@@ -1,0 +1,58 @@
+<div class="login-wrapper">
+
+  <!-- LEFT -->
+  <div class="login-left">
+    <div>
+
+      <h2 class="titulo">
+        Bem-vindo(a)<br />
+        <span style="color:#4a55ff">Acesso ao Sistema</span>
+      </h2>
+
+      <!-- FORM -->
+      <form (ngSubmit)="fazerLogin()">
+
+        <div class="input-group">
+          <label>E-mail</label>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="seuemail@gmail.com" />
+        </div>
+
+        <div class="input-group">
+          <label>Senha</label>
+          <input type="password" [(ngModel)]="senha" name="senha" placeholder="sua senha" />
+        </div>
+
+        <div class="options">
+          <label>
+            <input type="checkbox" /> Lembrar de mim
+          </label>
+
+          <a href="#">Esqueci minha senha</a>
+        </div>
+
+        <button class="btn-login">Entrar</button>
+
+      </form>
+
+      <p class="cadastro">
+        Não tem conta? <a href="#">Criar agora</a>
+      </p>
+
+      @if (loginMessage()) {
+        <p class="alert-success">{{ loginMessage() }}</p>
+      }
+
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="login-right">
+    <img src="assets/mulher.png" alt="Ilustração" class="illustration" />
+
+    <p class="texto-info">
+      A melhor experiência de login <br />
+      que você já teve na sua vida.
+    </p>
+  </div>
+
+</div>
