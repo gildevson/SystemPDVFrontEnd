@@ -38,9 +38,10 @@
         Não tem conta? <a href="#">Criar agora</a>
       </p>
 
-      @if (loginMessage()) {
-        <p class="alert-success">{{ loginMessage() }}</p>
-      }
+      <!-- MENSAGEM DE LOGIN -->
+      <p *ngIf="loginMessage" class="alert-success">
+        {{ loginMessage }}
+      </p>
 
     </div>
   </div>

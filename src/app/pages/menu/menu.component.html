@@ -1,0 +1,14 @@
+<div class="menu-wrapper">
+  <h2 class="menu-title">Painel de Acesso</h2>
+
+  <div class="menu-grid">
+    <div
+      class="menu-card"
+      *ngFor="let item of menuItems"
+      (click)="navegar(item.rota)">
+      
+      <span class="material-icons menu-icon">{{ item.icone }}</span>
+      <span class="menu-text">{{ item.nome }}</span>
+    </div>
+  </div>
+</div>
