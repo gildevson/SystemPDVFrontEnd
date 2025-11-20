@@ -8,6 +8,7 @@
   background: #eef1f6;
   font-family: 'Inter', sans-serif;
 }
+
 /* ============================
    SIDEBAR
 ============================ */
@@ -20,7 +21,6 @@
   padding: 20px;
 }
 
-
 /* LOGO */
 .logo {
   font-size: 22px;
@@ -31,61 +31,66 @@
   margin-bottom: 40px;
 }
 
+.logo-icon {
+  font-size: 22px;
+}
 
 /* ============================
-   MENU ITENS
+   MENU ITEMS
 ============================ */
 .menu-list {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.logo-icon {
-  font-size: 22px;
+  gap: 8px;
 }
 
 .menu-item {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 12px;
-  color: #c9d1d9;
-  padding: 10px 12px;
-  border-radius: 6px;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
+  color: #c9d1d9;
+  transition: 0.25s ease;
   font-size: 15px;
 }
 
-/* SLIDE INDICATOR */
+/* Indicador lateral */
 .menu-item::before {
   content: "";
   position: absolute;
-  left: -12px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   height: 0%;
   width: 4px;
   background: #4a55ff;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: 0.3s;
 }
 
 .menu-item:hover::before {
-  height: 70%;
+  height: 80%;
 }
 
 .menu-item:hover {
-  background: #1b222d;
+  background: #1f1a42;
   color: #fff;
 }
+
 .menu-icon {
   font-size: 22px;
 }
+
 /* ============================
    BOTÃO DE SAIR
 ============================ */
 .logout-btn {
-  margin-top: 40px;
+  margin-top: 30px;
   width: 100%;
   padding: 12px;
   border: none;
@@ -97,7 +102,6 @@
   cursor: pointer;
   transition: 0.2s;
 }
-
 
 .logout-btn:hover {
   background: #e63a3a;
