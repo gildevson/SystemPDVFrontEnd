@@ -1,59 +1,50 @@
 <div class="login-wrapper">
 
-  <!-- LEFT -->
   <div class="login-left">
-    <div>
+    <div class="login-card">
 
       <h2 class="titulo">
-        Bem-vindo(a)<br />
-        <span style="color:#4a55ff">Acesso ao Sistema</span>
+        Bem-vindo(a)<br>
+        <span>Acesso ao Sistema</span>
       </h2>
 
-      <!-- FORM -->
       <form (ngSubmit)="fazerLogin()">
 
         <div class="input-group">
           <label>E-mail</label>
-          <input type="email" [(ngModel)]="email" name="email" placeholder="seuemail@gmail.com" />
+          <input type="email" [(ngModel)]="email" name="email" required />
         </div>
 
         <div class="input-group">
           <label>Senha</label>
-          <input type="password" [(ngModel)]="senha" name="senha" placeholder="sua senha" />
+          <input type="password" [(ngModel)]="senha" name="senha" required />
         </div>
 
         <div class="options">
-          <label>
-            <input type="checkbox" /> Lembrar de mim
-          </label>
-
-          <a href="#">Esqueci minha senha</a>
+          <a href="#">Esqueci a senha</a>
+          <a href="#">Criar conta</a>
         </div>
 
-        <button class="btn-login">Entrar</button>
+        <button class="btn-login" type="submit">
+          Entrar
+        </button>
+
+        <div class="cadastro">
+          Ainda não possui conta? <a href="#">Cadastre-se</a>
+        </div>
 
       </form>
-
-      <p class="cadastro">
-        Não tem conta? <a href="#">Criar agora</a>
-      </p>
-
-      <!-- MENSAGEM DE LOGIN -->
-      <p *ngIf="loginMessage" class="alert-success">
-        {{ loginMessage }}
-      </p>
 
     </div>
   </div>
 
-  <!-- RIGHT -->
+  <!-- Lado direito com logo -->
   <div class="login-right">
-    <img src="assets/mulher.png" alt="Ilustração" class="illustration" />
+    <img src="assets/logonew.png" class="logo-right" alt="Logo ERP">
 
-    <p class="texto-info">
-      A melhor experiência de login <br />
-      que você já teve na sua vida.
-    </p>
+    <div class="info-text">
+      Sistema moderno, seguro e eficiente para sua empresa.
+    </div>
   </div>
 
 </div>
