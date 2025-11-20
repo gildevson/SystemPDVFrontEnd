@@ -11,15 +11,16 @@ import { CommonModule } from '@angular/common';
 })
 export class MenuComponent {
 
- menuItems = [
-  { nome: 'Dashboard Geral', rota: '/dashboard', icone: 'dashboard' },
-  { nome: 'Usuários do Sistema', rota: '/usuarios', icone: 'groups' },
-  { nome: 'Configurações', rota: '/configuracoes', icone: 'settings' },
-  { nome: 'Relatórios', rota: '/relatorios', icone: 'bar_chart' },
+  menuItems = [
+    { nome: 'Dashboard Geral', rota: '/dashboard', icone: 'dashboard' },
+    { nome: 'Usuários do Sistema', rota: '/usuarios', icone: 'groups' },
+    { nome: 'Configurações', rota: '/configuracoes', icone: 'settings' },
+    { nome: 'Relatórios', rota: '/relatorios', icone: 'bar_chart' },
 
-  // ➕ ADICIONADO
-  { nome: 'Operação PDV', rota: '/operacao', icone: 'point_of_sale' }
-];
+    // ➕ NOVO ITEM: OPERAÇÃO DO PDV
+    { nome: 'Operação PDV', rota: '/operacao', icone: 'point_of_sale' }
+  ];
+
   constructor(private router: Router) {}
 
   navegar(rota: string) {

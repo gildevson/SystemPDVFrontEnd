@@ -2,10 +2,13 @@
 
   <!-- MENU LATERAL -->
   <aside class="sidebar">
-    <h2 class="logo">ERP</h2>
+
+    <h2 class="logo">
+      <span class="logo-icon">☰</span> ERP
+    </h2>
 
     <nav class="menu-list">
-      <div 
+      <div
         class="menu-item"
         *ngFor="let item of menuItems"
         (click)="navegar(item.rota)"
