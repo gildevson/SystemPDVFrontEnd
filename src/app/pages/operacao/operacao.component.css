@@ -1,0 +1,345 @@
+/* Estilos existentes */
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.pdv-container {
+  /* Removido o height: 100vh para permitir rolagem em dispositivos móveis */
+  min-height: 100vh; /* Usa min-height para garantir que o container cubra a altura da viewport, mas permita o crescimento */
+  width: 100%;
+  background: linear-gradient(135deg, #3c5d82, #6e8fb9);
+  padding: 15px;
+  color: #fff;
+}
+
+/* HEADER */
+.pdv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0c3559;
+  padding: 10px 25px;
+  border-radius: 12px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-img {
+  height: 48px;
+}
+
+.header-buttons span {
+  cursor: pointer;
+  font-size: 28px;
+  margin-left: 15px;
+  transition: 0.2s;
+}
+
+.header-buttons span:hover {
+  transform: scale(1.2);
+  opacity: .8;
+}
+
+/* TÍTULO */
+.pdv-title {
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.pdv-title h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* CORPO */
+.pdv-body {
+  display: flex;
+  margin-top: 10px;
+  gap: 15px;
+  /* Removido o height: calc(100vh - 180px) para evitar problemas de layout em mobile */
+  min-height: 70vh; /* Mantém uma altura mínima, mas permite o crescimento */
+}
+
+/* PAINEL ESQUERDO */
+.left-panel {
+  width: 30%; /* Originalmente 30% */
+  background: rgba(255, 255, 255, 0.25);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.campo input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+}
+
+.valor {
+  margin-top: 5px;
+  padding: 10px;
+  background: #ffffff;
+  color: #000;
+  border-radius: 8px;
+  font-size: 20px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.grande {
+  font-size: 30px;
+}
+
+.linha-dupla {
+  display: flex;
+  gap: 10px;
+}
+
+.bloco {
+  flex: 1;
+}
+
+/* ATALHOS */
+.atalhos {
+  margin-top: 20px;
+  font-size: 13px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.atalhos div {
+  padding: 3px 0;
+}
+
+/* LISTA DE PRODUTOS */
+.produtos-panel {
+  width: 70%; /* Originalmente 70% */
+  background: rgba(255, 255, 255, 0.25);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-lista {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.produtos-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Adicionado para permitir a rolagem da tabela em telas pequenas se for o caso */
+  display: block; 
+  overflow-x: auto;
+  white-space: nowrap; /* Impede que o conteúdo do bloco da tabela quebre */
+}
+
+/* Tabela em geral */
+.produtos-tabela th,
+.produtos-tabela td {
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap; /* Força que o conteúdo da célula fique em uma linha */
+}
+
+/* Cabeçalhos da tabela */
+.produtos-tabela th {
+  background: #e0e0e0; /* Cor para distinguir o cabeçalho */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Removido o display:block da tabela para evitar problemas com thead/tbody, 
+   mas mantive o overflow-x: auto na .produtos-panel para tablets */
+.produtos-panel {
+  overflow-x: auto; /* Permite rolagem horizontal da tabela se o conteúdo for muito largo */
+}
+
+
+.subtotal {
+  margin-top: 20px;
+}
+
+.totais {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+
+.btn-voltar {
+  background: #0c3559;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.btn-voltar:hover {
+  background: #154b7d;
+  transform: translateY(-3px);
+}
+
+.btn-voltar .material-icons {
+  font-size: 20px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 📱 MEDIA QUERIES PARA RESPONSIVIDADE */
+/* ---------------------------------------------------------------------- */
+
+/* Estilos para telas menores que 1024px (Tablets em modo paisagem, e menor) */
+@media (max-width: 1024px) {
+  
+  .pdv-header {
+    padding: 10px 15px;
+  }
+  
+  .logo-area h1 {
+    font-size: 1.2em; /* Reduz o tamanho da fonte do título principal */
+  }
+
+  .pdv-body {
+    flex-direction: column; /* Empilha os painéis */
+    gap: 20px; /* Aumenta o espaçamento entre os painéis empilhados */
+  }
+  
+  /* Painéis ocupam 100% da largura */
+  .left-panel,
+  .produtos-panel {
+    width: 100%;
+  }
+
+  /* Reduz o padding dos painéis */
+  .left-panel,
+  .produtos-panel {
+    padding: 15px;
+  }
+  
+  /* Reduz um pouco o tamanho do subtotal */
+  .subtotal .grande {
+    font-size: 26px;
+  }
+  
+  /* Reduz o tamanho das fontes na tabela */
+  .produtos-tabela th,
+  .produtos-tabela td {
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  /* Tabela ganha rolagem horizontal em telas menores que o necessário */
+  .produtos-panel {
+    overflow-x: auto;
+  }
+}
+
+/* Estilos para telas muito pequenas (Celulares) */
+@media (max-width: 600px) {
+  
+  .pdv-container {
+    padding: 10px;
+  }
+
+  /* Esconde o título no header para economizar espaço */
+  .logo-area h1 {
+    display: none; 
+  }
+  
+  .logo-img {
+    height: 36px; /* Reduz o logo */
+  }
+
+  .pdv-header {
+    padding: 10px 10px;
+  }
+  
+  .header-buttons span {
+    font-size: 24px;
+    margin-left: 10px;
+  }
+
+  .pdv-title h2 {
+    font-size: 24px; /* Reduz o título principal */
+  }
+  
+  .totais {
+    flex-direction: column; /* Empilha as áreas de Total Recebido e Troco */
+  }
+  
+  /* Reorganiza os atalhos para 1 coluna */
+  .atalhos {
+    grid-template-columns: 1fr;
+    font-size: 12px;
+    gap: 4px;
+  }
+  
+  /* Reorganiza a linha dupla de Código/Pedido */
+  .linha-dupla {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Reduz o padding nos campos de input */
+  .campo input {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .valor {
+    padding: 8px;
+    font-size: 18px;
+  }
+
+  .subtotal .grande {
+    font-size: 24px;
+  }
+  
+  /* Ajusta a rolagem da tabela para mobile */
+  .produtos-panel {
+    overflow-x: scroll; /* Scroll mais evidente em mobile */
+  }
+  
+}

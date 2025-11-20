@@ -1,0 +1,116 @@
+<div class="pdv-container">
+
+  <!-- BOTÃO VOLTAR -->
+  <button class="btn-voltar" (click)="voltarMenu()">
+    <span class="material-icons">arrow_back</span>
+    Voltar ao Menu
+  </button>
+  
+  <!-- TOPO / HEADER -->
+  <header class="pdv-header">
+    <div class="logo-area">
+      <img src="assets/logo.png" alt="Logo" class="logo-img" />
+      <h1>PDV — SISTEMA ERP</h1>
+    </div>
+
+    <div class="header-buttons">
+      <span class="material-icons">settings</span>
+      <span class="material-icons">remove</span>
+      <span class="material-icons">close</span>
+    </div>
+  </header>
+
+  <!-- TÍTULO -->
+  <div class="pdv-title">
+    <h2>CAIXA LIVRE</h2>
+  </div>
+
+  <div class="pdv-body">
+
+    <!-- LADO ESQUERDO -->
+    <div class="left-panel">
+
+      <div class="campo bloco">
+        <label>CÓDIGO DE BARRAS</label>
+        <input type="text" />
+      </div>
+
+      <div class="campo bloco">
+        <label>VALOR UNITÁRIO</label>
+        <div class="valor">0,00</div>
+      </div>
+
+      <div class="campo bloco">
+        <label>TOTAL DO ITEM</label>
+        <div class="valor">0,00</div>
+      </div>
+
+      <div class="campo linha-dupla">
+        <div>
+          <label>CÓDIGO</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>DIGITE O PEDIDO</label>
+          <input type="text" />
+        </div>
+      </div>
+
+      <!-- TECLAS DE ATALHO -->
+      <div class="atalhos">
+        <div>F2 - Código Interno</div>
+        <div>F3 - Pesquisar Pedido</div>
+        <div>F4 - Inserir Quantidade</div>
+        <div>F5 - Nova Venda</div>
+        <div>F7 - Pesquisar Venda</div>
+        <div>F8 - Pesquisar Produto</div>
+        <div>F9 - Alterar Venda</div>
+        <div>F10 - Finalizar</div>
+        <div>F11 - Excluir Venda</div>
+        <div>F12 - Indicar Cliente</div>
+      </div>
+
+    </div>
+
+    <!-- ÁREA DA LISTA DE PRODUTOS -->
+    <div class="produtos-panel">
+
+      <div class="titulo-lista">LISTA DE PRODUTOS</div>
+
+      <table class="produtos-tabela">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Código de Barras</th>
+            <th>Descrição</th>
+            <th>Qtd</th>
+            <th>Vl. Unit</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aqui vai aparecer os itens -->
+        </tbody>
+      </table>
+
+      <div class="subtotal bloco">
+        <label>SUBTOTAL</label>
+        <div class="valor grande">0,00</div>
+      </div>
+
+      <div class="totais linha-dupla">
+        <div class="bloco">
+          <label>TOTAL RECEBIDO</label>
+          <div class="valor">0,00</div>
+        </div>
+        <div class="bloco">
+          <label>TROCO</label>
+          <div class="valor">0,00</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

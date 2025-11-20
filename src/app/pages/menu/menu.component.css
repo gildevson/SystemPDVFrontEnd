@@ -1,165 +1,111 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* =============================
-   Layout Geral do Menu
-============================= */
 body {
-  background: linear-gradient(135deg, #d0d9ff 0%, #eef2ff 100%);
   margin: 0;
   font-family: 'Inter', sans-serif;
+  background: #f5f7ff;
 }
 
-.top-bar {
-  width: 100%;
+/* LAYOUT PRINCIPAL */
+.layout {
   display: flex;
-  justify-content: flex-end;
-  padding: 15px 40px;
-  margin-bottom: 10px;
+  height: 100vh;
+  width: 100%;
 }
 
-/* Botão Sair */
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: #1d1f33;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+}
+
+.logo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #4a55ff;
+}
+
+/* LISTA DE MENU */
+.menu-list {
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.menu-item:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateX(6px);
+}
+
+.menu-icon {
+  font-size: 26px;
+}
+
+.menu-text {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* BOTÃO SAIR */
 .logout-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: #ef4444;
   border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
+  padding: 12px 18px;
   color: white;
+  border-radius: 10px;
+  cursor: pointer;
   font-weight: 600;
   font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 5px 14px rgba(239, 68, 68, 0.35);
   transition: 0.25s ease;
 }
 
 .logout-btn:hover {
   background: #d62828;
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
-.logout-btn:active {
-  transform: scale(0.96);
+/* ÁREA PRINCIPAL */
+.main-content {
+  flex: 1;
+  padding: 40px;
 }
 
-.logout-btn .material-icons {
-  font-size: 20px;
-}
-
-/* =============================
-   Conteúdo Principal
-============================= */
-.dashboard-container {
-  padding: 20px;
-  max-width: 1350px;
-  margin: 0 auto;
-  animation: fadeIn 0.7s ease-out;
-}
-
-/* Título */
 .menu-title {
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 800;
-  text-align: center;
-  margin-bottom: 50px;
   color: #1e293b;
-  letter-spacing: -0.5px;
 }
 
-.menu-title .accent {
+.accent {
   color: #4a55ff;
 }
 
-/* =============================
-   Grid de Opções
-============================= */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 35px;
-  padding: 10px;
-}
-
-/* =============================
-   Cards Estilizados
-============================= */
-.menu-card {
-  padding: 42px 26px;
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 22px;
-  backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  cursor: pointer;
-  transition: 0.35s ease;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  transform: translateY(0);
-}
-
-.menu-card:hover {
-  background: #4a55ff;
-  color: white;
-  transform: translateY(-12px) scale(1.05);
-  box-shadow: 0 18px 35px rgba(74, 85, 255, 0.35);
-}
-
-/* Ícone do card */
-.menu-icon {
-  font-size: 65px;
-  margin-bottom: 20px;
-  transition: 0.3s ease;
-}
-
-.menu-card:hover .menu-icon {
-  transform: scale(1.25) rotate(-3deg);
-}
-
-/* Nome */
-.menu-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* =============================
-   Animação de entrada
-============================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
+/* RESPONSIVO */
+@media (max-width: 780px) {
+  .sidebar {
+    width: 200px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* =============================
-   Responsivo
-============================= */
-@media (max-width: 620px) {
-  .top-bar {
-    justify-content: center;
-    padding: 10px 15px;
-  }
-
   .menu-title {
-    font-size: 28px;
-    margin-bottom: 30px;
-  }
-
-  .menu-card {
-    padding: 30px 18px;
-  }
-
-  .menu-icon {
-    font-size: 48px;
-  }
-
-  .menu-text {
-    font-size: 18px;
+    font-size: 26px;
   }
 }
