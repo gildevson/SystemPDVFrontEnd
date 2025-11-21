@@ -4,3 +4,22 @@ html, body {
   height: 100%;
   width: 100%;
 }
+
+/* FONTES LOCAIS (CORRETO PARA DESKTOP) */
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+

@@ -1,22 +1,42 @@
 const { spawn } = require('child_process');
+const axios = require('axios');
+const fs = require('fs');
 const path = require('path');
 
-let backendProcess;
-
-function startBackend() {
-  // Caminho correto após o publish
-  const apiPath = path.join(__dirname,
-    '../../SystemPDV/bin/Release/net8.0/win-x64/publish/SistemaCaixa.exe'
+async function isBackendRunning() {
+  const portFile = path.join(
+    __dirname,
+    '../../SystemPDV/bin/Release/net8.0/win-x64/publish/backend-port.txt'
   );
 
-  console.log("Iniciando backend em:", apiPath);
+  if (!fs.existsSync(portFile)) return false;
 
-  backendProcess = spawn(apiPath, [], {
-    detached: false
-  });
+  try {
+    const url = fs.readFileSync(portFile).toString().trim();
+    await axios.get(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-  backendProcess.stdout.on('data', data => console.log(data.toString()));
-  backendProcess.stderr.on('data', data => console.error(data.toString()));
+async function startBackend() {
+  const exePath = path.join(
+  __dirname,
+  '../../SystemPDV/publish/SistemaCaixa.exe'
+);
+
+  if (await isBackendRunning()) {
+    console.log("⚠️ Backend já está rodando.");
+    return;
+  }
+
+  console.log("🚀 Iniciando backend:", exePath);
+
+  const backend = spawn(exePath, [], { detached: false });
+
+  backend.stdout.on('data', d => console.log("[BACKEND]", d.toString()));
+  backend.stderr.on('data', d => console.error("[BACKEND ERROR]", d.toString()));
 }
 
 module.exports = { startBackend };

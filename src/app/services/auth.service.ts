@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 export interface LoginResponse {
   mensagem: string;
@@ -14,11 +14,35 @@ export interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth/login';
+  // Guarda a URL do backend carregada pelo Electron
+  private backendUrl$ = new ReplaySubject<string>(1);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // 🔥 Recebe a porta dinâmica do backend via preload.js
+    if ((window as any).backend) {
+      (window as any).backend.onUrlReady((url: string) => {
+        console.log('🔥 Backend URL recebida do Electron:', url);
+        this.backendUrl$.next(url);
+      });
+    } else {
+      console.warn('⚠️ Rodando no navegador — backend dinâmico desabilitado.');
+      this.backendUrl$.next('http://localhost:5000'); // fallback DEV
+    }
+  }
 
+  // Login usando HttpClient de forma normal
   login(email: string, senha: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, { email, senha });
+    return new Observable(observer => {
+      this.backendUrl$.subscribe(url => {
+        const fullUrl = `${url}/api/auth/login`;
+        console.log("Chamando login em:", fullUrl);
+
+        this.http.post<LoginResponse>(fullUrl, { email, senha })
+          .subscribe({
+            next: res => observer.next(res),
+            error: err => observer.error(err)
+          });
+      });
+    });
   }
 }
