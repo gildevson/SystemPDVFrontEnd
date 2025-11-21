@@ -4,7 +4,12 @@ const path = require('path');
 let backendProcess;
 
 function startBackend() {
-  const apiPath = path.join(__dirname, '../../SystemPDV/SystemPDV.exe');
+  // Caminho correto após o publish
+  const apiPath = path.join(__dirname,
+    '../../SystemPDV/bin/Release/net8.0/win-x64/publish/SystemPDV.exe'
+  );
+
+  console.log("Iniciando backend em:", apiPath);
 
   backendProcess = spawn(apiPath, [], {
     detached: false
