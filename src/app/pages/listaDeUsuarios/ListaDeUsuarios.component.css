@@ -1,0 +1,133 @@
+/* CARD PRINCIPAL */
+.content-wrapper {
+  background: #ffffff;
+  padding: 30px 40px;
+  margin: 0; /* REMOVIDO para encostar no menu */
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease;
+
+}
+
+/* ANIMAÇÃO SUAVE */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* TÍTULO E BOTÃO NO TOPO */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.titulo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+/* BOTÃO "NOVO USUÁRIO" */
+.btn-novo {
+  background: #4a55ff;
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-novo:hover {
+  background: #3948e0;
+  transform: translateY(-2px);
+}
+
+/* TABELA */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  background: #fff;
+}
+
+/* CABEÇALHO DA TABELA */
+
+.tabela th {
+  background: #f0f2ff;
+  padding: 14px;
+  text-align: left;
+  font-weight: 700;
+  color: #333;
+  border-bottom: 2px solid #dcdffc;
+}
+/* LINHAS */
+.tabela td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+/* HOVER NAS LINHAS */
+.tabela tbody tr:hover {
+  background: #f8f9ff;
+  cursor: pointer;
+}
+
+
+/* PRIMEIRA COLUNA */
+.tabela td:first-child,
+.tabela th:first-child {
+  width: 120px;
+  color: #4a55ff;
+  font-weight: bold;
+}
+
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .header-row {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+
+  .btn-novo {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Menu lateral */
+.sidebar {
+  width: 250px;
+  background: #0d0b3d;
+  color: #fff;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+/* Conteúdo encostado no menu */
+.main-content {
+  flex: 1;
+  padding: 30px; /* pode ajustar */
+  background: #eef1f7;
+}

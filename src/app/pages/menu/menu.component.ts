@@ -1,23 +1,26 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';   // 👈 IMPORTANTE
 import { LoadingService } from '../../shared/loading.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterModule   // 👈 SEM ISSO O ROUTER-OUTLET NÃO FUNCIONA
+  ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
 
   menuItems = [
-    { nome: 'Dashboard Geral', rota: '/dashboard', icone: 'dashboard' },
-    { nome: 'Usuários do Sistema', rota: '/usuarios', icone: 'groups' },
-    { nome: 'Configurações', rota: '/configuracoes', icone: 'settings' },
-    { nome: 'Relatórios', rota: '/relatorios', icone: 'bar_chart' },
-    { nome: 'Operação PDV', rota: '/operacao', icone: 'point_of_sale' }
+    { nome: 'Dashboard Geral', rota: 'dashboard', icone: 'dashboard' },
+    { nome: 'Usuários do Sistema', rota: 'usuarios', icone: 'groups' },
+    { nome: 'Configurações', rota: 'configuracoes', icone: 'settings' },
+    { nome: 'Relatórios', rota: 'relatorios', icone: 'bar_chart' },
+    { nome: 'Operação PDV', rota: 'operacao', icone: 'point_of_sale' }
   ];
 
   constructor(
@@ -26,13 +29,7 @@ export class MenuComponent {
   ) {}
 
   navegar(rota: string) {
-    this.loadingService.show();   // MOSTRA O LOADING
-
-    setTimeout(() => {
-      this.router.navigate([rota]).then(() => {
-        this.loadingService.hide(); // ESCONDE O LOADING
-      });
-    }, 200); // delay suave
+    this.router.navigate(['/menu', rota]);   // 👈 AJUSTADO PARA ROTA FILHA
   }
 
   logout() {
