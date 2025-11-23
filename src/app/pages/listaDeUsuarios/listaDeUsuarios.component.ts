@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+interface Usuario {
+  id: string;
+  nome: string;
+  email: string;
+  dataCriacao: string;
+}
 
 @Component({
   selector: 'app-lista-de-usuarios',
@@ -11,26 +19,44 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListaDeUsuariosComponent implements OnInit {
 
-  usuarios: any[] = [];
+  usuarios: Usuario[] = [];
   carregando: boolean = true;
+  erro: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.buscarUsuarios();
   }
 
   buscarUsuarios() {
-    this.http.get<any[]>('http://localhost:5000/api/users')
+    this.carregando = true;
+    this.erro = false;
+
+    this.http.get<Usuario[]>('https://localhost:7110/api/users')
       .subscribe({
         next: (res) => {
           this.usuarios = res;
           this.carregando = false;
         },
         error: () => {
-          alert('Erro ao carregar usuários.');
+          this.erro = true;
           this.carregando = false;
         }
       });
+  }
+
+  irParaNovoUsuario() {
+    this.router.navigate(['/novo-usuario']);
+  }
+
+  editar(usuario: Usuario) {
+    this.router.navigate(['/editar-usuario', usuario.id]);
+  }
+
+  deletar(usuario: Usuario) {
+    if (confirm(`Tem certeza que deseja apagar ${usuario.nome}?`)) {
+      // aqui você insere o delete
+    }
   }
 }

@@ -26,7 +26,7 @@ export class AuthService {
       });
     } else {
       console.warn('⚠️ Rodando no navegador — backend dinâmico desabilitado.');
-      this.backendUrl$.next('http://localhost:5000'); // fallback DEV
+      this.backendUrl$.next('https://localhost:7110'); // fallback DEV
     }
   }
 
@@ -34,7 +34,7 @@ export class AuthService {
   login(email: string, senha: string): Observable<LoginResponse> {
     return new Observable(observer => {
       this.backendUrl$.subscribe(url => {
-        const fullUrl = `${url}/api/auth/login`;
+        const fullUrl = `${url}/api/Auth/login`;
         console.log("Chamando login em:", fullUrl);
 
         this.http.post<LoginResponse>(fullUrl, { email, senha })

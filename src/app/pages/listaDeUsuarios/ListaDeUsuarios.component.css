@@ -1,21 +1,23 @@
-/* CARD PRINCIPAL */
+/* =============================
+   CARD PRINCIPAL
+============================= */
 .content-wrapper {
   background: #ffffff;
-  padding: 30px 40px;
-  margin: 0; /* REMOVIDO para encostar no menu */
-  border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease;
-
 }
 
-/* ANIMAÇÃO SUAVE */
+/* ANIMAÇÃO */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* TÍTULO E BOTÃO NO TOPO */
+/* =============================
+   HEADER
+============================= */
 .header-row {
   display: flex;
   justify-content: space-between;
@@ -25,24 +27,26 @@
 
 .titulo {
   font-size: 28px;
-  font-weight: 700;
-  color: #333;
+  font-weight: 800;
+  color: #2c2c2c;
   margin: 0;
 }
 
-/* BOTÃO "NOVO USUÁRIO" */
+/* BOTÃO NOVO */
 .btn-novo {
   background: #4a55ff;
-  color: white;
-  padding: 10px 16px;
+  color: #fff;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  border-radius: 8px;
+  gap: 8px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.2s ease;
+  font-size: 15px;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 10px rgba(57, 76, 255, 0.25);
 }
 
 .btn-novo:hover {
@@ -50,16 +54,19 @@
   transform: translateY(-2px);
 }
 
-/* TABELA */
+/* =============================
+   TABELA
+============================= */
 .tabela {
   width: 100%;
   border-collapse: collapse;
   font-size: 15px;
   background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-/* CABEÇALHO DA TABELA */
-
+/* CABEÇALHO */
 .tabela th {
   background: #f0f2ff;
   padding: 14px;
@@ -68,6 +75,12 @@
   color: #333;
   border-bottom: 2px solid #dcdffc;
 }
+
+.col-acoes {
+  width: 110px;
+  text-align: center;
+}
+
 /* LINHAS */
 .tabela td {
   padding: 14px;
@@ -75,59 +88,69 @@
   color: #555;
 }
 
-/* HOVER NAS LINHAS */
+/* HOVER NA LINHA */
 .tabela tbody tr:hover {
-  background: #f8f9ff;
+  background: #f6f7ff;
   cursor: pointer;
+  transition: 0.15s ease;
 }
 
-
-/* PRIMEIRA COLUNA */
-.tabela td:first-child,
-.tabela th:first-child {
-  width: 120px;
+/* PRIMEIRA COLUNA DESTACADA */
+.tabela td:first-child {
+  font-weight: 700;
   color: #4a55ff;
-  font-weight: bold;
 }
 
+/* =============================
+   ÍCONES DE AÇÃO
+============================= */
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
 
-/* RESPONSIVIDADE */
+.acao {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+.acao.editar {
+  color: #4a55ff;
+}
+
+.acao.editar:hover {
+  background: rgba(74, 85, 255, 0.1);
+}
+
+.acao.deletar {
+  color: #ff5b5b;
+}
+
+.acao.deletar:hover {
+  background: rgba(255, 91, 91, 0.15);
+}
+
+/* =============================
+   RESPONSIVO
+============================= */
 @media (max-width: 768px) {
   .content-wrapper {
     padding: 20px;
-    margin: 10px;
   }
 
   .header-row {
     flex-direction: column;
-    align-items: start;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .btn-novo {
     width: 100%;
     justify-content: center;
   }
-}
-
-.layout {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-}
-
-/* Menu lateral */
-.sidebar {
-  width: 250px;
-  background: #0d0b3d;
-  color: #fff;
-  height: 100vh;
-  flex-shrink: 0;
-}
-
-/* Conteúdo encostado no menu */
-.main-content {
-  flex: 1;
-  padding: 30px; /* pode ajustar */
-  background: #eef1f7;
 }

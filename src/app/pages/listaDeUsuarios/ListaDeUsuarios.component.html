@@ -1,5 +1,13 @@
 <div class="content-wrapper">
-  <h2 class="titulo">Lista de Usuários</h2>
+
+  <div class="header-row">
+    <h2 class="titulo">Lista de Usuários</h2>
+
+    <button class="btn-novo" (click)="irParaNovoUsuario()">
+      <span class="material-icons">person_add</span>
+      Novo Usuário
+    </button>
+  </div>
 
   <table class="tabela">
     <thead>
@@ -7,6 +15,7 @@
         <th>Nome</th>
         <th>Email</th>
         <th>Data de Criação</th>
+        <th class="col-acoes">Ações</th>
       </tr>
     </thead>
 
@@ -15,7 +24,13 @@
         <td>{{ u.nome }}</td>
         <td>{{ u.email }}</td>
         <td>{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
+
+        <td class="acoes">
+          <span class="acao editar material-icons" (click)="editar(u)">edit</span>
+          <span class="acao deletar material-icons" (click)="deletar(u)">delete</span>
+        </td>
       </tr>
     </tbody>
   </table>
+
 </div>
