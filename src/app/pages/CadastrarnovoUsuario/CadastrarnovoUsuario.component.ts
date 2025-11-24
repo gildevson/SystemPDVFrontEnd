@@ -1,31 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-novo-usuario',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './novousuario.component.html',
-  styleUrls: ['./novousuario.component.css']
+  templateUrl: './CadastrarnovoUsuario.component.html',
+  styleUrls: ['./CadastrarnovoUsuario.component.css']
 })
-export class NovoUsuarioComponent {
+export class CadastrarnovoUsuarioComponent {
 
-  nome: string = '';
-  email: string = '';
-  senha: string = '';
-  carregando: boolean = false;
-  erro: string = '';
-  sucesso: boolean = false;
+  @Output() salvou = new EventEmitter<void>();
+  @Output() fechar = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  nome = '';
+  email = '';
+  senha = '';
+  confirmarSenha = '';   // NOVA VARIÁVEL
+
+  carregando = false;
+  erro = '';
+  sucesso = false;
+
+  constructor(private http: HttpClient) {}
 
   salvar() {
     this.erro = '';
     this.sucesso = false;
     this.carregando = true;
+
+    // 🔥 VALIDAÇÃO DAS SENHAS
+    if (this.senha !== this.confirmarSenha) {
+      this.carregando = false;
+      this.erro = 'As senhas não coincidem.';
+      return;
+    }
 
     const novoUsuario = {
       nome: this.nome,
@@ -40,10 +51,10 @@ export class NovoUsuarioComponent {
           this.sucesso = true;
 
           setTimeout(() => {
-            this.router.navigate(['/usuarios']);
-          }, 800);
+            this.salvou.emit();
+          }, 600);
         },
-        error: (err) => {
+        error: () => {
           this.carregando = false;
           this.erro = 'Erro ao criar usuário. Verifique os dados.';
         }

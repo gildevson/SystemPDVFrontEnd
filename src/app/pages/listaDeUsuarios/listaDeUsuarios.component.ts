@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { CadastrarnovoUsuarioComponent } from '../CadastrarnovoUsuario/CadastrarnovoUsuario.component';
+
 interface Usuario {
   id: string;
   nome: string;
@@ -13,7 +15,10 @@ interface Usuario {
 @Component({
   selector: 'app-lista-de-usuarios',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    CadastrarnovoUsuarioComponent
+  ],
   templateUrl: './ListaDeUsuarios.component.html',
   styleUrls: ['./ListaDeUsuarios.component.css']
 })
@@ -23,6 +28,8 @@ export class ListaDeUsuariosComponent implements OnInit {
   carregando: boolean = true;
   erro: boolean = false;
 
+  exibirCadastro = false;
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -30,9 +37,6 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   buscarUsuarios() {
-    this.carregando = true;
-    this.erro = false;
-
     this.http.get<Usuario[]>('https://localhost:7110/api/users')
       .subscribe({
         next: (res) => {
@@ -46,8 +50,17 @@ export class ListaDeUsuariosComponent implements OnInit {
       });
   }
 
-  irParaNovoUsuario() {
-    this.router.navigate(['/menu/novousuario']);
+  abrirOverlay() {
+    this.exibirCadastro = true;
+  }
+
+  fecharOverlay() {
+    this.exibirCadastro = false;
+  }
+
+  aoSalvarUsuario() {
+    this.exibirCadastro = false;
+    this.buscarUsuarios();
   }
 
   editar(usuario: Usuario) {
@@ -55,8 +68,6 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   deletar(usuario: Usuario) {
-    if (confirm(`Tem certeza que deseja apagar ${usuario.nome}?`)) {
-      // aqui você insere o delete
-    }
+    if (confirm(`Tem certeza que deseja apagar ${usuario.nome}?`)) {}
   }
 }

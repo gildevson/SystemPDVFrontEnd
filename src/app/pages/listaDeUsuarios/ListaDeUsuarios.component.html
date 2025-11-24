@@ -1,9 +1,21 @@
+<div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
+
+  <app-novo-usuario
+    (salvou)="aoSalvarUsuario()"
+    (fechar)="fecharOverlay()">
+  </app-novo-usuario>
+
+</div>
+
+<!-- ===========================
+     CONTEÚDO DA LISTA
+=========================== -->
 <div class="content-wrapper">
 
   <div class="header-row">
     <h2 class="titulo">Lista de Usuários</h2>
 
-    <button class="btn-novo" (click)="irParaNovoUsuario()">
+    <button class="btn-novo" (click)="abrirOverlay()">
       <span class="material-icons">person_add</span>
       Novo Usuário
     </button>

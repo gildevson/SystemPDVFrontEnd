@@ -20,8 +20,8 @@ export const routes: Routes = [
       // ⬇ NOVA ROTA AQUI
       { 
         path: 'novousuario', 
-        loadComponent: () => import('./pages/novoUsuario/novousuario.component')
-          .then(m => m.NovoUsuarioComponent)
+        loadComponent: () => import('./pages/CadastrarnovoUsuario/CadastrarnovoUsuario.component')
+          .then(m => m.CadastrarnovoUsuarioComponent)
       },
 
       { path: 'operacao', component: OperacaoComponent },
