@@ -47,7 +47,7 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   irParaNovoUsuario() {
-    this.router.navigate(['/novo-usuario']);
+    this.router.navigate(['/menu/novousuario']);
   }
 
   editar(usuario: Usuario) {

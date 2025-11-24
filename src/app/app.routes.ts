@@ -16,6 +16,14 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: OperacaoComponent },
       { path: 'usuarios', component: ListaDeUsuariosComponent },
+
+      // ⬇ NOVA ROTA AQUI
+      { 
+        path: 'novousuario', 
+        loadComponent: () => import('./pages/novoUsuario/novousuario.component')
+          .then(m => m.NovoUsuarioComponent)
+      },
+
       { path: 'operacao', component: OperacaoComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
