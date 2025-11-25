@@ -44,7 +44,7 @@ export class CadastrarnovoUsuarioComponent {
       senha: this.senha
     };
 
-    this.http.post('https://localhost:7110/api/users', novoUsuario)
+    this.http.post('https://localhost:7110/api/Auth/registrar', novoUsuario)
       .subscribe({
         next: () => {
           this.carregando = false;
