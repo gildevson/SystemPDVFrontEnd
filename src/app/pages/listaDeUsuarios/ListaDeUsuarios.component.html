@@ -1,16 +1,17 @@
+<!-- ===== OVERLAY DO MODAL ===== -->
 <div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
 
-  <app-novo-usuario
-    (salvou)="aoSalvarUsuario()"
-    (fechar)="fecharOverlay()">
-  </app-novo-usuario>
+  <div class="modal-wrapper" (click)="$event.stopPropagation()">
+    <app-novo-usuario
+      (salvou)="aoSalvarUsuario()"
+      (fechar)="fecharOverlay()">
+    </app-novo-usuario>
+  </div>
 
 </div>
 
-<!-- ===========================
-     CONTEÚDO DA LISTA
-=========================== -->
-<div class="content-wrapper">
+<!-- ===== CONTEÚDO PRINCIPAL ===== -->
+<div class="content-card">
 
   <div class="header-row">
     <h2 class="titulo">Lista de Usuários</h2>
@@ -44,5 +45,34 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- ===== PAGINAÇÃO ===== -->
+  <div class="paginacao" *ngIf="totalPages > 1">
+
+    <button 
+      class="btn-pag"
+      [disabled]="page === 1"
+      (click)="buscarUsuarios(page - 1)">
+      « Anterior
+    </button>
+
+    <div class="numeros">
+      <button 
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        class="num" 
+        [class.ativo]="page === (i + 1)"
+        (click)="buscarUsuarios(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </div>
+
+    <button 
+      class="btn-pag"
+      [disabled]="page === totalPages"
+      (click)="buscarUsuarios(page + 1)">
+      Próxima »
+    </button>
+
+  </div>
 
 </div>

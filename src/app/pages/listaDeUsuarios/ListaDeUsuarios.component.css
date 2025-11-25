@@ -1,114 +1,85 @@
-/* =============================
-   CARD PRINCIPAL
-============================= */
-.content-wrapper {
+/* Card centralizado */
+.content-card {
   background: #ffffff;
   padding: 35px;
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease;
+  margin-left: 30px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* =============================
-   HEADER
-============================= */
+/* Header */
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .titulo {
   font-size: 28px;
   font-weight: 800;
-  color: #2c2c2c;
-  margin: 0;
 }
 
+/* Botão novo */
 .btn-novo {
   background: #4a55ff;
-  color: #fff;
-  padding: 10px 18px;
+  color: white;
+  padding: 12px 18px;
   display: flex;
   align-items: center;
   gap: 8px;
   border-radius: 10px;
   border: none;
-  cursor: pointer;
   font-weight: 600;
-  font-size: 15px;
-  transition: 0.25s ease;
-  box-shadow: 0 3px 10px rgba(57, 76, 255, 0.25);
+  cursor: pointer;
+  transition: 0.25s;
 }
 
 .btn-novo:hover {
-  background: #3948e0;
+  background: #3644e0;
   transform: translateY(-2px);
 }
 
-/* =============================
-   TABELA
-============================= */
+/* ================================
+   Tabela (desktop)
+================================ */
 .tabela {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
-  background: #fff;
+  background: white;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .tabela th {
-  background: #f0f2ff;
+  background: #eef1ff;
   padding: 14px;
+  border-bottom: 2px solid #d5d8ff;
   text-align: left;
-  font-weight: 700;
-  color: #333;
-  border-bottom: 2px solid #dcdffc;
-}
-
-.col-acoes {
-  width: 110px;
-  text-align: center;
 }
 
 .tabela td {
   padding: 14px;
   border-bottom: 1px solid #eee;
-  color: #555;
 }
 
 .tabela tbody tr:hover {
-  background: #f6f7ff;
-  cursor: pointer;
-  transition: 0.15s ease;
+  background: #f5f7ff;
 }
 
-.tabela td:first-child {
-  font-weight: 700;
-  color: #4a55ff;
-}
-
-/* =============================
-   ÍCONES DE AÇÃO
-============================= */
+/* Ações */
 .acoes {
   display: flex;
-  align-items: center;
   gap: 12px;
   justify-content: center;
 }
 
 .acao {
-  font-size: 22px;
   cursor: pointer;
-  transition: 0.2s ease;
+  font-size: 22px;
   padding: 5px;
   border-radius: 6px;
 }
@@ -117,24 +88,32 @@
   color: #4a55ff;
 }
 
-.acao.editar:hover {
-  background: rgba(74, 85, 255, 0.1);
-}
-
 .acao.deletar {
   color: #ff5b5b;
 }
 
-.acao.deletar:hover {
-  background: rgba(255, 91, 91, 0.15);
+/* ==========================================
+   RESPONSIVIDADE TOTAL
+========================================== */
+
+/* --- Tela média (tablets) --- */
+@media (max-width: 992px) {
+  .titulo {
+    font-size: 24px;
+  }
+
+  .content-card {
+    margin: 15px;
+    padding: 25px;
+  }
 }
 
-/* =============================
-   RESPONSIVO
-============================= */
+/* --- Tela mobile (até 768px) --- */
 @media (max-width: 768px) {
-  .content-wrapper {
+
+  .content-card {
     padding: 20px;
+    margin: 10px;
   }
 
   .header-row {
@@ -147,37 +126,164 @@
     width: 100%;
     justify-content: center;
   }
+
+  /* Tabela vira SCROLL horizontal */
+  .tabela {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
-/* =========================================================================
-   🌟 MODAL / OVERLAY (VERSÃO PREMIUM)
-   Blur + sombra + animação suave
-========================================================================= */
+/* --- Super mobile (até 600px) — tabela empilhada tipo "card list" --- */
+@media (max-width: 600px) {
 
-/* CAMADA ESCURA COM BLUR */
+  /* Esconde header da tabela */
+  .tabela thead {
+    display: none;
+  }
+
+  .tabela tr {
+    display: block;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: white;
+    padding: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  .tabela td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: none;
+  }
+
+  .tabela td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #4a55ff;
+  }
+
+  .acoes {
+    justify-content: flex-end;
+  }
+}
+
+/* --- Mini mobile (até 420px) --- */
+@media (max-width: 420px) {
+
+  .titulo {
+    font-size: 22px;
+  }
+
+  .acao {
+    font-size: 20px;
+  }
+
+  .btn-novo {
+    padding: 10px 14px;
+  }
+}
+
+
+/* ============================
+   OVERLAY (fica por cima de tudo)
+============================ */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100vh;
-
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+  z-index: 99999 !important; /* 🔥 ESSENCIAL */
+}
+
+/* O componente do modal */
+app-novo-usuario {
+  z-index: 100000 !important;
+}
+
+/* ================================
+   PAGINAÇÃO ESTILIZADA
+================================ */
+.paginacao {
+  margin-top: 28px;
+  display: flex;
   align-items: center;
-
-  z-index: 9999;
-  animation: overlayFade 0.25s ease-out;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  animation: fadeIn 0.3s ease;
 }
 
-@keyframes overlayFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+/* Botões Anterior / Próximo */
+.btn-pag {
+  background: #4a55ff;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(74, 85, 255, 0.25);
+  transition: all 0.25s ease;
 }
 
-/* CAIXA DO MODAL */
+.btn-pag:hover:not(:disabled) {
+  background: #3946e0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74, 85, 255, 0.35);
+}
+
+.btn-pag:disabled {
+  background: #c9c9c9;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Números da paginação */
+.numeros {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.num {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  background: #f5f6ff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #3c3c3c;
+  transition: all 0.2s ease;
+}
+
+.num:hover {
+  background: #e7e9ff;
+  transform: translateY(-1px);
+}
+
+/* Página ativa */
+.num.ativo {
+  background: #4a55ff;
+  color: #fff;
+  border-color: #4a55ff;
+  box-shadow: 0 4px 14px rgba(74, 85, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -2,7 +2,6 @@
 
   <!-- MENU LATERAL -->
   <aside class="sidebar">
-
     <h2 class="logo">
       <span class="logo-icon">☰</span> ERP
     </h2>
@@ -11,8 +10,10 @@
       <div
         class="menu-item"
         *ngFor="let item of menuItems"
-        (click)="navegar(item.rota)"
-      >
+        [routerLink]="['/menu', item.rota]"
+        routerLinkActive="active-item"
+        [routerLinkActiveOptions]="{ exact: false }">
+
         <span class="material-icons menu-icon">{{ item.icone }}</span>
         <span class="menu-text">{{ item.nome }}</span>
       </div>
@@ -25,8 +26,8 @@
   </aside>
 
   <!-- CONTEÚDO PRINCIPAL -->
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
 
 </div>

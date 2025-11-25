@@ -30,25 +30,41 @@ export class ListaDeUsuariosComponent implements OnInit {
 
   exibirCadastro = false;
 
+  // 🔥 variáveis da paginação
+  page = 1;
+  pageSize = 10;
+  total = 0;
+  totalPages = 1;
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.buscarUsuarios();
   }
 
-  buscarUsuarios() {
-    this.http.get<Usuario[]>('https://localhost:7110/api/users')
-      .subscribe({
-        next: (res) => {
-          this.usuarios = res;
-          this.carregando = false;
-        },
-        error: () => {
-          this.erro = true;
-          this.carregando = false;
-        }
-      });
-  }
+ buscarUsuarios(page: number = 1) {
+  this.carregando = true;
+  this.erro = false;
+
+  this.http.get<any>(`https://localhost:7110/api/users?page=${page}&pageSize=${this.pageSize}`)
+    .subscribe({
+      next: (res) => {
+        this.usuarios = res.data;
+
+        this.page = res.page;
+        this.pageSize = res.pageSize;
+        this.total = res.total;
+        this.totalPages = Math.ceil(this.total / this.pageSize);
+
+        this.carregando = false;
+      },
+      error: () => {
+        this.erro = true;
+        this.carregando = false;
+      }
+    });
+}
+
 
   abrirOverlay() {
     this.exibirCadastro = true;
@@ -60,7 +76,7 @@ export class ListaDeUsuariosComponent implements OnInit {
 
   aoSalvarUsuario() {
     this.exibirCadastro = false;
-    this.buscarUsuarios();
+    this.buscarUsuarios(this.page); // recarrega página atual
   }
 
   editar(usuario: Usuario) {

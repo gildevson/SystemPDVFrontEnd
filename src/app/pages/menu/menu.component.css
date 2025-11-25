@@ -1,5 +1,5 @@
 /* ============================
-   LAYOUT BASE
+   BASE DO LAYOUT
 ============================ */
 .layout {
   display: flex;
@@ -7,18 +7,24 @@
   width: 100%;
   background: #eef1f6;
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 /* ============================
    SIDEBAR
 ============================ */
 .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 240px;
   background: #171336;
+  padding: 25px;
   color: #fff;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  z-index: 100;
 }
 
 /* LOGO */
@@ -31,23 +37,15 @@
   margin-bottom: 40px;
 }
 
-.logo-icon {
-  font-size: 22px;
-}
-
-/* ============================
-   MENU ITEMS
-============================ */
+/* MENU LIST */
 .menu-list {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .menu-item {
-  position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -55,11 +53,16 @@
   border-radius: 8px;
   cursor: pointer;
   color: #c9d1d9;
-  transition: 0.25s ease;
+  transition: 0.25s;
   font-size: 15px;
+  position: relative;
 }
 
-/* Indicador lateral */
+.menu-icon {
+  font-size: 22px;
+}
+
+/* Indicador Lateral */
 .menu-item::before {
   content: "";
   position: absolute;
@@ -73,24 +76,27 @@
   transition: 0.3s;
 }
 
-.menu-item:hover::before {
-  height: 80%;
-}
-
 .menu-item:hover {
   background: #1f1a42;
   color: #fff;
 }
 
-.menu-icon {
-  font-size: 22px;
+.menu-item:hover::before {
+  height: 80%;
 }
 
-/* ============================
-   BOTÃO DE SAIR
-============================ */
+.active-item {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-weight: 600;
+}
+
+.active-item::before {
+  height: 80%;
+}
+
+/* BOTÃO SAIR */
 .logout-btn {
-  margin-top: 30px;
   width: 100%;
   padding: 12px;
   border: none;
@@ -101,6 +107,10 @@
   color: #fff;
   cursor: pointer;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .logout-btn:hover {
@@ -108,19 +118,11 @@
 }
 
 /* ============================
-   CONTEÚDO PRINCIPAL
+   ÁREA PRINCIPAL
 ============================ */
 .main-content {
   flex: 1;
-  padding: 15px 15px;
-}
-
-.menu-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1d1f33;
-}
-
-.accent {
-  color: #3769ff;
+  padding: 20px;
+  margin-left: 260px; /* Sidebar fixa */
+  transition: margin-left 0.3s ease;
 }

@@ -1,11 +1,11 @@
 html, body {
   margin: 0 !important;
   padding: 0 !important;
-  height: 100%;
-  
   width: 100%;
-  
+  height: auto;      /* ← ESSENCIAL */
+  min-height: 100vh; /* ← altura mínima correta */
 }
+
 
 /* FONTES LOCAIS (CORRETO PARA DESKTOP) */
 @font-face {
