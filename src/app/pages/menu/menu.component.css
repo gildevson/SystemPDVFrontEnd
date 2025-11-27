@@ -1,43 +1,112 @@
 /* ============================
-   BASE DO LAYOUT
+   BOTÃO HAMBÚRGUER
 ============================ */
-.layout {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  background: #eef1f6;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+.hamburger-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 200;
+  background: #171336;
+  color: #fff;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: none; /* aparece apenas no mobile */
 }
+
+.hamburger-btn .material-icons {
+  font-size: 28px;
+}
+
+
+/* ============================
+   OVERLAY (FUNDO ESCURO)
+============================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  z-index: 150;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 
 /* ============================
    SIDEBAR
 ============================ */
 .sidebar {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   bottom: 0;
   width: 240px;
-  background: #171336;
   padding: 25px;
+  background: #171336;
   color: #fff;
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 180;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
 }
 
-/* LOGO */
-.logo {
-  font-size: 22px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
+/* MOBILE: sidebar fechada */
+.sidebar.open {
+  transform: translateX(0);
 }
 
-/* MENU LIST */
+/* ============================
+   DESKTOP
+============================ */
+@media (min-width: 900px) {
+  .hamburger-btn {
+    display: none;
+  }
+
+  .sidebar {
+    transform: translateX(0) !important; /* sempre visível */
+  }
+
+  .main-content {
+    margin-left: 260px;
+  }
+}
+
+/* ============================
+   MOBILE
+============================ */
+@media (max-width: 899px) {
+  .hamburger-btn {
+    display: block; /* mostra botão */
+  }
+
+  .sidebar {
+    transform: translateX(-105%); /* escondido */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* visível */
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 20px;
+  }
+}
+
+
+/* ============================
+   MENU ITEM (SEU PADRÃO)
+============================ */
 .menu-list {
   flex: 1;
   display: flex;
@@ -54,35 +123,12 @@
   cursor: pointer;
   color: #c9d1d9;
   transition: 0.25s;
-  font-size: 15px;
   position: relative;
-}
-
-.menu-icon {
-  font-size: 22px;
-}
-
-/* Indicador Lateral */
-.menu-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 0%;
-  width: 4px;
-  background: #4a55ff;
-  border-radius: 12px;
-  transition: 0.3s;
 }
 
 .menu-item:hover {
   background: #1f1a42;
   color: #fff;
-}
-
-.menu-item:hover::before {
-  height: 80%;
 }
 
 .active-item {
@@ -91,38 +137,88 @@
   font-weight: 600;
 }
 
+/* Indicador lateral */
+.menu-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: 0%;
+  background: #4a55ff;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.menu-item:hover::before,
 .active-item::before {
   height: 80%;
 }
 
-/* BOTÃO SAIR */
+
+/* ============================
+   BOTÃO SAIR
+============================ */
 .logout-btn {
-  width: 100%;
+  margin-top: auto;
   padding: 12px;
+  background: #ff4d4d;
   border: none;
   border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  background: #ff4d4d;
-  color: #fff;
   cursor: pointer;
-  transition: 0.2s;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
+  transition: 0.25s;
 }
 
 .logout-btn:hover {
   background: #e63a3a;
 }
 
+
 /* ============================
-   ÁREA PRINCIPAL
+   MAIN
 ============================ */
 .main-content {
-  flex: 1;
+  width: 100%;
+  transition: 0.3s;
   padding: 20px;
-  margin-left: 260px; /* Sidebar fixa */
-  transition: margin-left 0.3s ease;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+
+.layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px 30px;
+  overflow-x: hidden;
 }

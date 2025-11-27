@@ -20,7 +20,7 @@
 }
 
 /* ================================
-   MODAL CONTAINER (cartão principal)
+   MODAL CONTAINER
 ================================ */
 .container {
   width: 480px;
@@ -28,13 +28,13 @@
   background: #ffffff;
   border-radius: 22px;
 
-  /* sombra premium */
   box-shadow:
     0 25px 55px rgba(0,0,0,0.22),
     0 8px 18px rgba(0,0,0,0.08);
 
   animation: modalEnter 0.28s cubic-bezier(0.23, 1, 0.32, 1);
   font-family: 'Inter', sans-serif;
+  position: relative;
 }
 
 @keyframes modalEnter {
@@ -56,14 +56,28 @@ h2 {
 /* ================================
    INPUTS
 ================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
 input {
-  width: 100%;
+  width: 91%;
   padding: 14px;
   border-radius: 12px;
   border: 1px solid #d7d7dd;
   background: #fafafa;
-  margin-bottom: 18px;
   font-size: 15px;
+  margin-top: 10px;
+
   transition: 0.25s ease;
 }
 
@@ -101,19 +115,8 @@ input:focus {
 }
 
 /* ================================
-   MENSAGENS
+   FECHAR
 ================================ */
-.erro, .sucesso {
-  margin-top: 18px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.erro { color: #ff3b3b; }
-.sucesso { color: #10b76f; }
-
-
 .btn-close {
   position: absolute;
   top: 12px;
@@ -140,4 +143,77 @@ input:focus {
 .btn-close:hover {
   background: #e2e2ee;
   transform: scale(1.1);
+}
+
+/* ================================
+   MENSAGENS
+================================ */
+.erro, .sucesso {
+  margin-top: 18px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.erro { color: #ff3b3b; }
+.sucesso { color: #10b76f; }
+
+/* ============================================================
+   🚀 RESPONSIVIDADE PROFISSIONAL (smartphones)
+============================================================ */
+@media (max-width: 600px) {
+
+  .container {
+    width: 92%;               /* 🔥 ajusta ao mobile */
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  .btn-close {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+/* ============================================================
+   MINI MOBILE (iPhone SE, Galaxy Mini)
+============================================================ */
+@media (max-width: 380px) {
+
+  .container {
+    width: 94%;
+    padding: 24px 18px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 12px;
+  }
 }

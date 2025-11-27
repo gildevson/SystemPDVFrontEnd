@@ -49,7 +49,7 @@
   <!-- ===== PAGINAÇÃO ===== -->
   <div class="paginacao" *ngIf="totalPages > 1">
 
-    <button 
+    <button
       class="btn-pag"
       [disabled]="page === 1"
       (click)="buscarUsuarios(page - 1)">
@@ -57,16 +57,16 @@
     </button>
 
     <div class="numeros">
-      <button 
+      <button
         *ngFor="let p of [].constructor(totalPages); let i = index"
-        class="num" 
+        class="num"
         [class.ativo]="page === (i + 1)"
         (click)="buscarUsuarios(i + 1)">
         {{ i + 1 }}
       </button>
     </div>
 
-    <button 
+    <button
       class="btn-pag"
       [disabled]="page === totalPages"
       (click)="buscarUsuarios(page + 1)">

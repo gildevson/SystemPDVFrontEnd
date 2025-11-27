@@ -1,19 +1,30 @@
+<!-- BOTÃO HAMBÚRGUER -->
+<button class="hamburger-btn" (click)="toggleSidebar()">
+  <span *ngIf="!isSidebarOpen" class="material-icons">menu</span>
+  <span *ngIf="isSidebarOpen" class="material-icons">close</span>
+</button>
+
+<!-- OVERLAY ESCURECIDO NO MOBILE -->
+<div class="overlay" [class.visible]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
 <div class="layout">
 
-  <!-- MENU LATERAL -->
-  <aside class="sidebar">
-    <h2 class="logo">
-      <span class="logo-icon">☰</span> ERP
-    </h2>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" [class.open]="isSidebarOpen">
+
+    <!-- LOGO CORRETA -->
+    <div class="logo">
+      <img src="../../../assets/logo.png" class="logo-img" />
+      <span>MySystem</span>
+    </div>
 
     <nav class="menu-list">
       <div
-        class="menu-item"
         *ngFor="let item of menuItems"
-        [routerLink]="['/menu', item.rota]"
+        class="menu-item"
         routerLinkActive="active-item"
-        [routerLinkActiveOptions]="{ exact: false }">
-
+        (click)="navegar(item.rota)"
+      >
         <span class="material-icons menu-icon">{{ item.icone }}</span>
         <span class="menu-text">{{ item.nome }}</span>
       </div>
@@ -23,6 +34,7 @@
       <span class="material-icons">logout</span>
       Sair
     </button>
+
   </aside>
 
   <!-- CONTEÚDO PRINCIPAL -->
