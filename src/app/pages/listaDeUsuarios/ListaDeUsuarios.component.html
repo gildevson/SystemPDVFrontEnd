@@ -1,7 +1,8 @@
 <!-- ===== OVERLAY DO MODAL ===== -->
+<!-- ===== OVERLAY DO MODAL ===== -->
 <div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
 
-  <div class="modal-wrapper" (click)="$event.stopPropagation()">
+  <div class="container" (click)="$event.stopPropagation()">
     <app-novo-usuario
       (salvou)="aoSalvarUsuario()"
       (fechar)="fecharOverlay()">
@@ -9,6 +10,7 @@
   </div>
 
 </div>
+
 
 <!-- ===== CONTEÚDO PRINCIPAL ===== -->
 <div class="content-card">
@@ -33,17 +35,17 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let u of usuarios">
-        <td>{{ u.nome }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
+  <tr *ngFor="let u of usuarios">
+    <td data-label="Nome">{{ u.nome }}</td>
+    <td data-label="Email">{{ u.email }}</td>
+    <td data-label="Data de Criação">{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
 
-        <td class="acoes">
-          <span class="acao editar material-icons" (click)="editar(u)">edit</span>
-          <span class="acao deletar material-icons" (click)="deletar(u)">delete</span>
-        </td>
-      </tr>
-    </tbody>
+    <td data-label="Ações" class="acoes">
+      <span class="acao editar material-icons" (click)="editar(u)">edit</span>
+      <span class="acao deletar material-icons" (click)="deletar(u)">delete</span>
+    </td>
+  </tr>
+</tbody>
   </table>
 
   <!-- ===== PAGINAÇÃO ===== -->

@@ -1,177 +1,174 @@
-/* ================================
-   OVERLAY (desfoque premium)
-================================ */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  animation: fadeOverlay 0.25s ease-out forwards;
-}
 
-@keyframes fadeOverlay {
+
+@keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-/* ================================
-   MODAL CONTAINER
-================================ */
+
+/* =========================================================
+   MODAL CARD — Caixa central do formulário
+========================================================= */
 .container {
   width: 480px;
-  padding: 40px 35px;
+  max-width: 95%;
   background: #ffffff;
-  border-radius: 22px;
+  padding: 40px 35px;
+  border-radius: 20px;
 
   box-shadow:
-    0 25px 55px rgba(0,0,0,0.22),
+    0 22px 48px rgba(0,0,0,0.20),
     0 8px 18px rgba(0,0,0,0.08);
 
-  animation: modalEnter 0.28s cubic-bezier(0.23, 1, 0.32, 1);
-  font-family: 'Inter', sans-serif;
+  animation: zoom 0.28s cubic-bezier(.23,1,.32,1);
   position: relative;
+  font-family: "Inter", sans-serif;
+
+  /* impede que sobreponha a sidebar */
+  z-index: 10000 !important;
 }
 
-@keyframes modalEnter {
-  0%   { transform: scale(0.92) translateY(40px); opacity: 0; }
-  100% { transform: scale(1) translateY(0);       opacity: 1; }
+@keyframes zoom {
+  0% { transform: scale(0.90) translateY(25px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* ================================
+
+/* =========================================================
    TÍTULO
-================================ */
+========================================================= */
 h2 {
   text-align: center;
-  margin-bottom: 28px;
+  font-size: 26px;
   font-weight: 800;
-  font-size: 27px;
-  color: #121212;
+  color: #1e1e2f;
+  margin-bottom: 26px;
 }
 
-/* ================================
-   INPUTS
-================================ */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-}
 
+/* =========================================================
+   LABELS / INPUTS
+========================================================= */
 label {
   font-size: 14px;
   font-weight: 600;
+  color: #33344e;
   margin-bottom: 5px;
-  color: #333;
+  display: block;
 }
 
 input {
   width: 91%;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid #d7d7dd;
+  border: 1px solid #d4d4dd;
   background: #fafafa;
+  margin-bottom: 18px;
   font-size: 15px;
-  margin-top: 10px;
-
-  transition: 0.25s ease;
+  transition: 0.2s ease;
 }
 
 input:hover {
-  border-color: #b9b9c9;
+  border-color: #b7b7c8;
 }
 
 input:focus {
   border-color: #4a55ff;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(74, 85, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(74,85,255,0.25);
   outline: none;
 }
 
-/* ================================
-   BOTÃO
-================================ */
+
+/* =========================================================
+   BOTÃO SALVAR
+========================================================= */
 .btn {
   width: 100%;
-  padding: 15px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(90deg, #4a55ff, #7b82ff);
+  padding: 14px;
+  background: linear-gradient(90deg, #4a55ff, #6d76ff);
   color: #fff;
-  font-size: 17px;
   font-weight: 700;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.25s ease;
+  margin-top: 10px;
 }
 
 .btn:hover {
-  background: linear-gradient(90deg, #4048e4, #6d74ff);
+  background: linear-gradient(90deg, #424cd8, #626dff);
   transform: translateY(-2px);
 }
 
-/* ================================
-   FECHAR
-================================ */
+
+/* =========================================================
+   BOTÃO FECHAR (X)
+========================================================= */
 .btn-close {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 36px;
-  height: 36px;
 
-  background: #f1f1f5;
+  width: 34px;
+  height: 34px;
+
   border: none;
+  background: #f0f0f5;
   border-radius: 50%;
 
-  font-size: 18px;
-  font-weight: bold;
-  color: #555;
-  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  color: #4a4a5c;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
-  transition: 0.25s ease;
+  transition: 0.22s ease;
 }
 
 .btn-close:hover {
-  background: #e2e2ee;
-  transform: scale(1.1);
+  background: #e1e1eb;
+  transform: scale(1.12);
 }
 
-/* ================================
+
+/* =========================================================
    MENSAGENS
-================================ */
+========================================================= */
 .erro, .sucesso {
-  margin-top: 18px;
   text-align: center;
+  margin-top: 14px;
   font-weight: 600;
   font-size: 15px;
 }
 
-.erro { color: #ff3b3b; }
-.sucesso { color: #10b76f; }
+.erro {
+  color: #e64545;
+}
 
-/* ============================================================
-   🚀 RESPONSIVIDADE PROFISSIONAL (smartphones)
-============================================================ */
-@media (max-width: 600px) {
+.sucesso {
+  color: #18b876;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE — Mobile moderno
+========================================================= */
+@media (max-width: 520px) {
 
   .container {
-    width: 92%;               /* 🔥 ajusta ao mobile */
-    padding: 28px 22px;
+    width: 100%;
+    padding: 26px 20px;
     border-radius: 18px;
   }
 
   h2 {
     font-size: 22px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   input {
@@ -180,40 +177,14 @@ input:focus {
   }
 
   .btn {
-    padding: 13px;
+    padding: 12px;
     font-size: 15px;
   }
 
+
   .btn-close {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    top: 10px;
-    right: 10px;
-  }
-}
-
-/* ============================================================
-   MINI MOBILE (iPhone SE, Galaxy Mini)
-============================================================ */
-@media (max-width: 380px) {
-
-  .container {
-    width: 94%;
-    padding: 24px 18px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  input {
+    width: 26px;
+    height: 26px;
     font-size: 13px;
-    padding: 10px;
-  }
-
-  .btn {
-    font-size: 14px;
-    padding: 12px;
   }
 }
