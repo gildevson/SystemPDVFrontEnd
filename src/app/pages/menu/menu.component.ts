@@ -36,4 +36,11 @@ export class MenuComponent {
     localStorage.removeItem('token');
     this.router.navigate(['/']);
   }
+
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+  this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
 }
