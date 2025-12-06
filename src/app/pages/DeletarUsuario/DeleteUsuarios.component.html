@@ -1,0 +1,29 @@
+<div class="delete-wrapper" *ngIf="!carregando">
+
+  <div class="delete-card">
+    <h2>Excluir Usuário</h2>
+
+    <p><strong>ID:</strong> {{ userId }}</p>
+    <p><strong>Nome:</strong> {{ nomeUsuario }}</p>
+
+    <label>Digite o nome para confirmar:</label>
+    <input
+      [(ngModel)]="confirmacaoNome"
+      placeholder="Digite exatamente como está"
+      type="text"
+    />
+
+    <div class="btns">
+      <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+
+      <button
+        class="btn-excluir"
+        [disabled]="confirmacaoNome !== nomeUsuario"
+        (click)="confirmarExclusao()">
+        Confirmar Exclusão
+      </button>
+    </div>
+
+  </div>
+
+</div>
