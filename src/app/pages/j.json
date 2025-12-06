@@ -1,0 +1,152 @@
+{Nome: "Contas a Receber Aberto", Arquivo: "ContasAReceberAberto.ContasAReceberAberto", Tipo: 2,…
+}
+Arquivo
+: "ContasAReceberAberto.ContasAReceberAberto"
+Assina
+: false
+CreationTime
+: "2022-11-17T17:46:00Z"
+CreatorUserId
+: "7b9c9399-8427-40a5-ad95-b141abc5f60e"
+CrystalReports
+: true
+ExibeCadastro
+: false
+ExibeCaixaBanco
+: false
+ExibeCliente
+: false
+ExibeComissaoComercial
+: false
+ExibeContrato
+: false
+ExibeDebenture
+: false
+ExibeDesconto
+: false
+ExibeEnviarCliente
+: false
+ExibeEnviarSacado
+: false
+ExibeListaPadraoAssinaturaOperacao
+: false
+ExibeManutencaoDocumento
+: false
+ExibeManutencaoDocumentoMobile
+: false
+ExibeNaRemessa
+: false
+ExibeNoCorpoEmail
+: false
+ExibeOperacao
+: false
+ExibeOperacaoDetalheMobile
+: false
+ExibeOperacaoDocumentoMobile
+: false
+ExibeRelatorio
+: true
+ExibeRelatorioMobile
+: true
+ExibeResgateDebenture
+: false
+Filtros
+: "FFFFFVFFFFFFFFFFFFFFFFFVFFFFFFFFFFVVFFFFFFFFVVVFFFFFFFVF"
+FiltrosMobile
+: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+Id
+: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d"
+IsAnexo
+: false
+IsDeleted
+: false
+LastModificationTime
+: "2025-09-18T19:47:00Z"
+LastModifierUserId
+: "cd4b19eb-29ff-4d7c-ba64-62be06808edf"
+Nome
+: "Contas a Receber Aberto"
+Obrigatorios
+: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+ObrigatoriosMobile
+: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+OrdemPreferencia
+: false
+OrdemPreferenciaMobile
+: false
+QFrom
+: "from ViewContasAReceberaberto"
+QSelect
+: "Select *"
+QWhere
+: "empresaId=@empresaId and Status = 0"
+RelatoriosModalidadeIds
+: []
+RelatoriosModalidades
+: []
+RelatoriosRoles
+: [
+    ,…
+]
+0
+: {RoleId: "dc249daa-e6b2-4baf-ab1b-ba545fa8ce87", RelatoriosId: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d",…
+}
+CreationTime
+: "2025-09-18T19:47:00Z"
+CreatorUserId
+: "cd4b19eb-29ff-4d7c-ba64-62be06808edf"
+Id
+: "30502ec5-a330-4453-bfe2-7b6ce2d33f10"
+IsDeleted
+: false
+RelatoriosId
+: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d"
+RoleId
+: "dc249daa-e6b2-4baf-ab1b-ba545fa8ce87"
+TimeStamp
+: "AAAAAAJEbSI="1
+: {RoleId: "6aff558b-d0e6-455f-8b89-a554e805f95a", RelatoriosId: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d",…
+}
+CreationTime
+: "2025-09-18T19:47:00Z"
+CreatorUserId
+: "cd4b19eb-29ff-4d7c-ba64-62be06808edf"
+Id
+: "bb3447ca-e761-4ced-aaa5-b7540e4a9757"
+IsDeleted
+: false
+RelatoriosId
+: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d"
+RoleId
+: "6aff558b-d0e6-455f-8b89-a554e805f95a"
+TimeStamp
+: "AAAAAAJEbSE="2
+: {RoleId: "12339b5b-6cdc-4dd2-851e-2a1f84423c4d", RelatoriosId: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d",…
+}
+CreationTime
+: "2025-09-18T19:47:00Z"
+CreatorUserId
+: "cd4b19eb-29ff-4d7c-ba64-62be06808edf"
+Id
+: "1df795e2-e35a-4bb3-9f77-fbaa021550b5"
+IsDeleted
+: false
+RelatoriosId
+: "afcadcd7-cfd1-4fa1-87b5-f97e4cea3a4d"
+RoleId
+: "12339b5b-6cdc-4dd2-851e-2a1f84423c4d"
+TimeStamp
+: "AAAAAAJEbSM="
+RelatoriosRolesIds
+: [
+    "dc249daa-e6b2-4baf-ab1b-ba545fa8ce87",
+    "6aff558b-d0e6-455f-8b89-a554e805f95a",…
+]
+TimeStamp
+: "AAAAAAJEbSA="
+Tipo
+: 2
+TipoAssinatura
+: 0
+TipoExclusivo
+: 0
