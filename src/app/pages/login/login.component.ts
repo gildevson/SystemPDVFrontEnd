@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { LoadingService } from '../../shared/loading.service'; // ✅ IMPORTANTE
+import { LoadingService } from '../../shared/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +13,7 @@ import { LoadingService } from '../../shared/loading.service'; // ✅ IMPORTANTE
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   email: string = '';
   senha: string = '';
   loginMessage: string = '';
@@ -20,8 +21,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private loadingService: LoadingService // ✅ INJETADO
-  ) {}
+    private loadingService: LoadingService
+  ) { }
 
   fazerLogin() {
 
@@ -30,23 +31,26 @@ export class LoginComponent {
       return;
     }
 
-    // 🔵 Mostra loading
     this.loadingService.show();
 
     this.authService.login(this.email, this.senha).subscribe({
       next: (res) => {
-        this.loginMessage = res.mensagem;
-        localStorage.setItem('token', res.token);
+
+        // 💾 SALVAR DADOS DO USUÁRIO
+        localStorage.setItem('nome', res.usuario.nome);
+        localStorage.setItem('email', res.usuario.email);
+        localStorage.setItem('id', res.usuario.id);
+
+        this.loginMessage = 'Login realizado com sucesso!';
 
         setTimeout(() => {
-          // 🔵 Esconde loading depois de 1 segundos (fica mais bonito)
           this.loadingService.hide();
           this.router.navigate(['/menu']);
         }, 1000);
       },
 
       error: () => {
-        this.loadingService.hide(); // 🔴 Remove loading mesmo com erro
+        this.loadingService.hide();
         this.loginMessage = 'Usuário ou senha incorretos.';
       }
     });

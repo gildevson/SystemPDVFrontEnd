@@ -12,13 +12,21 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" [class.open]="isSidebarOpen">
 
-    <!-- LOGO CORRETA -->
+    <!-- LOGO -->
     <div class="logo">
       <img src="../../../assets/logo.png" class="logo-img" />
       <span>RME TECH</span>
     </div>
 
+    <!-- 👇 AQUI — BLOCO DO USUÁRIO -->
+    <div class="user-info">
+      <span class="material-icons user-icon">account_circle</span>
+      <span class="user-name">{{ nomeUsuario }}</span>
+    </div>
+
     <nav class="menu-list">
+
+      <!-- ITENS DO MENU -->
       <div
         *ngFor="let item of menuItems"
         class="menu-item"
@@ -28,6 +36,7 @@
         <span class="material-icons menu-icon">{{ item.icone }}</span>
         <span class="menu-text">{{ item.nome }}</span>
       </div>
+
     </nav>
 
     <button class="logout-btn" (click)="logout()">
@@ -37,7 +46,6 @@
 
   </aside>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
