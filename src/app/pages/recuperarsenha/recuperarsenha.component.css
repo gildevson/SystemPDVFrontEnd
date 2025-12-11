@@ -1,0 +1,79 @@
+.reset-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #dce4ff);
+  padding: 20px;
+}
+
+.reset-card {
+  background: #fff;
+  padding: 35px 40px;
+  width: 380px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.reset-card h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #2b2b2b;
+}
+
+.descricao {
+  font-size: 14px;
+  color: #6a6a6a;
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #c9c9c9;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #4a52ff;
+  box-shadow: 0 0 4px rgba(74, 82, 255, 0.4);
+}
+
+.btn-reset {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #4a52ff, #6670ff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(74, 82, 255, 0.35);
+}
+
+.voltar {
+  display: block;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #4a52ff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.voltar:hover {
+  color: #222;
+  text-decoration: underline;
+}

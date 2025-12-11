@@ -45,4 +45,43 @@ export class AuthService {
       });
     });
   }
+
+  // ==============================
+// 🔥 SOLICITAR RESET DE SENHA
+// ==============================
+solicitarResetSenha(email: string): Observable<any> {
+  return new Observable(observer => {
+    this.backendUrl$.subscribe(url => {
+      const fullUrl = `${url}/auth/reset/solicitar`;
+      console.log("Chamando solicitar reset em:", fullUrl);
+
+      this.http.post(fullUrl, { email })
+        .subscribe({
+          next: res => observer.next(res),
+          error: err => observer.error(err)
+        });
+    });
+  });
+}
+
+// ==============================
+// 🔥 REDEFINIR SENHA
+// ==============================
+redefinirSenha(dto: { token: string; novaSenha: string }): Observable<any> {
+  return new Observable(observer => {
+    this.backendUrl$.subscribe(url => {
+      const fullUrl = `${url}/auth/reset/resetar`;
+
+      console.log("Chamando redefinir senha:", fullUrl);
+
+      this.http.post(fullUrl, dto)
+        .subscribe({
+          next: res => observer.next(res),
+          error: err => observer.error(err)
+        });
+    });
+  });
+}
+
+
 }
