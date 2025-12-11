@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { LoadingService } from './shared/loading.service';
+import { ToastComponent } from './components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    LoadingComponent
+    LoadingComponent,
+    ToastComponent
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class AppComponent {
 
@@ -20,19 +22,15 @@ export class AppComponent {
     private loadingService: LoadingService
   ) {
     this.router.events.subscribe(event => {
-
-      // Quando começar a navegar → mostra loader
       if (event instanceof NavigationStart) {
         this.loadingService.show();
       }
 
-      // Quando terminar → esconde loader
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
           this.loadingService.hide();
-        }, 300); // atraso para animação suave
+        }, 300);
       }
-
     });
   }
 }

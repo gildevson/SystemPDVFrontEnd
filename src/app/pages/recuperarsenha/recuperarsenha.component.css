@@ -1,79 +1,127 @@
+/* recuperarsenha.component.css */
+
 .reset-wrapper {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #eef2ff, #dce4ff);
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .reset-card {
-  background: #fff;
-  padding: 35px 40px;
-  width: 380px;
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 48px 40px;
+  max-width: 440px;
+  width: 100%;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .reset-card h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
+  margin: 0 0 12px 0;
+  font-size: 28px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: #1a202c;
+  text-align: center;
 }
 
 .descricao {
-  font-size: 14px;
-  color: #6a6a6a;
-  margin-bottom: 25px;
+  margin: 0 0 32px 0;
+  color: #718096;
+  font-size: 15px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.input-group {
+  margin-bottom: 24px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #c9c9c9;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
   font-size: 15px;
-  outline: none;
-  transition: 0.2s;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
 }
 
 .input-group input:focus {
-  border-color: #4a52ff;
-  box-shadow: 0 0 4px rgba(74, 82, 255, 0.4);
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-group input::placeholder {
+  color: #a0aec0;
 }
 
 .btn-reset {
   width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: linear-gradient(90deg, #4a52ff, #6670ff);
-  border: none;
-  border-radius: 8px;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-reset:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(74, 82, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-reset:active {
+  transform: translateY(0);
 }
 
 .voltar {
   display: block;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #4a52ff;
-  cursor: pointer;
+  text-align: center;
+  margin-top: 24px;
+  color: #667eea;
   text-decoration: none;
-  transition: 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .voltar:hover {
-  color: #222;
+  color: #764ba2;
   text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .reset-card {
+    padding: 36px 28px;
+  }
+
+  .reset-card h2 {
+    font-size: 24px;
+  }
+
+  .descricao {
+    font-size: 14px;
+  }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,23 +11,35 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './redefinirsenha.component.html',
   styleUrls: ['./redefinirsenha.component.css']
 })
-
 export class RedefinirsenhaComponent {
-
   token = '';
   senha = '';
   confirmar = '';
 
-  constructor(private route: ActivatedRoute, private auth: AuthService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService,
+    private toast: ToastService
+  ) {
     this.route.queryParams.subscribe(p => {
       this.token = p['token'];
     });
   }
 
   redefinir() {
+    if (!this.senha || !this.confirmar) {
+      this.toast.warning('Preencha todos os campos.');
+      return;
+    }
 
     if (this.senha !== this.confirmar) {
-      alert("As senhas não coincidem!");
+      this.toast.error('As senhas não coincidem!');
+      return;
+    }
+
+    if (this.senha.length < 6) {
+      this.toast.warning('A senha deve ter no mínimo 6 caracteres.');
       return;
     }
 
@@ -34,8 +47,15 @@ export class RedefinirsenhaComponent {
       token: this.token,
       novaSenha: this.senha
     }).subscribe({
-      next: () => alert("Senha redefinida com sucesso!"),
-      error: err => alert(err.error?.mensagem || "Erro ao redefinir senha.")
+      next: () => {
+        this.toast.success('Senha redefinida com sucesso!');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      },
+      error: err => {
+        this.toast.error(err.error?.mensagem || 'Erro ao redefinir senha.');
+      }
     });
   }
 }
