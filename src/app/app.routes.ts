@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { AuthGuard } from './guards/auth.guard';
-
 import { OperacaoComponent } from './pages/operacao/operacao.component';
 import { DeleteUsuariosComponent } from './pages/DeletarUsuario/DeleteUsuarios.component';
 import { ListaDeUsuariosComponent } from './pages/listaDeUsuarios/listaDeUsuarios.component';

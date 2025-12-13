@@ -1,28 +1,28 @@
-import { ListaDeUsuariosComponent } from './listaDeUsuarios.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CadastrarnovoUsuarioComponent } from '../CadastrarnovoUsuario/CadastrarnovoUsuario.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { LoadingService } from '../../shared/loading.service'; // ⭐ SE USAR O SERVICE
 
-describe('ListaDeUsuariosComponent', () => {
+describe('CadastrarnovoUsuarioComponent', () => {
+  let component: CadastrarnovoUsuarioComponent;
+  let fixture: ComponentFixture<CadastrarnovoUsuarioComponent>;
 
-  let http: HttpClient;
-  let routerSpy: any;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        CadastrarnovoUsuarioComponent
+      ],
       providers: [
-        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
+        LoadingService // ⭐ SE O COMPONENTE USAR
       ]
-    });
+    }).compileComponents();
 
-    http = TestBed.inject(HttpClient);
-    routerSpy = TestBed.inject(Router);
+    fixture = TestBed.createComponent(CadastrarnovoUsuarioComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create component', () => {
-    const component = new ListaDeUsuariosComponent(http, routerSpy);
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

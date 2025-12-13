@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // ⭐ IMPORTANTE para ngModel
+import { FormsModule } from '@angular/forms';
+import { LoadingService } from '../../shared/loading.service';
 
 import { CadastrarnovoUsuarioComponent } from '../CadastrarnovoUsuario/CadastrarnovoUsuario.component';
 
@@ -18,15 +19,15 @@ interface Usuario {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule, // ⭐ NECESSÁRIO PARA ngModel
+    FormsModule,
     CadastrarnovoUsuarioComponent
   ],
   templateUrl: './ListaDeUsuarios.component.html',
   styleUrls: ['./ListaDeUsuarios.component.css']
-})export class ListaDeUsuariosComponent implements OnInit {
+})
+export class ListaDeUsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
-  carregando = true;
   erro = false;
 
   exibirCadastro = false;
@@ -36,14 +37,23 @@ interface Usuario {
   total = 0;
   totalPages = 1;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.buscarUsuarios();
   }
 
   buscarUsuarios(page: number = 1) {
-    this.carregando = true;
+    // ⭐ ATIVA O LOADING
+    this.loadingService.show();
+    this.erro = false;
+
+    // ⭐ MARCA O TEMPO DE INÍCIO
+    const startTime = Date.now();
 
     this.http.get<any>(`https://localhost:7110/api/users?page=${page}&pageSize=${this.pageSize}`)
       .subscribe({
@@ -53,11 +63,29 @@ interface Usuario {
           this.pageSize = res.pageSize;
           this.total = res.total;
           this.totalPages = Math.ceil(this.total / this.pageSize);
-          this.carregando = false;
+
+          // ⭐ CALCULA QUANTO TEMPO PASSOU
+          const elapsedTime = Date.now() - startTime;
+          // ⭐ GARANTE UM MÍNIMO DE 500ms DE LOADING
+          const minLoadingTime = 500;
+          const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
+          // ⭐ ESPERA O TEMPO RESTANTE ANTES DE ESCONDER
+          setTimeout(() => {
+            this.loadingService.hide();
+          }, remainingTime);
         },
         error: () => {
           this.erro = true;
-          this.carregando = false;
+
+          // ⭐ MESMO NO ERRO, MANTÉM O DELAY
+          const elapsedTime = Date.now() - startTime;
+          const minLoadingTime = 500;
+          const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
+          setTimeout(() => {
+            this.loadingService.hide();
+          }, remainingTime);
         }
       });
   }
@@ -80,7 +108,6 @@ interface Usuario {
   }
 
   deletar(usuario: Usuario) {
-  this.router.navigate(['/menu/deletar-usuario', usuario.id]);
-}
-
+    this.router.navigate(['/menu/deletar-usuario', usuario.id]);
+  }
 }
