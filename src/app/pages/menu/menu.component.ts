@@ -35,14 +35,37 @@ export class MenuComponent {
   }
 
   navegar(rota: string) {
-    this.router.navigate(['/menu', rota]);
+    // Mostra o loading
+    this.loadingService.show();
+
+    // Navega para a rota
+    this.router.navigate(['/menu', rota]).then(() => {
+      // Esconde o loading após a navegação
+      // Pequeno delay para garantir que o componente carregou
+      setTimeout(() => {
+        this.loadingService.hide();
+      }, 500);
+    });
+
+    // Fecha a sidebar no mobile
+    this.isSidebarOpen = false;
   }
 
   logout() {
+    // Mostra loading ao fazer logout
+    this.loadingService.show();
+
+    // Remove dados do localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('nome');
     localStorage.removeItem('email');
-    this.router.navigate(['/']);
+
+    // Navega para login e esconde o loading
+    this.router.navigate(['/']).then(() => {
+      setTimeout(() => {
+        this.loadingService.hide();
+      }, 300);
+    });
   }
 
   isSidebarOpen = false;
