@@ -28,6 +28,8 @@ interface Usuario {
 export class ListaDeUsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
+  usuariosFiltrados: Usuario[] = []; // ✅ ADICIONADO
+  termoPesquisa: string = ''; // ✅ ADICIONADO
   erro = false;
 
   exibirCadastro = false;
@@ -59,6 +61,7 @@ export class ListaDeUsuariosComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.usuarios = res.data;
+          this.usuariosFiltrados = res.data; // ✅ INICIALIZA OS FILTRADOS
           this.page = res.page;
           this.pageSize = res.pageSize;
           this.total = res.total;
@@ -90,6 +93,27 @@ export class ListaDeUsuariosComponent implements OnInit {
       });
   }
 
+  // ✅ MÉTODO DE PESQUISA
+  pesquisar() {
+    const termo = this.termoPesquisa.toLowerCase().trim();
+
+    if (!termo) {
+      this.usuariosFiltrados = this.usuarios;
+      return;
+    }
+
+    this.usuariosFiltrados = this.usuarios.filter(usuario =>
+      usuario.nome.toLowerCase().includes(termo) ||
+      usuario.email.toLowerCase().includes(termo)
+    );
+  }
+
+  // ✅ MÉTODO PARA LIMPAR PESQUISA
+  limparPesquisa() {
+    this.termoPesquisa = '';
+    this.usuariosFiltrados = this.usuarios;
+  }
+
   abrirOverlay() {
     this.exibirCadastro = true;
   }
@@ -108,6 +132,8 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   deletar(usuario: Usuario) {
-    this.router.navigate(['/menu/deletar-usuario', usuario.id]);
+    if (confirm(`Tem certeza que deseja deletar o usuário ${usuario.nome}?`)) {
+      this.router.navigate(['/menu/deletar-usuario', usuario.id]);
+    }
   }
 }

@@ -20,6 +20,24 @@
     </button>
   </div>
 
+  <!-- ===== BARRA DE PESQUISA ===== -->
+  <div class="search-container">
+    <span class="material-icons search-icon">search</span>
+    <input
+      type="text"
+      class="search-input"
+      [(ngModel)]="termoPesquisa"
+      (input)="pesquisar()"
+      placeholder="Pesquisar por nome ou email...">
+    <button
+      class="btn-limpar"
+      *ngIf="termoPesquisa"
+      (click)="limparPesquisa()"
+      title="Limpar pesquisa">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
   <!-- ===== TABELA DE USUÁRIOS ===== -->
   <table class="tabela">
     <thead>
@@ -33,7 +51,7 @@
 
     <tbody>
       <!-- Lista de usuários -->
-      <tr *ngFor="let u of usuarios">
+      <tr *ngFor="let u of usuariosFiltrados">
         <td data-label="Nome">{{ u.nome }}</td>
         <td data-label="Email">{{ u.email }}</td>
         <td data-label="Data de Criação">{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
@@ -54,7 +72,7 @@
       </tr>
 
       <!-- Estado vazio -->
-      <tr *ngIf="usuarios.length === 0" class="empty-state">
+      <tr *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa" class="empty-state">
         <td colspan="4">
           <span class="material-icons" style="font-size: 48px; color: #cbd5e1; margin-bottom: 12px;">
             inbox
@@ -62,11 +80,24 @@
           <div>Nenhum usuário cadastrado</div>
         </td>
       </tr>
+
+      <!-- Nenhum resultado encontrado -->
+      <tr *ngIf="usuariosFiltrados.length === 0 && termoPesquisa" class="empty-state">
+        <td colspan="4">
+          <span class="material-icons" style="font-size: 48px; color: #cbd5e1; margin-bottom: 12px;">
+            search_off
+          </span>
+          <div>Nenhum resultado encontrado para "{{ termoPesquisa }}"</div>
+          <button class="btn-limpar-resultado" (click)="limparPesquisa()">
+            Limpar pesquisa
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 
   <!-- ===== PAGINAÇÃO ===== -->
-  <div class="paginacao" *ngIf="totalPages > 1">
+  <div class="paginacao" *ngIf="totalPages > 1 && !termoPesquisa">
     <button
       class="btn-pag"
       [disabled]="page === 1"

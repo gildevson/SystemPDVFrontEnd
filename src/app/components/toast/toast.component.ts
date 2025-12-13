@@ -7,7 +7,7 @@ import { ToastService, Toast } from '../../services/toast.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.css']   // ✅ Corrigido
+ // styleUrls: ['./toast.component.css']   // ✅ Corrigido
 })
 export class ToastComponent implements OnInit {
   toasts: (Toast & { id: number })[] = [];

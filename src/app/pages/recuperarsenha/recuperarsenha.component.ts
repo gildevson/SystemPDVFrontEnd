@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [FormsModule, RouterModule],
   templateUrl: './recuperarsenha.component.html',
-  styleUrls: ['./recuperarsenha.component.css']
+ styleUrls: ['./recuperarsenha.component.css']
 })
 export class RecuperarsenhaComponent {
   email = '';

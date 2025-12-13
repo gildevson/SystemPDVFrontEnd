@@ -2,10 +2,10 @@ html, body {
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-  height: auto;      /* ← ESSENCIAL */
-  min-height: 100vh; /* ← altura mínima correta */
+  height: auto;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
-
 
 /* FONTES LOCAIS (CORRETO PARA DESKTOP) */
 @font-face {
