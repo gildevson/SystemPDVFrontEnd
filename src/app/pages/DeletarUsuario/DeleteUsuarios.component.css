@@ -1,122 +1,771 @@
-/* CONTAINER CENTRAL */
+/* ================================
+   DELETE WRAPPER - Container Principal
+================================ */
 .delete-wrapper {
   background: #ffffff;
-  padding: 35px;
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease;
-  margin-left: 30px;
-  width: calc(100% - 20px);
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
+  margin: -10px auto 0px 20px;
 }
 
-/* CARD */
+/* Partículas flutuantes de fundo */
+.delete-wrapper::before,
+.delete-wrapper::after {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: -10px auto 0px 20px;
+}
+
+.delete-wrapper::before {
+  background: radial-gradient(circle, #ff6b9d 0%, transparent 70%);
+  top: -250px;
+  left: -250px;
+  animation-delay: -5s;
+}
+
+.delete-wrapper::after {
+  background: radial-gradient(circle, #c471ed 0%, transparent 70%);
+  bottom: -250px;
+  right: -250px;
+  animation-delay: -10s;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 50% 50%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, 50px) scale(1.1); }
+  50% { transform: translate(-30px, 100px) scale(0.9); }
+  75% { transform: translate(-50px, -50px) scale(1.05); }
+}
+
+/* ================================
+   DELETE CARD - Card de Exclusão (Compacto)
+================================ */
 .delete-card {
-  width: 520px;
-  background: white;
-  padding: 35px 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  animation: fadeIn .25s ease-out; /**/
+  width: 480px;
+  max-width: 100%;
+  padding: 36px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 50px 100px rgba(0, 0, 0, 0.3),
+    0 25px 50px rgba(0, 0, 0, 0.2),
+    0 12px 24px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    inset 0 2px 0 rgba(255, 255, 255, 0.9);
+  animation: slideInBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 10;
+  margin: 0; /* ✅ REMOVE MARGEM AUTOMÁTICA */
 }
 
-/* ANIMAÇÃO */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Borda gradiente animada */
+.delete-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(
+    45deg,
+    #fca5a5 0%,
+    #f87171 15%,
+    #ef4444 30%,
+    #dc2626 45%,
+    #b91c1c 60%,
+    #991b1b 75%,
+    #7f1d1d 90%,
+    #fca5a5 100%
+  );
+  background-size: 300% 300%;
+  border-radius: 24px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: gradientRotate 8s linear infinite;
 }
 
-/* TÍTULO */
+.delete-card:hover::before {
+  opacity: 0.6;
+}
+
+@keyframes gradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Brilho interno */
+.delete-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    transparent 100%
+  );
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
+}
+
+@keyframes slideInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.85) rotateX(15deg);
+  }
+  60% {
+    transform: translateY(-10px) scale(1.02) rotateX(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0);
+  }
+}
+
+/* ================================
+   TÍTULO COM EFEITOS PREMIUM
+================================ */
 .delete-card h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1e1e2f;
+  margin: 0 0 24px 0;
+  font-size: 26px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  letter-spacing: -0.8px;
+  position: relative;
+  padding-bottom: 16px;
+  text-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+  animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.02); filter: brightness(1.1); }
+}
+
+/* Linha decorativa animada */
+.delete-card h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #dc2626 50%, transparent);
+  border-radius: 3px;
+  animation: lineExpand 3s ease-in-out infinite;
+}
+
+@keyframes lineExpand {
+  0%, 100% { width: 60px; opacity: 1; }
+  50% { width: 90px; opacity: 0.7; }
+}
+
+/* ================================
+   SEÇÃO DE INFORMAÇÕES - Cards 3D
+================================ */
+.info-section {
   margin-bottom: 20px;
 }
 
-/* LABELS */
-.delete-card label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  display: block;
-  color: #333;
+.info-section p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.7;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+  border-radius: 12px;
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* INPUT */
+/* Gradiente animado lateral */
+.info-section p::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  background-size: 100% 200%;
+  animation: gradientSlide 3s ease infinite;
+}
+
+@keyframes gradientSlide {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+}
+
+.info-section p:hover {
+  transform: translateX(6px) translateY(-1px);
+  box-shadow:
+    0 6px 16px rgba(99, 102, 241, 0.12),
+    0 3px 8px rgba(99, 102, 241, 0.08);
+  border-left-color: #6366f1;
+}
+
+.info-section p:hover::before {
+  width: 100%;
+  opacity: 0.03;
+}
+
+.info-section p strong {
+  color: #1e293b;
+  font-weight: 700;
+  margin-right: 12px;
+  display: inline-block;
+  min-width: 65px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================================
+   CAIXA DE AVISO - Super Premium
+================================ */
+.warning-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 50%, #fecaca 100%);
+  border: 2px solid rgba(254, 202, 202, 0.8);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 6px 20px rgba(220, 38, 38, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Shimmer animado */
+.warning-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  animation: shimmerMove 4s infinite;
+}
+
+@keyframes shimmerMove {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Padrão decorativo */
+.warning-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(220, 38, 38, 0.03) 10px,
+      rgba(220, 38, 38, 0.03) 20px
+    );
+  pointer-events: none;
+}
+
+.warning-box .material-icons {
+  font-size: 30px;
+  color: #dc2626;
+  flex-shrink: 0;
+  animation: warningPulse 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(220, 38, 38, 0.4));
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes warningPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 3px 6px rgba(220, 38, 38, 0.4));
+  }
+  25% {
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 6px 12px rgba(220, 38, 38, 0.6));
+  }
+  75% {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 6px 12px rgba(220, 38, 38, 0.6));
+  }
+}
+
+.warning-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #7f1d1d;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+}
+
+.warning-box strong {
+  font-weight: 900;
+  color: #991b1b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 2px rgba(153, 27, 27, 0.2);
+}
+
+/* ================================
+   LABEL
+================================ */
+.delete-card label {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #dc2626;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.95;
+  animation: labelFade 2s ease-in-out infinite;
+}
+
+@keyframes labelFade {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+
+/* ================================
+   INPUT DE CONFIRMAÇÃO - Ultra Premium
+================================ */
 .delete-card input {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #d3d3e0;
-  background: #fafafa;
+  padding: 14px 18px;
+  border: 2px solid #fecaca;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
   font-size: 15px;
-  margin-bottom: 18px;
-  transition: .2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1e293b;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.08);
+}
+
+.delete-card input::placeholder {
+  color: #f87171;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.delete-card input:hover {
+  border-color: #f87171;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 12px rgba(220, 38, 38, 0.1),
+    0 2px 6px rgba(220, 38, 38, 0.08);
 }
 
 .delete-card input:focus {
-  border-color: #4a55ff;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(74,85,255,.20);
+  border-color: #dc2626;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(220, 38, 38, 0.1),
+    0 8px 24px rgba(220, 38, 38, 0.15);
   outline: none;
+  transform: translateY(-2px) scale(1.01);
 }
 
-/* LINHAS */
-.delete-card p {
-  font-size: 15px;
-  margin-bottom: 6px;
+.delete-card input.valid {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+  box-shadow:
+    0 0 0 4px rgba(16, 185, 129, 0.1),
+    0 6px 20px rgba(16, 185, 129, 0.12);
+  animation: validPulse 0.6s ease;
 }
 
-/* BOTÕES */
+@keyframes validPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* ================================
+   CONTAINER DOS BOTÕES
+================================ */
 .btns {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
+/* ================================
+   BOTÃO CANCELAR - Premium
+================================ */
 .btn-cancelar {
-  padding: 10px 18px;
-  background: #d3d3d3;
-  border-radius: 8px;
-  border: none;
-  color: #333;
-  font-weight: 600;
+  flex: 1;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
-  transition: .2s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-cancelar:hover {
-  background: #bdbdbd;
+.btn-cancelar::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 116, 139, 0.1), transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
-.btn-excluir {
-  padding: 10px 20px;
-  background: #ff7171;
-  border-radius: 8px;
-  border: none;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: .2s;
+.btn-cancelar:hover:not(:disabled)::before {
+  width: 300px;
+  height: 300px;
 }
 
-.btn-excluir:hover:not(:disabled) {
-  background: #ff5a5a;
+.btn-cancelar:hover:not(:disabled) {
+  border-color: #cbd5e1;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #475569;
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.12),
+    0 5px 12px rgba(0, 0, 0, 0.08);
 }
 
-.btn-excluir:disabled {
-  background: #ffd1d1;
+.btn-cancelar:active:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cancelar:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* MOBILE */
-@media (max-width: 600px) {
+/* ================================
+   BOTÃO EXCLUIR - Ultra Premium
+================================ */
+.btn-excluir {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow:
+    0 12px 32px rgba(220, 38, 38, 0.45),
+    0 6px 16px rgba(220, 38, 38, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilho superior */
+.btn-excluir::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.7s;
+}
+
+/* Efeito ripple */
+.btn-excluir::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.7s, height 0.7s, opacity 0.7s;
+  opacity: 0;
+}
+
+.btn-excluir:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 50%, #7f1d1d 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 16px 40px rgba(220, 38, 38, 0.55),
+    0 8px 20px rgba(220, 38, 38, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn-excluir:hover:not(:disabled)::before {
+  left: 150%;
+}
+
+.btn-excluir:active:not(:disabled)::after {
+  width: 400px;
+  height: 400px;
+  opacity: 1;
+  transition: 0s;
+}
+
+.btn-excluir:active:not(:disabled) {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow:
+    0 10px 24px rgba(220, 38, 38, 0.45),
+    0 5px 12px rgba(220, 38, 38, 0.35);
+}
+
+.btn-excluir:disabled {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ================================
+   LOADING NO BOTÃO
+================================ */
+.loading-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner-btn {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-right-color: #ffffff;
+  border-radius: 50%;
+  animation: spinFast 0.8s linear infinite;
+}
+
+@keyframes spinFast {
+  to { transform: rotate(360deg); }
+}
+
+/* ================================
+   LOADING INICIAL - Premium
+================================ */
+.loading-card {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.loading-spinner {
+  width: 52px;
+  height: 52px;
+  border: 5px solid #e2e8f0;
+  border-top-color: #6366f1;
+  border-right-color: #8b5cf6;
+  border-bottom-color: #ec4899;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spinColorful 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  filter: drop-shadow(0 5px 10px rgba(99, 102, 241, 0.35));
+}
+
+@keyframes spinColorful {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 5px 10px rgba(99, 102, 241, 0.35));
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    filter: drop-shadow(0 7px 14px rgba(139, 92, 246, 0.45));
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    filter: drop-shadow(0 5px 10px rgba(236, 72, 153, 0.35));
+  }
+}
+
+.loading-text {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+@media (max-width: 1200px) {
   .delete-wrapper {
-    padding-left: 0;
+    padding: 30px 30px 30px 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .delete-wrapper {
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
 
   .delete-card {
-    width: 90%;
-    padding: 25px;
+    width: 100%;
+    margin: 0;
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .delete-card h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .info-section p {
+    font-size: 13px;
+    padding: 12px 14px;
+  }
+
+  .warning-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px;
+  }
+
+  .warning-box .material-icons {
+    font-size: 32px;
+  }
+
+  .btns {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-cancelar,
+  .btn-excluir {
+    width: 100%;
   }
 }
+
+@media (max-width: 450px) {
+  .delete-card {
+    padding: 28px 20px;
+  }
+
+  .delete-card h2 {
+    font-size: 22px;
+  }
+
+  .delete-card input {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .info-section p strong {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .btn-cancelar,
+  .btn-excluir {
+    padding: 13px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .delete-card {
+    padding: 24px 18px;
+  }
+
+  .delete-card h2 {
+    font-size: 20px;
+  }
+}
+
+

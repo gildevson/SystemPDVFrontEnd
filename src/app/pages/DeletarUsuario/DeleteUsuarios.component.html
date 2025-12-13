@@ -1,29 +1,50 @@
-<div class="delete-wrapper" *ngIf="!carregando">
+<!-- ===== ESTADO DE CARREGAMENTO ===== -->
+<div class="delete-wrapper" *ngIf="carregando">
+  <div class="delete-card loading-card">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Carregando informações do usuário...</p>
+  </div>
+</div>
 
+<!-- ===== CARD DE EXCLUSÃO ===== -->
+<div class="delete-wrapper" *ngIf="!carregando">
   <div class="delete-card">
     <h2>Excluir Usuário</h2>
 
-    <p><strong>ID:</strong> {{ userId }}</p>
-    <p><strong>Nome:</strong> {{ nomeUsuario }}</p>
+    <div class="info-section">
 
-    <label>Digite o nome para confirmar:</label>
+      <p><strong>Nome:</strong> {{ nomeUsuario }}</p>
+      <p><strong>Email:</strong> {{ emailUsuario }}</p>
+    </div>
+
+    <div class="warning-box">
+      <span class="material-icons">warning</span>
+      <p>Esta ação é <strong>irreversível</strong>. Todos os dados serão permanentemente excluídos.</p>
+    </div>
+
+    <label>Digite o nome completo para confirmar:</label>
     <input
       [(ngModel)]="confirmacaoNome"
-      placeholder="Digite exatamente como está"
+      placeholder="Digite exatamente como está acima"
       type="text"
+      [class.valid]="confirmacaoNome === nomeUsuario"
     />
 
     <div class="btns">
-      <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+      <button class="btn-cancelar" (click)="cancelar()" [disabled]="excluindo">
+        Cancelar
+      </button>
 
       <button
         class="btn-excluir"
-        [disabled]="confirmacaoNome !== nomeUsuario"
+        [disabled]="confirmacaoNome !== nomeUsuario || excluindo"
         (click)="confirmarExclusao()">
-        Confirmar Exclusão
+        <span *ngIf="!excluindo">Confirmar Exclusão</span>
+        <span *ngIf="excluindo" class="loading-btn">
+          <span class="spinner-btn"></span>
+          Excluindo...
+        </span>
       </button>
     </div>
-
   </div>
-
 </div>

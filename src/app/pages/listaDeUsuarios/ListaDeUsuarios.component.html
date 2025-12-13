@@ -1,5 +1,11 @@
-<!-- ===== OVERLAY DO MODAL DE CADASTRO ===== -->
-<div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
+<!-- ============================= -->
+<!-- OVERLAY DO MODAL DE CADASTRO -->
+<!-- ============================= -->
+<div
+  class="overlay"
+  *ngIf="exibirCadastro"
+  (click)="fecharOverlay()">
+
   <div class="container" (click)="$event.stopPropagation()">
     <app-novo-usuario
       (salvou)="aoSalvarUsuario()"
@@ -8,37 +14,89 @@
   </div>
 </div>
 
+<!-- =================================== -->
+<!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+<!-- =================================== -->
+<div
+  class="overlay"
+  *ngIf="exibirConfirmacaoDelete"
+  (click)="cancelarDelecao()">
+
+  <div class="modal-confirmacao" (click)="$event.stopPropagation()">
+
+    <div class="icone-alerta">
+      <span class="material-icons">warning</span>
+    </div>
+
+    <h3>Confirmar Exclusão</h3>
+
+    <p class="mensagem">
+      Tem certeza que deseja deletar o usuário
+      <strong>{{ usuarioSelecionado?.nome }}</strong>?
+    </p>
+
+    <p class="submensagem">
+      Você será redirecionado para a tela de confirmação final.
+    </p>
+
+    <div class="botoes-confirmacao">
+      <button
+        type="button"
+        class="btn-cancelar-modal"
+        (click)="cancelarDelecao()">
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        class="btn-deletar-modal"
+        (click)="confirmarDelecao()">
+        Continuar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= -->
+<!-- CARD PRINCIPAL -->
+<!-- ================= -->
 <div class="content-card">
 
-  <!-- ===== HEADER DO CARD ===== -->
+  <!-- HEADER -->
   <div class="header-row">
     <h2 class="titulo">Lista de Usuários</h2>
 
-    <button class="btn-novo" (click)="abrirOverlay()">
+    <button
+      type="button"
+      class="btn-novo"
+      (click)="abrirOverlay()">
       <span class="material-icons">person_add</span>
       Novo Usuário
     </button>
   </div>
 
-  <!-- ===== BARRA DE PESQUISA ===== -->
+  <!-- PESQUISA -->
   <div class="search-container">
     <span class="material-icons search-icon">search</span>
+
     <input
       type="text"
       class="search-input"
       [(ngModel)]="termoPesquisa"
       (input)="pesquisar()"
-      placeholder="Pesquisar por nome ou email...">
+      placeholder="Pesquisar por nome ou email..." />
+
     <button
-      class="btn-limpar"
       *ngIf="termoPesquisa"
-      (click)="limparPesquisa()"
-      title="Limpar pesquisa">
+      type="button"
+      class="btn-limpar"
+      title="Limpar pesquisa"
+      (click)="limparPesquisa()">
       <span class="material-icons">close</span>
     </button>
   </div>
 
-  <!-- ===== TABELA DE USUÁRIOS ===== -->
+  <!-- TABELA -->
   <table class="tabela">
     <thead>
       <tr>
@@ -50,45 +108,53 @@
     </thead>
 
     <tbody>
-      <!-- Lista de usuários -->
       <tr *ngFor="let u of usuariosFiltrados">
         <td data-label="Nome">{{ u.nome }}</td>
         <td data-label="Email">{{ u.email }}</td>
-        <td data-label="Data de Criação">{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td data-label="Data de Criação">
+          {{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}
+        </td>
         <td class="acoes">
           <span
             class="acao editar material-icons"
-            (click)="editar(u)"
-            title="Editar usuário">
+            title="Editar usuário"
+            (click)="editar(u)">
             edit
           </span>
+
           <span
             class="acao deletar material-icons"
-            (click)="deletar(u)"
-            title="Deletar usuário">
+            title="Deletar usuário"
+            (click)="deletar(u)">
             delete
           </span>
         </td>
       </tr>
 
-      <!-- Estado vazio -->
-      <tr *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa" class="empty-state">
+      <!-- ESTADO VAZIO -->
+      <tr
+        *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa"
+        class="empty-state">
         <td colspan="4">
-          <span class="material-icons" style="font-size: 48px; color: #cbd5e1; margin-bottom: 12px;">
-            inbox
-          </span>
+          <span class="material-icons empty-icon">inbox</span>
           <div>Nenhum usuário cadastrado</div>
         </td>
       </tr>
 
-      <!-- Nenhum resultado encontrado -->
-      <tr *ngIf="usuariosFiltrados.length === 0 && termoPesquisa" class="empty-state">
+      <!-- SEM RESULTADOS -->
+      <tr
+        *ngIf="usuariosFiltrados.length === 0 && termoPesquisa"
+        class="empty-state">
         <td colspan="4">
-          <span class="material-icons" style="font-size: 48px; color: #cbd5e1; margin-bottom: 12px;">
-            search_off
-          </span>
-          <div>Nenhum resultado encontrado para "{{ termoPesquisa }}"</div>
-          <button class="btn-limpar-resultado" (click)="limparPesquisa()">
+          <span class="material-icons empty-icon">search_off</span>
+          <div>
+            Nenhum resultado encontrado para
+            <strong>"{{ termoPesquisa }}"</strong>
+          </div>
+          <button
+            type="button"
+            class="btn-limpar-resultado"
+            (click)="limparPesquisa()">
             Limpar pesquisa
           </button>
         </td>
@@ -96,9 +162,13 @@
     </tbody>
   </table>
 
-  <!-- ===== PAGINAÇÃO ===== -->
-  <div class="paginacao" *ngIf="totalPages > 1 && !termoPesquisa">
+  <!-- PAGINAÇÃO -->
+  <div
+    class="paginacao"
+    *ngIf="totalPages > 1 && !termoPesquisa">
+
     <button
+      type="button"
       class="btn-pag"
       [disabled]="page === 1"
       (click)="buscarUsuarios(page - 1)">
@@ -107,15 +177,17 @@
 
     <div class="numeros">
       <button
+        type="button"
         *ngFor="let p of [].constructor(totalPages); let i = index"
         class="num"
-        [class.ativo]="page === (i + 1)"
+        [class.ativo]="page === i + 1"
         (click)="buscarUsuarios(i + 1)">
         {{ i + 1 }}
       </button>
     </div>
 
     <button
+      type="button"
       class="btn-pag"
       [disabled]="page === totalPages"
       (click)="buscarUsuarios(page + 1)">

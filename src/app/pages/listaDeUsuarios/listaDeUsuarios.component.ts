@@ -27,13 +27,20 @@ interface Usuario {
 })
 export class ListaDeUsuariosComponent implements OnInit {
 
+  // 🔹 Dados
   usuarios: Usuario[] = [];
-  usuariosFiltrados: Usuario[] = []; // ✅ ADICIONADO
-  termoPesquisa: string = ''; // ✅ ADICIONADO
+  usuariosFiltrados: Usuario[] = [];
+  termoPesquisa = '';
   erro = false;
 
+  // 🔹 Cadastro
   exibirCadastro = false;
 
+  // 🔹 Exclusão (modal)
+  exibirConfirmacaoDelete = false;
+  usuarioSelecionado?: Usuario;
+
+  // 🔹 Paginação
   page = 1;
   pageSize = 10;
   total = 0;
@@ -49,51 +56,46 @@ export class ListaDeUsuariosComponent implements OnInit {
     this.buscarUsuarios();
   }
 
+  // ===============================
+  // BUSCAR USUÁRIOS
+  // ===============================
   buscarUsuarios(page: number = 1) {
-    // ⭐ ATIVA O LOADING
     this.loadingService.show();
     this.erro = false;
 
-    // ⭐ MARCA O TEMPO DE INÍCIO
     const startTime = Date.now();
 
-    this.http.get<any>(`https://localhost:7110/api/users?page=${page}&pageSize=${this.pageSize}`)
+    this.http
+      .get<any>(`https://localhost:7110/api/users?page=${page}&pageSize=${this.pageSize}`)
       .subscribe({
         next: (res) => {
           this.usuarios = res.data;
-          this.usuariosFiltrados = res.data; // ✅ INICIALIZA OS FILTRADOS
+          this.usuariosFiltrados = res.data;
           this.page = res.page;
           this.pageSize = res.pageSize;
           this.total = res.total;
           this.totalPages = Math.ceil(this.total / this.pageSize);
 
-          // ⭐ CALCULA QUANTO TEMPO PASSOU
-          const elapsedTime = Date.now() - startTime;
-          // ⭐ GARANTE UM MÍNIMO DE 500ms DE LOADING
-          const minLoadingTime = 500;
-          const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
-
-          // ⭐ ESPERA O TEMPO RESTANTE ANTES DE ESCONDER
-          setTimeout(() => {
-            this.loadingService.hide();
-          }, remainingTime);
+          this.finalizarLoading(startTime);
         },
         error: () => {
           this.erro = true;
-
-          // ⭐ MESMO NO ERRO, MANTÉM O DELAY
-          const elapsedTime = Date.now() - startTime;
-          const minLoadingTime = 500;
-          const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
-
-          setTimeout(() => {
-            this.loadingService.hide();
-          }, remainingTime);
+          this.finalizarLoading(startTime);
         }
       });
   }
 
-  // ✅ MÉTODO DE PESQUISA
+  private finalizarLoading(startTime: number) {
+    const elapsedTime = Date.now() - startTime;
+    const minLoadingTime = 500;
+    const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
+    setTimeout(() => this.loadingService.hide(), remainingTime);
+  }
+
+  // ===============================
+  // PESQUISA
+  // ===============================
   pesquisar() {
     const termo = this.termoPesquisa.toLowerCase().trim();
 
@@ -102,18 +104,20 @@ export class ListaDeUsuariosComponent implements OnInit {
       return;
     }
 
-    this.usuariosFiltrados = this.usuarios.filter(usuario =>
-      usuario.nome.toLowerCase().includes(termo) ||
-      usuario.email.toLowerCase().includes(termo)
+    this.usuariosFiltrados = this.usuarios.filter(u =>
+      u.nome.toLowerCase().includes(termo) ||
+      u.email.toLowerCase().includes(termo)
     );
   }
 
-  // ✅ MÉTODO PARA LIMPAR PESQUISA
   limparPesquisa() {
     this.termoPesquisa = '';
     this.usuariosFiltrados = this.usuarios;
   }
 
+  // ===============================
+  // CADASTRO
+  // ===============================
   abrirOverlay() {
     this.exibirCadastro = true;
   }
@@ -127,13 +131,31 @@ export class ListaDeUsuariosComponent implements OnInit {
     this.buscarUsuarios(this.page);
   }
 
+  // ===============================
+  // AÇÕES
+  // ===============================
   editar(usuario: Usuario) {
     this.router.navigate(['/editar-usuario', usuario.id]);
   }
 
   deletar(usuario: Usuario) {
-    if (confirm(`Tem certeza que deseja deletar o usuário ${usuario.nome}?`)) {
-      this.router.navigate(['/menu/deletar-usuario', usuario.id]);
-    }
+    this.usuarioSelecionado = usuario;
+    this.exibirConfirmacaoDelete = true;
+  }
+
+  cancelarDelecao() {
+    this.exibirConfirmacaoDelete = false;
+    this.usuarioSelecionado = undefined;
+  }
+
+  confirmarDelecao() {
+    if (!this.usuarioSelecionado) return;
+
+    this.router.navigate(
+      ['/menu/deletar-usuario', this.usuarioSelecionado.id],
+      { state: { fromList: true } }
+    );
+
+    this.cancelarDelecao();
   }
 }
