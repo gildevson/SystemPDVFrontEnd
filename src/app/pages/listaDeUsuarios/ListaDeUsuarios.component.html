@@ -10,6 +10,7 @@
 
 <div class="content-card">
 
+  <!-- ===== HEADER DO CARD ===== -->
   <div class="header-row">
     <h2 class="titulo">Lista de Usuários</h2>
 
@@ -19,6 +20,7 @@
     </button>
   </div>
 
+  <!-- ===== TABELA DE USUÁRIOS ===== -->
   <table class="tabela">
     <thead>
       <tr>
@@ -30,13 +32,34 @@
     </thead>
 
     <tbody>
+      <!-- Lista de usuários -->
       <tr *ngFor="let u of usuarios">
-        <td>{{ u.nome }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td data-label="Nome">{{ u.nome }}</td>
+        <td data-label="Email">{{ u.email }}</td>
+        <td data-label="Data de Criação">{{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
         <td class="acoes">
-          <span class="acao editar material-icons" (click)="editar(u)">edit</span>
-          <span class="acao deletar material-icons" (click)="deletar(u)">delete</span>
+          <span
+            class="acao editar material-icons"
+            (click)="editar(u)"
+            title="Editar usuário">
+            edit
+          </span>
+          <span
+            class="acao deletar material-icons"
+            (click)="deletar(u)"
+            title="Deletar usuário">
+            delete
+          </span>
+        </td>
+      </tr>
+
+      <!-- Estado vazio -->
+      <tr *ngIf="usuarios.length === 0" class="empty-state">
+        <td colspan="4">
+          <span class="material-icons" style="font-size: 48px; color: #cbd5e1; margin-bottom: 12px;">
+            inbox
+          </span>
+          <div>Nenhum usuário cadastrado</div>
         </td>
       </tr>
     </tbody>
@@ -44,7 +67,12 @@
 
   <!-- ===== PAGINAÇÃO ===== -->
   <div class="paginacao" *ngIf="totalPages > 1">
-    <button class="btn-pag" [disabled]="page === 1" (click)="buscarUsuarios(page - 1)">« Anterior</button>
+    <button
+      class="btn-pag"
+      [disabled]="page === 1"
+      (click)="buscarUsuarios(page - 1)">
+      « Anterior
+    </button>
 
     <div class="numeros">
       <button
@@ -56,7 +84,10 @@
       </button>
     </div>
 
-    <button class="btn-pag" [disabled]="page === totalPages" (click)="buscarUsuarios(page + 1)">
+    <button
+      class="btn-pag"
+      [disabled]="page === totalPages"
+      (click)="buscarUsuarios(page + 1)">
       Próxima »
     </button>
   </div>
