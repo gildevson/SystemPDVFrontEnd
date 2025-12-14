@@ -31,7 +31,7 @@ export const routes: Routes = [
         path: 'novousuario',
         loadComponent: () =>
           import('./pages/CadastrarnovoUsuario/CadastrarnovoUsuario.component')
-            .then(m => m.CadastrarnovoUsuarioComponent)
+            .then(m => m.CadastrarUsuarioComponent)
       },
 
       { path: 'operacao', component: OperacaoComponent },

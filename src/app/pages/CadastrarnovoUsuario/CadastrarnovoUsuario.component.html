@@ -1,34 +1,36 @@
 <div class="container" (click)="$event.stopPropagation()">
-
-  <button class="btn-close" (click)="fechar.emit()">✕</button>
-
-  <h2 class="ClassTitulo">Cadastrar Usuário</h2>
+  <button class="btn-close" (click)="cancelar()">✕</button>
+  <h2 class="ClassTitulo">Cadastrar Novo Usuário</h2>
 
   <div class="form-group">
     <label>Nome</label>
-    <input [(ngModel)]="nome" type="text" placeholder="Digite o nome" />
+    <input [(ngModel)]="nome" type="text" placeholder="Digite o nome completo" [disabled]="carregando" />
   </div>
 
   <div class="form-group">
     <label>E-mail</label>
-    <input [(ngModel)]="email" type="email" placeholder="Digite o email" />
+    <input [(ngModel)]="email" type="email" placeholder="exemplo@email.com" [disabled]="carregando" />
   </div>
 
   <div class="form-group">
     <label>Senha</label>
-    <input [(ngModel)]="senha" type="password" placeholder="Digite a senha" />
+    <input [(ngModel)]="senha" type="password" placeholder="Mínimo 4 caracteres" [disabled]="carregando" />
   </div>
 
   <div class="form-group">
     <label>Confirmar Senha</label>
-    <input [(ngModel)]="confirmarSenha" type="password" placeholder="Digite novamente a senha" />
+    <input [(ngModel)]="confirmarSenha" type="password" placeholder="Digite a senha novamente" [disabled]="carregando" />
   </div>
 
-  <button class="btn" (click)="salvar()">
-    Salvar Usuário
+  <button class="btn" (click)="salvar()" [disabled]="carregando">
+    <span *ngIf="!carregando">Cadastrar Usuário</span>
+    <span *ngIf="carregando" class="btn-loading">
+      <span class="spinner-inline"></span> Salvando...
+    </span>
   </button>
 
-  <p class="erro" *ngIf="erro">{{ erro }}</p>
-  <p class="sucesso" *ngIf="sucesso">Usuário criado com sucesso!</p>
+  <button class="btn" (click)="cancelar()">Cancelar</button>
 
+  <p class="erro" *ngIf="erro">{{ erro }}</p>
+  <p class="sucesso" *ngIf="sucesso">Usuário cadastrado com sucesso!</p>
 </div>

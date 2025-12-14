@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoadingService } from '../../shared/loading.service';
 
-import { CadastrarnovoUsuarioComponent } from '../CadastrarnovoUsuario/CadastrarnovoUsuario.component';
-
 interface Usuario {
   id: string;
   nome: string;
@@ -19,8 +17,7 @@ interface Usuario {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    CadastrarnovoUsuarioComponent
+    FormsModule
   ],
   templateUrl: './ListaDeUsuarios.component.html',
   styleUrls: ['./ListaDeUsuarios.component.css']
@@ -33,13 +30,6 @@ export class ListaDeUsuariosComponent implements OnInit {
   termoPesquisa = '';
   erro = false;
 
-  // 🔹 Cadastro
-  exibirCadastro = false;
-
-  // 🔹 Exclusão (modal)
-  exibirConfirmacaoDelete = false;
-  usuarioSelecionado?: Usuario;
-
   // 🔹 Paginação
   page = 1;
   pageSize = 10;
@@ -50,15 +40,12 @@ export class ListaDeUsuariosComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private loadingService: LoadingService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.buscarUsuarios();
   }
 
-  // ===============================
-  // BUSCAR USUÁRIOS
-  // ===============================
   buscarUsuarios(page: number = 1) {
     this.loadingService.show();
     this.erro = false;
@@ -93,9 +80,6 @@ export class ListaDeUsuariosComponent implements OnInit {
     setTimeout(() => this.loadingService.hide(), remainingTime);
   }
 
-  // ===============================
-  // PESQUISA
-  // ===============================
   pesquisar() {
     const termo = this.termoPesquisa.toLowerCase().trim();
 
@@ -116,49 +100,21 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   // ===============================
-  // CADASTRO
+  // NAVEGAÇÕES
   // ===============================
+
   abrirOverlay() {
-    this.exibirCadastro = true;
-  }
-
-  fecharOverlay() {
-    this.exibirCadastro = false;
-  }
-
-  aoSalvarUsuario() {
-    this.exibirCadastro = false;
-    this.buscarUsuarios(this.page);
-  }
-
-  // ===============================
-  // AÇÕES
-  // ===============================
-
-  deletar(usuario: Usuario) {
-    this.usuarioSelecionado = usuario;
-    this.exibirConfirmacaoDelete = true;
-  }
-
-  cancelarDelecao() {
-    this.exibirConfirmacaoDelete = false;
-    this.usuarioSelecionado = undefined;
-  }
-
-  confirmarDelecao() {
-    if (!this.usuarioSelecionado) return;
-
-    this.router.navigate(
-      ['/menu/deletar-usuario', this.usuarioSelecionado.id],
-      { state: { fromList: true } }
-    );
-
-    this.cancelarDelecao();
+    this.router.navigate(['/menu/novousuario']);
   }
 
   editar(usuario: Usuario) {
     this.router.navigate(['/menu/editar-usuario', usuario.id]);
   }
 
-
+  deletar(usuario: Usuario) {
+  this.router.navigate(
+    ['/menu/deletar-usuario', usuario.id],
+    { state: { fromList: true } } // 🔑 ESSENCIAL
+  );
+}
 }

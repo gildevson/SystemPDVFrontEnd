@@ -8,21 +8,17 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-delete-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule], // ✅ ngModel funcionando
   templateUrl: './DeleteUsuarios.component.html',
   styleUrls: ['./DeleteUsuarios.component.css']
 })
 export class DeleteUsuariosComponent implements OnInit {
 
-  // 🔹 Dados do usuário
   userId = '';
   nomeUsuario = '';
   emailUsuario = '';
-
-  // 🔹 Confirmação
   confirmacaoNome = '';
 
-  // 🔹 Estados de UI
   carregando = true;
   excluindo = false;
 
@@ -35,12 +31,9 @@ export class DeleteUsuariosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // 🔐 Bloqueia acesso direto (opcional, mas recomendado)
+    // 🔐 bloqueia acesso direto
     if (!history.state?.fromList) {
-      this.toast.warning(
-        'Acesso inválido à exclusão de usuário',
-        'Atenção'
-      );
+      this.toast.warning('Acesso inválido à exclusão de usuário', 'Atenção');
       this.router.navigate(['/menu/usuarios']);
       return;
     }
@@ -56,7 +49,6 @@ export class DeleteUsuariosComponent implements OnInit {
     this.buscarUsuario();
   }
 
-  // 🔍 Busca dados do usuário
   private buscarUsuario() {
     this.http.get<any>(`https://localhost:7110/api/users/${this.userId}`)
       .subscribe({
@@ -66,18 +58,17 @@ export class DeleteUsuariosComponent implements OnInit {
           this.carregando = false;
         },
         error: () => {
+          this.carregando = false;
           this.toast.error('Usuário não encontrado', 'Erro');
           this.router.navigate(['/menu/usuarios']);
         }
       });
   }
 
-  // ❌ Cancelar exclusão
   cancelar() {
     this.router.navigate(['/menu/usuarios']);
   }
 
-  // ✅ Confirmar exclusão
   confirmarExclusao() {
 
     if (this.confirmacaoNome.trim() !== this.nomeUsuario) {
@@ -90,28 +81,26 @@ export class DeleteUsuariosComponent implements OnInit {
 
     this.excluindo = true;
 
-    const body = { id: this.userId };
+    this.http.delete('https://localhost:7110/api/Auth', {
+      body: { id: this.userId }
+    }).subscribe({
+      next: () => {
+        this.toast.success(
+          `Usuário "${this.nomeUsuario}" excluído com sucesso!`,
+          'Exclusão realizada'
+        );
 
-    this.http.delete('https://localhost:7110/api/Auth', { body })
-      .subscribe({
-        next: () => {
-          this.toast.success(
-            `Usuário "${this.nomeUsuario}" excluído com sucesso!`,
-            'Exclusão realizada'
-          );
-
-          // ⏳ Delay pequeno para UX
-          setTimeout(() => {
-            this.router.navigate(['/menu/usuarios']);
-          }, 500);
-        },
-        error: () => {
-          this.excluindo = false;
-          this.toast.error(
-            'Erro ao excluir usuário. Tente novamente.',
-            'Erro'
-          );
-        }
-      });
+        setTimeout(() => {
+          this.router.navigate(['/menu/usuarios']);
+        }, 500);
+      },
+      error: () => {
+        this.excluindo = false;
+        this.toast.error(
+          'Erro ao excluir usuário. Tente novamente.',
+          'Erro'
+        );
+      }
+    });
   }
 }

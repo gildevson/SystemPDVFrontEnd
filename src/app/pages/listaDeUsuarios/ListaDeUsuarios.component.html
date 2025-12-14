@@ -1,61 +1,20 @@
-<!-- ============================= -->
-<!-- OVERLAY DO MODAL DE CADASTRO -->
-<!-- ============================= -->
-<div
-  class="overlay"
-  *ngIf="exibirCadastro"
-  (click)="fecharOverlay()">
-
+<!-- ❌ REMOVER TODO ESTE BLOCO: -->
+<!--
+<div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
   <div class="container" (click)="$event.stopPropagation()">
-    <app-novo-usuario
+    <app-cadastrar-usuario
       (salvou)="aoSalvarUsuario()"
       (fechar)="fecharOverlay()">
-    </app-novo-usuario>
+    </app-cadastrar-usuario>
   </div>
 </div>
+-->
+
+<!-- ✅ MANTER APENAS: -->
 
 <!-- =================================== -->
 <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
 <!-- =================================== -->
-<div
-  class="overlay"
-  *ngIf="exibirConfirmacaoDelete"
-  (click)="cancelarDelecao()">
-
-  <div class="modal-confirmacao" (click)="$event.stopPropagation()">
-
-    <div class="icone-alerta">
-      <span class="material-icons">warning</span>
-    </div>
-
-    <h3>Confirmar Exclusão</h3>
-
-    <p class="mensagem">
-      Tem certeza que deseja deletar o usuário
-      <strong>{{ usuarioSelecionado?.nome }}</strong>?
-    </p>
-
-    <p class="submensagem">
-      Você será redirecionado para a tela de confirmação final.
-    </p>
-
-    <div class="botoes-confirmacao">
-      <button
-        type="button"
-        class="btn-cancelar-modal"
-        (click)="cancelarDelecao()">
-        Cancelar
-      </button>
-
-      <button
-        type="button"
-        class="btn-deletar-modal"
-        (click)="confirmarDelecao()">
-        Continuar
-      </button>
-    </div>
-  </div>
-</div>
 
 <!-- ================= -->
 <!-- CARD PRINCIPAL -->
