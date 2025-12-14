@@ -9,6 +9,7 @@ interface Usuario {
   id: string;
   nome: string;
   email: string;
+  permissoes: string[];  // ✅ ARRAY de strings
   dataCriacao: string;
 }
 
@@ -90,13 +91,35 @@ export class ListaDeUsuariosComponent implements OnInit {
 
     this.usuariosFiltrados = this.usuarios.filter(u =>
       u.nome.toLowerCase().includes(termo) ||
-      u.email.toLowerCase().includes(termo)
+      u.email.toLowerCase().includes(termo) ||
+      u.permissoes.some(p => p.toLowerCase().includes(termo)) // ✅ Busca no array
     );
   }
 
   limparPesquisa() {
     this.termoPesquisa = '';
     this.usuariosFiltrados = this.usuarios;
+  }
+
+  // ✅ Método para formatar permissões
+  formatarPermissoes(permissoes: string[]): string {
+    if (!permissoes || permissoes.length === 0) {
+      return 'Sem permissões';
+    }
+    return permissoes.join(', ');
+  }
+
+  // ✅ Método para obter classe CSS baseada na permissão
+  getPermissaoClass(permissoes: string[]): string {
+    if (!permissoes || permissoes.length === 0) return 'badge-sem-permissao';
+
+    if (permissoes.includes('ADMIN') || permissoes.includes('ADM')) {
+      return 'badge-admin';
+    }
+    if (permissoes.includes('MODERADOR')) {
+      return 'badge-moderador';
+    }
+    return 'badge-usuario';
   }
 
   // ===============================
@@ -112,9 +135,9 @@ export class ListaDeUsuariosComponent implements OnInit {
   }
 
   deletar(usuario: Usuario) {
-  this.router.navigate(
-    ['/menu/deletar-usuario', usuario.id],
-    { state: { fromList: true } } // 🔑 ESSENCIAL
-  );
-}
+    this.router.navigate(
+      ['/menu/deletar-usuario', usuario.id],
+      { state: { fromList: true } }
+    );
+  }
 }

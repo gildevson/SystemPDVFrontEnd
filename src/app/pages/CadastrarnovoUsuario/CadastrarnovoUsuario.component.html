@@ -1,45 +1,133 @@
 <div class="container" (click)="$event.stopPropagation()">
-  <button class="btn-close" (click)="cancelar()">✕</button>
-  <h2 class="ClassTitulo">Cadastrar Novo Usuário</h2>
 
-  <div class="form-group">
-    <label>Nome</label>
-    <input [(ngModel)]="nome" type="text" placeholder="Digite o nome completo" [disabled]="carregando" />
-  </div>
-
-  <div class="form-group">
-    <label>E-mail</label>
-    <input [(ngModel)]="email" type="email" placeholder="exemplo@email.com" [disabled]="carregando" />
-  </div>
-
-  <div class="form-group">
-    <label>Tipo de Usuário</label>
-    <select [(ngModel)]="tipoUsuario" [disabled]="carregando">
-      <option [ngValue]="null" disabled>Selecione o tipo de usuário</option>
-      <option [value]="1">Administrador</option>
-      <option [value]="2">Usuário</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Senha</label>
-    <input [(ngModel)]="senha" type="password" placeholder="Mínimo 6 caracteres" [disabled]="carregando" />
-  </div>
-
-  <div class="form-group">
-    <label>Confirmar Senha</label>
-    <input [(ngModel)]="confirmarSenha" type="password" placeholder="Digite a senha novamente" [disabled]="carregando" />
-  </div>
-
-  <button class="btn" (click)="salvar()" [disabled]="carregando">
-    <span *ngIf="!carregando">Cadastrar Usuário</span>
-    <span *ngIf="carregando" class="btn-loading">
-      <span class="spinner-inline"></span> Salvando...
-    </span>
+  <!-- BOTÃO FECHAR -->
+  <button class="btn-close" (click)="cancelar()" [disabled]="carregando">
+    ✕
   </button>
 
-  <button class="btn" (click)="cancelar()">Cancelar</button>
+  <!-- TÍTULO -->
+  <h2 class="ClassTitulo">Cadastrar Novo Usuário</h2>
 
-  <p class="erro" *ngIf="erro">{{ erro }}</p>
-  <p class="sucesso" *ngIf="sucesso">Usuário cadastrado com sucesso!</p>
+  <!-- FORMULÁRIO -->
+  <form (ngSubmit)="salvar()">
+
+    <!-- NOME -->
+    <div class="form-group">
+      <label for="nome">
+        Nome <span class="required">*</span>
+      </label>
+      <input
+        id="nome"
+        [(ngModel)]="nome"
+        name="nome"
+        type="text"
+        placeholder="Digite o nome completo"
+        [disabled]="carregando"
+        maxlength="100"
+        autocomplete="name" />
+    </div>
+
+    <!-- E-MAIL -->
+    <div class="form-group">
+      <label for="email">
+        E-mail <span class="required">*</span>
+      </label>
+      <input
+        id="email"
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        placeholder="exemplo@email.com"
+        [disabled]="carregando"
+        maxlength="100"
+        autocomplete="email" />
+    </div>
+
+    <!-- TIPO DE USUÁRIO -->
+    <div class="form-group">
+      <label for="tipoUsuario">
+        Tipo de Usuário <span class="required">*</span>
+      </label>
+      <select
+        id="tipoUsuario"
+        [(ngModel)]="permissaoId"
+        name="tipoUsuario"
+        [disabled]="carregando">
+        <option [ngValue]="null" disabled>Selecione o tipo de usuário</option>
+        <option [ngValue]="1">👑 Administrador</option>
+        <option [ngValue]="2">👤 Usuário</option>
+      </select>
+    </div>
+
+    <!-- SENHA -->
+    <div class="form-group">
+      <label for="senha">
+        Senha <span class="required">*</span>
+      </label>
+      <input
+        id="senha"
+        [(ngModel)]="senha"
+        name="senha"
+        type="password"
+        placeholder="Mínimo 6 caracteres"
+        [disabled]="carregando"
+        maxlength="50"
+        autocomplete="new-password" />
+    </div>
+
+    <!-- CONFIRMAR SENHA -->
+    <div class="form-group">
+      <label for="confirmarSenha">
+        Confirmar Senha <span class="required">*</span>
+      </label>
+      <input
+        id="confirmarSenha"
+        [(ngModel)]="confirmarSenha"
+        name="confirmarSenha"
+        type="password"
+        placeholder="Digite a senha novamente"
+        [disabled]="carregando"
+        maxlength="50"
+        autocomplete="new-password" />
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="button-group">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="carregando">
+        <span *ngIf="!carregando">
+          <span class="material-icons">person_add</span>
+          Cadastrar Usuário
+        </span>
+        <span *ngIf="carregando" class="btn-loading">
+          <span class="spinner-inline"></span>
+          Salvando...
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="cancelar()"
+        [disabled]="carregando">
+        <span class="material-icons">close</span>
+        Cancelar
+      </button>
+    </div>
+
+    <!-- MENSAGENS -->
+    <div class="mensagens">
+      <p class="erro" *ngIf="erro">
+        <span class="material-icons">error</span>
+        {{ erro }}
+      </p>
+      <p class="sucesso" *ngIf="sucesso">
+        <span class="material-icons">check_circle</span>
+        Usuário cadastrado com sucesso!
+      </p>
+    </div>
+
+  </form>
 </div>

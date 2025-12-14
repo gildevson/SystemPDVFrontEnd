@@ -1,21 +1,3 @@
-<!-- ❌ REMOVER TODO ESTE BLOCO: -->
-<!--
-<div class="overlay" *ngIf="exibirCadastro" (click)="fecharOverlay()">
-  <div class="container" (click)="$event.stopPropagation()">
-    <app-cadastrar-usuario
-      (salvou)="aoSalvarUsuario()"
-      (fechar)="fecharOverlay()">
-    </app-cadastrar-usuario>
-  </div>
-</div>
--->
-
-<!-- ✅ MANTER APENAS: -->
-
-<!-- =================================== -->
-<!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
-<!-- =================================== -->
-
 <!-- ================= -->
 <!-- CARD PRINCIPAL -->
 <!-- ================= -->
@@ -43,7 +25,7 @@
       class="search-input"
       [(ngModel)]="termoPesquisa"
       (input)="pesquisar()"
-      placeholder="Pesquisar por nome ou email..." />
+      placeholder="Pesquisar por nome, email ou permissão..." />
 
     <button
       *ngIf="termoPesquisa"
@@ -61,6 +43,7 @@
       <tr>
         <th>Nome</th>
         <th>Email</th>
+        <th>Permissões</th>
         <th>Data de Criação</th>
         <th class="col-acoes">Ações</th>
       </tr>
@@ -70,6 +53,24 @@
       <tr *ngFor="let u of usuariosFiltrados">
         <td data-label="Nome">{{ u.nome }}</td>
         <td data-label="Email">{{ u.email }}</td>
+
+        <!-- ✅ EXIBIÇÃO DAS PERMISSÕES COM BADGES -->
+        <td data-label="Permissões">
+          <div class="permissoes-container">
+            <span
+              *ngFor="let permissao of u.permissoes"
+              [ngClass]="getPermissaoClass(u.permissoes)"
+              class="badge-permissao">
+              {{ permissao }}
+            </span>
+            <span
+              *ngIf="!u.permissoes || u.permissoes.length === 0"
+              class="badge-permissao badge-sem-permissao">
+              Sem permissões
+            </span>
+          </div>
+        </td>
+
         <td data-label="Data de Criação">
           {{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}
         </td>
@@ -94,7 +95,7 @@
       <tr
         *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa"
         class="empty-state">
-        <td colspan="4">
+        <td colspan="5">
           <span class="material-icons empty-icon">inbox</span>
           <div>Nenhum usuário cadastrado</div>
         </td>
@@ -104,7 +105,7 @@
       <tr
         *ngIf="usuariosFiltrados.length === 0 && termoPesquisa"
         class="empty-state">
-        <td colspan="4">
+        <td colspan="5">
           <span class="material-icons empty-icon">search_off</span>
           <div>
             Nenhum resultado encontrado para

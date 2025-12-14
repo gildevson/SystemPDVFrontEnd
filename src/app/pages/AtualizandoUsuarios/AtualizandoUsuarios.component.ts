@@ -17,6 +17,8 @@ export class AtualizarUsuarioComponent implements OnInit {
   nome = '';
   email = '';
   senha = '';
+  permissaoId: number | null = null; // 🆕 Permissão
+
   carregando = false;
   carregandoDados = false;
   erro = '';
@@ -37,7 +39,6 @@ export class AtualizarUsuarioComponent implements OnInit {
     this.carregandoDados = true;
     this.erro = '';
 
-    // ✅ CORRIGIDO: Buscar na lista primeiro
     this.http.get<any>(`https://localhost:7110/api/users?page=1&pageSize=1000`)
       .subscribe({
         next: (res) => {
@@ -46,6 +47,14 @@ export class AtualizarUsuarioComponent implements OnInit {
           if (usuario) {
             this.nome = usuario.nome;
             this.email = usuario.email;
+
+            // 🆕 Mapear permissão atual
+            if (usuario.permissoes && usuario.permissoes.length > 0) {
+              const permissao = usuario.permissoes[0].toUpperCase();
+              this.permissaoId = permissao === 'ADMIN' ? 1 : 2;
+            } else {
+              this.permissaoId = 2; // Padrão: usuário comum
+            }
           } else {
             this.erro = 'Usuário não encontrado.';
           }
@@ -62,19 +71,43 @@ export class AtualizarUsuarioComponent implements OnInit {
   atualizar(): void {
     this.erro = '';
     this.sucesso = false;
+
+    // Validações
+    if (!this.nome?.trim()) {
+      this.erro = 'O nome é obrigatório.';
+      return;
+    }
+
+    if (!this.email?.trim()) {
+      this.erro = 'O email é obrigatório.';
+      return;
+    }
+
+    if (!this.permissaoId) {
+      this.erro = 'Selecione uma permissão.';
+      return;
+    }
+
+    // Validar senha se preenchida
+    if (this.senha && this.senha.length < 6) {
+      this.erro = 'A senha deve ter no mínimo 6 caracteres.';
+      return;
+    }
+
     this.carregando = true;
 
     const payload: any = {
-      id: this.id,        // ✅ IMPORTANTE: Enviar o ID
-      nome: this.nome,
-      email: this.email
+      id: this.id,
+      nome: this.nome.trim(),
+      email: this.email.trim(),
+      permissaoId: this.permissaoId // 🆕 Envia permissão
     };
 
-    if (this.senha && this.senha.trim().length >= 4) {
+    // Adicionar senha apenas se foi preenchida
+    if (this.senha && this.senha.trim()) {
       payload.senha = this.senha;
     }
 
-    // ✅ CORRIGIDO: Endpoint correto
     this.http.put(`https://localhost:7110/api/auth`, payload)
       .subscribe({
         next: () => {
