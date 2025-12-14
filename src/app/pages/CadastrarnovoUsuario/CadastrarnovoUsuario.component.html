@@ -11,7 +11,19 @@
     <label>E-mail</label>
     <input [(ngModel)]="email" type="email" placeholder="exemplo@email.com" [disabled]="carregando" />
   </div>
+  <div class="form-group">
+    <label>Tipo de Usuário</label>
 
+    <select [(ngModel)]="tipoUsuario" [disabled]="carregando">
+
+      <option [ngValue]="null" disabled>
+        Selecione o tipo de usuário
+      </option>
+
+      <option [value]="1">Administrador</option>
+      <option [value]="2">Usuário</option>
+    </select>
+  </div>
   <div class="form-group">
     <label>Senha</label>
     <input [(ngModel)]="senha" type="password" placeholder="Mínimo 4 caracteres" [disabled]="carregando" />
@@ -19,7 +31,8 @@
 
   <div class="form-group">
     <label>Confirmar Senha</label>
-    <input [(ngModel)]="confirmarSenha" type="password" placeholder="Digite a senha novamente" [disabled]="carregando" />
+    <input [(ngModel)]="confirmarSenha" type="password" placeholder="Digite a senha novamente"
+      [disabled]="carregando" />
   </div>
 
   <button class="btn" (click)="salvar()" [disabled]="carregando">

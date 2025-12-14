@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-cadastrar-usuario',  // ✅ Este é o seletor
+  selector: 'app-cadastrar-usuario',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './CadastrarnovoUsuario.component.html',
@@ -14,13 +13,15 @@ import { Router } from '@angular/router';
 })
 export class CadastrarUsuarioComponent {
 
-  @Output() salvou = new EventEmitter<void>();  // ✅ ADICIONAR
-  @Output() fechar = new EventEmitter<void>();  // ✅ ADICIONAR
+  @Output() salvou = new EventEmitter<void>();
+  @Output() fechar = new EventEmitter<void>();
 
   nome = '';
   email = '';
   senha = '';
   confirmarSenha = '';
+
+  tipoUsuario: number | null = null; // 👈 NOVO
 
   carregando = false;
   erro = '';
@@ -28,20 +29,18 @@ export class CadastrarUsuarioComponent {
 
   constructor(
     private http: HttpClient,
-  private router: Router
-    ) {}
+    private router: Router
+  ) {}
 
-    cancelar(): void {
-  this.router.navigate(['/menu/usuarios']);
-
-
-}
+  cancelar(): void {
+    this.router.navigate(['/menu/usuarios']);
+  }
 
   salvar(): void {
     this.erro = '';
     this.sucesso = false;
 
-    // VALIDAÇÕES
+    // 🔎 Validações
     if (!this.nome || !this.email || !this.senha || !this.confirmarSenha) {
       this.erro = 'Preencha todos os campos.';
       return;
@@ -57,12 +56,18 @@ export class CadastrarUsuarioComponent {
       return;
     }
 
+    if (!this.tipoUsuario) {
+      this.erro = 'Selecione o tipo de usuário.';
+      return;
+    }
+
     this.carregando = true;
 
     const novoUsuario = {
       nome: this.nome,
       email: this.email,
-      senha: this.senha
+      senha: this.senha,
+      tipoUsuario: this.tipoUsuario // 👈 ENVIA 1 ou 2
     };
 
     this.http.post('https://localhost:7110/api/Auth/registrar', novoUsuario)
@@ -76,9 +81,10 @@ export class CadastrarUsuarioComponent {
           this.email = '';
           this.senha = '';
           this.confirmarSenha = '';
+          this.tipoUsuario = null;
 
           setTimeout(() => {
-            this.salvou.emit();  // ✅ EMITIR EVENTO
+            this.salvou.emit();
           }, 600);
         },
         error: () => {
@@ -86,7 +92,5 @@ export class CadastrarUsuarioComponent {
           this.erro = 'Erro ao criar usuário. Verifique os dados.';
         }
       });
-
   }
-
 }
