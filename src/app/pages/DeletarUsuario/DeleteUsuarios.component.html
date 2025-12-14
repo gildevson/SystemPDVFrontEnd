@@ -24,11 +24,11 @@
 
     <label>Digite o nome completo para confirmar:</label>
     <input
-  [(ngModel)]="confirmacaoNome"
-  type="text"
-  [class.valid]="confirmacaoNome === nomeUsuario"
-  [class.invalid]="confirmacaoNome && confirmacaoNome !== nomeUsuario"
-/>
+      [(ngModel)]="confirmacaoNome"
+      placeholder="Digite exatamente como está acima"
+      type="text"
+      [class.valid]="confirmacaoNome === nomeUsuario"
+    />
 
     <div class="btns">
       <button class="btn-cancelar" (click)="cancelar()" [disabled]="excluindo">

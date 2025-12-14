@@ -20,8 +20,7 @@ export class CadastrarUsuarioComponent {
   email = '';
   senha = '';
   confirmarSenha = '';
-
-  tipoUsuario: number | null = null; // 👈 NOVO
+  tipoUsuario: number | null = null;
 
   carregando = false;
   erro = '';
@@ -51,8 +50,8 @@ export class CadastrarUsuarioComponent {
       return;
     }
 
-    if (this.senha.length < 4) {
-      this.erro = 'A senha deve ter no mínimo 4 caracteres.';
+    if (this.senha.length < 6) {
+      this.erro = 'A senha deve ter no mínimo 6 caracteres.';
       return;
     }
 
@@ -67,7 +66,7 @@ export class CadastrarUsuarioComponent {
       nome: this.nome,
       email: this.email,
       senha: this.senha,
-      tipoUsuario: this.tipoUsuario // 👈 ENVIA 1 ou 2
+      tipoUsuario: this.tipoUsuario
     };
 
     this.http.post('https://localhost:7110/api/Auth/registrar', novoUsuario)
