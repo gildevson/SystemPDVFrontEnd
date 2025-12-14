@@ -7,6 +7,7 @@ import { DeleteUsuariosComponent } from './pages/DeletarUsuario/DeleteUsuarios.c
 import { ListaDeUsuariosComponent } from './pages/listaDeUsuarios/listaDeUsuarios.component';
 import { RecuperarsenhaComponent } from './pages/recuperarsenha/recuperarsenha.component';
 import { RedefinirsenhaComponent } from './pages/redefinirsenha/redefinirsenha.component';
+import { AtualizarUsuarioComponent } from './pages/AtualizandoUsuarios/AtualizandoUsuarios.component'; // 👈 IMPORTAR
 
 export const routes: Routes = [
 
@@ -15,7 +16,7 @@ export const routes: Routes = [
   { path: 'recuperarsenha', component: RecuperarsenhaComponent },
   { path: 'redefinirsenha', component: RedefinirsenhaComponent },
 
-  // 🔐 Rotas protegidas (só entra logado)
+  // 🔐 Rotas protegidas
   {
     path: 'menu',
     component: MenuComponent,
@@ -24,8 +25,8 @@ export const routes: Routes = [
       { path: 'dashboard', component: OperacaoComponent },
       { path: 'usuarios', component: ListaDeUsuariosComponent },
       { path: 'deletar-usuario/:id', component: DeleteUsuariosComponent },
+      { path: 'editar-usuario/:id', component: AtualizarUsuarioComponent }, // 👈 SEM 'menu/'
 
-      // LoadComponent (ok do jeito que está)
       {
         path: 'novousuario',
         loadComponent: () =>

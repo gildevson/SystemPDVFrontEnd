@@ -83,5 +83,17 @@ redefinirSenha(dto: { token: string; novaSenha: string }): Observable<any> {
   });
 }
 
+atualizarUsuario(id: string, payload: any): Observable<any> {
+    return new Observable(observer => {
+      this.backendUrl$.subscribe(url => {
+        const fullUrl = `${url}/api/usuarios/${id}`;
+
+        this.http.put(fullUrl, payload).subscribe({
+          next: res => observer.next(res),
+          error: err => observer.error(err)
+        });
+      });
+    });
+  }
 
 }

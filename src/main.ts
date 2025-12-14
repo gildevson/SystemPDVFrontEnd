@@ -10,7 +10,7 @@ import { provideToastr } from 'ngx-toastr';
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(), // ✅ CORRETO
 
     // Animações necessárias para fadeIn / fadeOut
     provideAnimations(), // obrigatorio

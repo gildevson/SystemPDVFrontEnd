@@ -50,7 +50,7 @@ export class ListaDeUsuariosComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private loadingService: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buscarUsuarios();
@@ -134,9 +134,6 @@ export class ListaDeUsuariosComponent implements OnInit {
   // ===============================
   // AÇÕES
   // ===============================
-  editar(usuario: Usuario) {
-    this.router.navigate(['/editar-usuario', usuario.id]);
-  }
 
   deletar(usuario: Usuario) {
     this.usuarioSelecionado = usuario;
@@ -158,4 +155,10 @@ export class ListaDeUsuariosComponent implements OnInit {
 
     this.cancelarDelecao();
   }
+
+  editar(usuario: Usuario) {
+    this.router.navigate(['/menu/editar-usuario', usuario.id]);
+  }
+
+
 }
