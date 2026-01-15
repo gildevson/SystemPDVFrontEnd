@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule], // ✅ ngModel funcionando
+  imports: [CommonModule, FormsModule],
   templateUrl: './DeleteUsuarios.component.html',
   styleUrls: ['./DeleteUsuarios.component.css']
 })
@@ -21,6 +21,9 @@ export class DeleteUsuariosComponent implements OnInit {
 
   carregando = true;
   excluindo = false;
+
+  // ✅ precisa existir para o HTML usar
+  isSelfDelete = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +48,10 @@ export class DeleteUsuariosComponent implements OnInit {
       this.router.navigate(['/menu/usuarios']);
       return;
     }
+
+    // ✅ calcula UMA vez (estado da tela)
+    const idLogado = localStorage.getItem('id');
+    this.isSelfDelete = !!idLogado && this.userId === idLogado;
 
     this.buscarUsuario();
   }
@@ -72,34 +79,57 @@ export class DeleteUsuariosComponent implements OnInit {
   confirmarExclusao() {
 
     if (this.confirmacaoNome.trim() !== this.nomeUsuario) {
+      this.toast.warning('Digite o nome exatamente igual ao exibido', 'Confirmação necessária');
+      return;
+    }
+
+    // ✅ se for o próprio usuário, bloqueia
+    if (this.isSelfDelete) {
       this.toast.warning(
-        'Digite o nome exatamente igual ao exibido',
-        'Confirmação necessária'
+        'Por motivos de segurança, você não pode excluir o seu próprio usuário logado.',
+        'Ação bloqueada'
       );
       return;
     }
 
     this.excluindo = true;
 
+    const idLogado = localStorage.getItem('id');
+
     this.http.delete('https://localhost:7110/api/Auth', {
-      body: { id: this.userId }
+      body: {
+        id: this.userId,
+        idLogado: idLogado
+      }
     }).subscribe({
       next: () => {
-        this.toast.success(
-          `Usuário "${this.nomeUsuario}" excluído com sucesso!`,
-          'Exclusão realizada'
-        );
+        this.toast.success(`Usuário "${this.nomeUsuario}" excluído com sucesso!`, 'Exclusão realizada');
 
         setTimeout(() => {
           this.router.navigate(['/menu/usuarios']);
         }, 500);
       },
-      error: () => {
+
+      error: (err: HttpErrorResponse) => {
         this.excluindo = false;
-        this.toast.error(
-          'Erro ao excluir usuário. Tente novamente.',
-          'Erro'
-        );
+
+        const msg =
+          err.error?.mensagem ||
+          err.error?.message ||
+          'Erro ao excluir usuário. Tente novamente.';
+
+        const msgLower = String(msg).toLowerCase();
+
+        // ✅ se backend bloquear (bypass), mostrar warning
+        if (msgLower.includes('não pode excluir') || msgLower.includes('proprio') || msgLower.includes('próprio')) {
+          this.toast.warning(
+            'Por motivos de segurança, você não pode excluir o seu próprio usuário logado.',
+            'Ação bloqueada'
+          );
+          return;
+        }
+
+        this.toast.error(msg, 'Erro');
       }
     });
   }

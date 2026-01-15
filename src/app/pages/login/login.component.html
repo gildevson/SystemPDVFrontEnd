@@ -11,25 +11,44 @@
       <form (ngSubmit)="fazerLogin()">
 
         <div class="input-group">
-          <label>E-mail</label>
-          <input type="email" [(ngModel)]="email" name="email" required />
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="seu@email.com"
+            required
+            autocomplete="username"
+          />
         </div>
 
         <div class="input-group">
-          <label>Senha</label>
-          <input type="password" [(ngModel)]="senha" name="senha" required />
+          <label for="senha">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            [(ngModel)]="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            required
+            autocomplete="current-password"
+          />
         </div>
 
         <div class="options">
           <a routerLink="/recuperarsenha">Esqueci a senha</a>
-          <a href="#">Criar conta</a>
+          <a routerLink="/cadastro">Criar conta</a>
         </div>
 
         <button class="btn-login" type="submit">
           Entrar
         </button>
 
-
+        <!-- ✅ MENSAGEM com classe dinâmica -->
+        <p class="login-message" [ngClass]="messageType" *ngIf="loginMessage">
+          {{ loginMessage }}
+        </p>
 
       </form>
 
@@ -38,7 +57,7 @@
 
   <!-- Lado direito com logo -->
   <div class="login-right">
-    <img src="assets/logonew.png" class="logo-right" alt="Logo ERP">
+    <img src="assets/logonew.png" class="logo-right" alt="Logo ERP" loading="lazy">
 
     <div class="info-text">
       Sistema moderno, seguro e eficiente para sua empresa.

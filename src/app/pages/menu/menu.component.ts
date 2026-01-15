@@ -3,75 +3,129 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoadingService } from '../../shared/loading.service';
 
+interface MenuItem {
+  nome: string;
+  rota?: string;
+  icone: string;
+  permissao?: string;
+  submenu?: MenuItem[];
+  expanded?: boolean;
+}
+
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
+  imports: [CommonModule, RouterModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
 
-  menuItems = [
-    { nome: 'Dashboard Geral', rota: 'dashboard', icone: 'dashboard' },
-    { nome: 'Usuários do Sistema', rota: 'usuarios', icone: 'groups' },
-    { nome: 'Configurações', rota: 'configuracoes', icone: 'settings' },
-    { nome: 'Relatórios', rota: 'relatorios', icone: 'bar_chart' },
-    { nome: 'Operação PDV', rota: 'operacao', icone: 'point_of_sale' }
+  menuItems: MenuItem[] = [
+    {
+      nome: 'Dashboard Geral',
+      rota: 'dashboard',
+      icone: 'dashboard'
+    },
+    {
+      nome: 'Cadastros',
+      icone: 'folder',
+      submenu: [
+        { nome: 'Usuários do Sistema', rota: 'usuarios', icone: 'groups', permissao: 'ADMIN' },
+        { nome: 'Produtos', rota: 'produtos', icone: 'inventory_2' },
+        { nome: 'Clientes', rota: 'clientes', icone: 'people' },
+        { nome: 'Fornecedores', rota: 'fornecedores', icone: 'local_shipping' },
+        { nome: 'Categorias', rota: 'categorias', icone: 'category' }
+      ]
+    },
+    {
+      nome: 'Operações',
+      icone: 'business_center',
+      submenu: [
+        { nome: 'PDV', rota: 'operacao/pdv', icone: 'point_of_sale' },
+        { nome: 'Vendas', rota: 'operacao/vendas', icone: 'shopping_cart' },
+        { nome: 'Estoque', rota: 'operacao/estoque', icone: 'warehouse' }
+      ]
+    },
+    {
+      nome: 'Relatórios',
+      icone: 'bar_chart',
+      submenu: [
+        { nome: 'Vendas', rota: 'relatorios/vendas', icone: 'analytics' },
+        { nome: 'Financeiro', rota: 'relatorios/financeiro', icone: 'attach_money' },
+        { nome: 'Estoque', rota: 'relatorios/estoque', icone: 'assessment' }
+      ]
+    },
+    {
+      nome: 'Configurações',
+      rota: 'configuracoes',
+      icone: 'settings'
+    }
   ];
 
-  // 🔥 VARIÁVEL DO NOME
   nomeUsuario: string = '';
+  isSidebarOpen = false;
 
   constructor(
-    private router: Router,
+    public router: Router, // ✅ MUDOU DE private PARA public
     private loadingService: LoadingService
   ) {
-    // 🔥 PEGA O NOME QUE O LOGIN SALVOU
     this.nomeUsuario = localStorage.getItem('nome') || 'Usuário';
   }
 
+  // ✅ Ler permissões
+  getPermissoes(): string[] {
+    return JSON.parse(localStorage.getItem('permissoes') || '[]');
+  }
+
+  // ✅ Verificar permissão
+  hasPermissao(permissao?: string): boolean {
+    if (!permissao) return true;
+    return this.getPermissoes().includes(permissao);
+  }
+
+  // ✨ Alternar submenu
+  toggleSubmenu(item: MenuItem) {
+    if (item.submenu) {
+      item.expanded = !item.expanded;
+    } else if (item.rota) {
+      this.navegar(item.rota);
+    }
+  }
+
+  // ✅ Navegar
   navegar(rota: string) {
-    // Mostra o loading
     this.loadingService.show();
 
-    // Navega para a rota
     this.router.navigate(['/menu', rota]).then(() => {
-      // Esconde o loading após a navegação
-      // Pequeno delay para garantir que o componente carregou
-      setTimeout(() => {
-        this.loadingService.hide();
-      }, 500);
+      setTimeout(() => this.loadingService.hide(), 500);
     });
 
-    // Fecha a sidebar no mobile
     this.isSidebarOpen = false;
   }
 
+  // ✅ Logout
   logout() {
-    // Mostra loading ao fazer logout
     this.loadingService.show();
 
-    // Remove dados do localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('nome');
     localStorage.removeItem('email');
+    localStorage.removeItem('permissoes');
 
-    // Navega para login e esconde o loading
     this.router.navigate(['/']).then(() => {
-      setTimeout(() => {
-        this.loadingService.hide();
-      }, 300);
+      setTimeout(() => this.loadingService.hide(), 300);
     });
   }
 
-  isSidebarOpen = false;
-
+  // ✅ Toggle sidebar mobile
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  // ✨ Método auxiliar para verificar se a rota está ativa
+  isRouteActive(rota?: string): boolean {
+    if (!rota) return false;
+    return this.router.url.includes(rota);
+  }
 }

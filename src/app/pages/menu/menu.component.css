@@ -12,13 +12,19 @@
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
-  display: none; /* aparece apenas no mobile */
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  background: #1f1a42;
+  transform: scale(1.05);
 }
 
 .hamburger-btn .material-icons {
   font-size: 28px;
 }
-
 
 /* ============================
    OVERLAY (FUNDO ESCURO)
@@ -26,7 +32,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
   opacity: 0;
   visibility: hidden;
@@ -39,6 +45,15 @@
   visibility: visible;
 }
 
+/* ============================
+   LAYOUT
+============================ */
+.layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
 
 /* ============================
    SIDEBAR
@@ -48,8 +63,8 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: 240px;
-  padding: 25px;
+  width: 260px;
+  padding: 25px 15px;
   background: #171336;
   color: #fff;
   display: flex;
@@ -57,145 +72,36 @@
   z-index: 180;
   transform: translateX(0);
   transition: transform 0.3s ease;
+  overflow-y: auto;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* MOBILE: sidebar fechada */
-.sidebar.open {
-  transform: translateX(0);
+/* Scrollbar personalizada */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* ============================
-   DESKTOP
-============================ */
-@media (min-width: 900px) {
-  .hamburger-btn {
-    display: none;
-  }
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
 
-  .sidebar {
-    transform: translateX(0) !important; /* sempre visível */
-  }
-
-  .main-content {
-    margin-left: 260px;
-  }
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 /* ============================
-   MOBILE
+   LOGO
 ============================ */
-@media (max-width: 899px) {
-  .hamburger-btn {
-    display: block; /* mostra botão */
-  }
-
-  .sidebar {
-    transform: translateX(-105%); /* escondido */
-  }
-
-  .sidebar.open {
-    transform: translateX(0); /* visível */
-  }
-
-  .main-content {
-    margin-left: 0 !important;
-    padding: 20px;
-  }
-}
-
-
-/* ============================
-   MENU ITEM (SEU PADRÃO)
-============================ */
-.menu-list {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #c9d1d9;
-  transition: 0.25s;
-  position: relative;
-}
-
-.menu-item:hover {
-  background: #1f1a42;
-  color: #fff;
-}
-
-.active-item {
-  background: rgba(255,255,255,0.18);
-  color: #fff;
-  font-weight: 600;
-}
-
-/* Indicador lateral */
-.menu-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 4px;
-  height: 0%;
-  background: #4a55ff;
-  border-radius: 12px;
-  transition: 0.2s;
-}
-
-.menu-item:hover::before,
-.active-item::before {
-  height: 80%;
-}
-
-
-/* ============================
-   BOTÃO SAIR
-============================ */
-.logout-btn {
-  margin-top: auto;
-  padding: 12px;
-  background: #ff4d4d;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: 0.25s;
-}
-
-.logout-btn:hover {
-  background: #e63a3a;
-}
-
-
-/* ============================
-   MAIN
-============================ */
-.main-content {
-  width: 100%;
-  transition: 0.3s;
-  padding: 20px;
-}
-
-
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   color: #fff;
   font-size: 22px;
   font-weight: 700;
+  padding: 0 10px;
 }
 
 .logo-img {
@@ -205,31 +111,15 @@
   border-radius: 8px;
 }
 
-
-.layout {
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 250px;
-  flex-shrink: 0;
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px 30px;
-  overflow-x: hidden;
-}
-
-
+/* ============================
+   USER INFO
+============================ */
 .user-info {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 15px 20px;
-  margin: 10px 0 20px;
+  padding: 12px 15px;
+  margin: 0 0 25px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   color: #fff;
@@ -237,10 +127,264 @@
 
 .user-icon {
   font-size: 30px;
-  color: #fff;
+  color: #4a55ff;
 }
 
 .user-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
+}
+
+/* ============================
+   MENU LIST
+============================ */
+.menu-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+/* ============================
+   MENU ITEM
+============================ */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #c9d1d9;
+  transition: all 0.25s ease;
+  position: relative;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.menu-item.active-item {
+  background: rgba(74, 85, 255, 0.25);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Indicador lateral */
+.menu-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0%;
+  background: #4a55ff;
+  border-radius: 0 12px 12px 0;
+  transition: height 0.2s ease;
+}
+
+.menu-item:hover::before,
+.menu-item.active-item::before {
+  height: 70%;
+}
+
+.menu-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Seta do submenu */
+.submenu-arrow {
+  font-size: 20px;
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.menu-item.expanded .submenu-arrow {
+  transform: rotate(180deg);
+}
+
+/* ============================
+   SUBMENU
+============================ */
+.submenu {
+  padding-left: 20px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #a8b3c1;
+  transition: all 0.2s ease;
+  position: relative;
+  padding-left: 24px;
+}
+
+.submenu-item::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #4a55ff;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.submenu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  padding-left: 28px;
+}
+
+.submenu-item:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.3);
+}
+
+.submenu-item.active-item {
+  background: rgba(74, 85, 255, 0.15);
+  color: #fff;
+  font-weight: 600;
+}
+
+.submenu-item.active-item::before {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.5);
+}
+
+.submenu-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.submenu-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ============================
+   BOTÃO SAIR
+============================ */
+.logout-btn {
+  margin-top: auto;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff4d4d 0%, #e63a3a 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #e63a3a 0%, #d32f2f 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 77, 77, 0.4);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================
+   MAIN CONTENT
+============================ */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* ============================
+   RESPONSIVO - DESKTOP
+============================ */
+@media (min-width: 900px) {
+  .hamburger-btn {
+    display: none;
+  }
+
+  .sidebar {
+    transform: translateX(0) !important;
+  }
+
+  .main-content {
+    margin-left: 260px;
+  }
+}
+
+/* ============================
+   RESPONSIVO - MOBILE
+============================ */
+@media (max-width: 899px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-105%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 80px 20px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .main-content {
+    padding: 70px 15px 15px;
+  }
 }

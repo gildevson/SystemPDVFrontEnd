@@ -12,12 +12,12 @@ import { LoadingService } from '../../shared/loading.service';
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
-})
-export class LoginComponent {
+})export class LoginComponent {
 
   email: string = '';
   senha: string = '';
   loginMessage: string = '';
+  messageType: 'success' | 'error' | 'warning' = 'error'; // ✨ Novo
 
   constructor(
     private authService: AuthService,
@@ -28,6 +28,7 @@ export class LoginComponent {
   fazerLogin() {
     if (!this.email || !this.senha) {
       this.loginMessage = 'Preencha todos os campos.';
+      this.messageType = 'warning';
       return;
     }
 
@@ -35,12 +36,13 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.senha).subscribe({
       next: (res) => {
-
         localStorage.setItem('nome', res.usuario.nome);
         localStorage.setItem('email', res.usuario.email);
         localStorage.setItem('id', res.usuario.id);
+        localStorage.setItem('permissoes', JSON.stringify(res.usuario.permissoes || []));
 
         this.loginMessage = 'Login realizado com sucesso!';
+        this.messageType = 'success'; // ✨ Sucesso
 
         setTimeout(() => {
           this.loadingService.hide();
@@ -51,6 +53,7 @@ export class LoginComponent {
       error: () => {
         this.loadingService.hide();
         this.loginMessage = 'Usuário ou senha incorretos.';
+        this.messageType = 'error'; // ✨ Erro
       }
     });
   }

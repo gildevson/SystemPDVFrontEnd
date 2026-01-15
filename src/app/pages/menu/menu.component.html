@@ -14,11 +14,11 @@
 
     <!-- LOGO -->
     <div class="logo">
-      <img src="../../../assets/logo.png" class="logo-img" />
+      <img src="../../../assets/logo.png" class="logo-img" alt="Logo" />
       <span>RME TECH</span>
     </div>
 
-    <!-- 👇 AQUI — BLOCO DO USUÁRIO -->
+    <!-- BLOCO DO USUÁRIO -->
     <div class="user-info">
       <span class="material-icons user-icon">account_circle</span>
       <span class="user-name">{{ nomeUsuario }}</span>
@@ -27,15 +27,41 @@
     <nav class="menu-list">
 
       <!-- ITENS DO MENU -->
-      <div
-        *ngFor="let item of menuItems"
-        class="menu-item"
-        routerLinkActive="active-item"
-        (click)="navegar(item.rota)"
-      >
-        <span class="material-icons menu-icon">{{ item.icone }}</span>
-        <span class="menu-text">{{ item.nome }}</span>
-      </div>
+      <ng-container *ngFor="let item of menuItems">
+        <div *ngIf="hasPermissao(item.permissao)">
+
+          <!-- ITEM PRINCIPAL -->
+          <div
+            class="menu-item"
+            [class.active-item]="item.rota && router.url.includes(item.rota)"
+            [class.has-submenu]="item.submenu"
+            [class.expanded]="item.expanded"
+            (click)="toggleSubmenu(item)"
+          >
+            <span class="material-icons menu-icon">{{ item.icone }}</span>
+            <span class="menu-text">{{ item.nome }}</span>
+
+            <!-- Seta para submenu -->
+            <span *ngIf="item.submenu" class="material-icons submenu-arrow">
+              {{ item.expanded ? 'expand_less' : 'expand_more' }}
+            </span>
+          </div>
+
+          <!-- SUBMENU -->
+          <div class="submenu" *ngIf="item.submenu && item.expanded">
+            <div
+              *ngFor="let subitem of item.submenu"
+              class="submenu-item"
+              [class.active-item]="subitem.rota && router.url.includes(subitem.rota)"
+              (click)="navegar(subitem.rota!)"
+            >
+              <span class="material-icons submenu-icon">{{ subitem.icone }}</span>
+              <span class="submenu-text">{{ subitem.nome }}</span>
+            </div>
+          </div>
+
+        </div>
+      </ng-container>
 
     </nav>
 
