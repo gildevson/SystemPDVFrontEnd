@@ -18,7 +18,7 @@ interface Produtos {
     selector: "app-produtos",
     standalone: true,
     imports: [CommonModule, FormsModule],
-    templateUrl: "./produtos.component.html",
+    templateUrl: "./produtos.components.html",
     styleUrls: ["./produtos.component.css"],
 })
 export class ProdutosComponent {
