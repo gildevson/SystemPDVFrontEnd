@@ -27,7 +27,7 @@ export class AuthService {
       });
     } else {
       console.warn('⚠️ Rodando no navegador — backend dinâmico desabilitado.');
-      this.backendUrl$.next('https://localhost:7110'); // fallback DEV
+      this.backendUrl$.next('https://localhost:7041'); // fallback DEV
     }
   }
 

@@ -36,7 +36,7 @@ export class CadastrarUsuarioComponent {
   sucesso = false;
 
   // 🔹 Configurações
-  private readonly API_URL = 'https://localhost:7110/api/Auth/registrar';
+  private readonly API_URL = 'https://localhost:7041/api/Auth/registrar';
   private readonly SENHA_MIN_LENGTH = 6;
 
   constructor(

@@ -39,7 +39,7 @@ export class AtualizarUsuarioComponent implements OnInit {
     this.carregandoDados = true;
     this.erro = '';
 
-    this.http.get<any>(`https://localhost:7110/api/users?page=1&pageSize=1000`)
+    this.http.get<any>(`https://localhost:7041/api/users?page=1&pageSize=1000`)
       .subscribe({
         next: (res) => {
           const usuario = res.data.find((u: any) => u.id === this.id);
@@ -108,7 +108,7 @@ export class AtualizarUsuarioComponent implements OnInit {
       payload.senha = this.senha;
     }
 
-    this.http.put(`https://localhost:7110/api/auth`, payload)
+    this.http.put(`https://localhost:7041/api/auth`, payload)
       .subscribe({
         next: () => {
           this.carregando = false;

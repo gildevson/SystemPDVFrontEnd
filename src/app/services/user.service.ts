@@ -21,7 +21,7 @@ export class UserService {
       });
     } else {
       console.warn('⚠️ Rodando no navegador — usando URL padrão');
-      this.backendUrl$.next('https://localhost:7110');
+      this.backendUrl$.next('https://localhost:7041');
     }
   }
 

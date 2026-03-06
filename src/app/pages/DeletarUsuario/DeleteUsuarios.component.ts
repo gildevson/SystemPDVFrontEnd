@@ -57,7 +57,7 @@ export class DeleteUsuariosComponent implements OnInit {
   }
 
   private buscarUsuario() {
-    this.http.get<any>(`https://localhost:7110/api/users/${this.userId}`)
+    this.http.get<any>(`https://localhost:7041/api/users/${this.userId}`)
       .subscribe({
         next: (res) => {
           this.nomeUsuario = res.nome;
@@ -96,7 +96,7 @@ export class DeleteUsuariosComponent implements OnInit {
 
     const idLogado = localStorage.getItem('id');
 
-    this.http.delete('https://localhost:7110/api/Auth', {
+    this.http.delete('https://localhost:7041/api/Auth', {
       body: {
         id: this.userId,
         idLogado: idLogado

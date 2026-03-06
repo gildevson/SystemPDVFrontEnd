@@ -54,7 +54,7 @@ export class ListaDeUsuariosComponent implements OnInit {
     const startTime = Date.now();
 
     this.http
-      .get<any>(`https://localhost:7110/api/users?page=${page}&pageSize=${this.pageSize}`)
+      .get<any>(`https://localhost:7041/api/users?page=${page}&pageSize=${this.pageSize}`)
       .subscribe({
         next: (res) => {
           this.usuarios = res.data;
