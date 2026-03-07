@@ -50,7 +50,11 @@ export class ProdutosListaComponent implements OnInit  {
       .get<any>(`https://localhost:7041/api/produtos?page=${page}&pageSize=${this.pageSize}`)
       .subscribe({
         next: (res) => {
-          this.produtos =
+          this.produtos = res.data;
+          this.page = res.page;
+          this.pageSize = res.pageSize;
+          this.total = res.total;
+          this.totalPages = Math.ceil(this.total / this.pageSize);
         }
       })
     }
