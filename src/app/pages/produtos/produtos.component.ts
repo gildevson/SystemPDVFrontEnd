@@ -1,4 +1,4 @@
-import { Component } from "@angular/core"; //Esse aqui chama
+import { Component, OnInit } from "@angular/core"; //Esse aqui chama
 import { CommonModule } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
@@ -22,7 +22,7 @@ interface Produtos {
     styleUrls: ["./produtos.component.css"],
 })
 
-export class ProdutosListaComponent  implements OnInit  {
+export class ProdutosListaComponent implements OnInit  {
     produtos: Produtos[] = [];
     erro = false;
     page = 1;
@@ -38,5 +38,20 @@ export class ProdutosListaComponent  implements OnInit  {
 
     ngOnInit(): void {
       this.buscarProdutos();
+    }
+
+    buscarProdutos(page: number = 1) {
+      this.loadingService.show();
+      this.erro = false;
+
+      const startTime = Date.now();
+
+      this.http
+      .get<any>(`https://localhost:7041/api/produtos?page=${page}&pageSize=${this.pageSize}`)
+      .subscribe({
+        next: (res) => {
+          this.produtos =
+        }
+      })
     }
 }
