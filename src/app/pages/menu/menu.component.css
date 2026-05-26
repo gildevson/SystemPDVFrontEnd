@@ -1,49 +1,38 @@
 /* ============================
-   BOTÃO HAMBÚRGUER
+   HAMBÚRGUER
 ============================ */
 .hamburger-btn {
   position: fixed;
-  top: 18px;
-  left: 18px;
+  top: 16px;
+  left: 16px;
   z-index: 200;
-  background: #171336;
+  background: #1a1540;
   color: #fff;
-  border: none;
-  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 9px 11px;
   border-radius: 10px;
   cursor: pointer;
   display: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: all 0.2s ease;
 }
-
-.hamburger-btn:hover {
-  background: #1f1a42;
-  transform: scale(1.05);
-}
-
-.hamburger-btn .material-icons {
-  font-size: 28px;
-}
+.hamburger-btn:hover { background: #231c52; }
+.hamburger-btn .material-icons { font-size: 26px; }
 
 /* ============================
-   OVERLAY (FUNDO ESCURO)
+   OVERLAY MOBILE
 ============================ */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
   opacity: 0;
   visibility: hidden;
   transition: 0.25s;
   z-index: 150;
 }
-
-.overlay.visible {
-  opacity: 1;
-  visibility: visible;
-}
+.overlay.visible { opacity: 1; visibility: visible; }
 
 /* ============================
    LAYOUT
@@ -52,7 +41,7 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background: #f5f7fa;
+  background: #f1f4f9;
 }
 
 /* ============================
@@ -60,79 +49,136 @@
 ============================ */
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 260px;
-  padding: 25px 15px;
-  background: #171336;
-  color: #fff;
+  top: 0; left: 0; bottom: 0;
+  width: 255px;
+  background: #13103a;
   display: flex;
   flex-direction: column;
   z-index: 180;
   transform: translateX(0);
   transition: transform 0.3s ease;
-  overflow-y: auto;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Scrollbar personalizada */
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  overflow: hidden;
 }
 
 /* ============================
    LOGO
 ============================ */
-.logo {
+.logo-area {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 30px;
-  color: #fff;
-  font-size: 22px;
-  font-weight: 700;
-  padding: 0 10px;
+  padding: 22px 20px 18px;
+  flex-shrink: 0;
 }
 
-.logo-img {
-  width: 40px;
-  height: 40px;
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4a55ff, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 8px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.logo-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.logo-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 /* ============================
-   USER INFO
+   DIVISOR
 ============================ */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 15px;
-  margin: 0 0 25px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: #fff;
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 0 20px;
+  flex-shrink: 0;
 }
 
-.user-icon {
-  font-size: 30px;
-  color: #4a55ff;
+/* ============================
+   USUÁRIO
+============================ */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 20px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4a55ff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .user-name {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-email {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* ============================
@@ -140,10 +186,31 @@
 ============================ */
 .menu-list {
   flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  overflow-y: auto;
+  gap: 2px;
+}
+
+.menu-list::-webkit-scrollbar { width: 4px; }
+.menu-list::-webkit-scrollbar-track { background: transparent; }
+.menu-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 4px;
+}
+
+/* ============================
+   LABEL DE SEÇÃO
+============================ */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 14px 10px 6px;
+  user-select: none;
 }
 
 /* ============================
@@ -152,65 +219,67 @@
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 8px;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
   cursor: pointer;
-  color: #c9d1d9;
-  transition: all 0.25s ease;
-  position: relative;
+  color: rgba(255,255,255,0.55);
+  transition: all 0.2s ease;
   user-select: none;
+  position: relative;
 }
 
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
 }
 
 .menu-item.active-item {
-  background: rgba(74, 85, 255, 0.25);
+  background: linear-gradient(135deg, rgba(74,85,255,0.22), rgba(139,92,246,0.14));
   color: #fff;
-  font-weight: 600;
+  border: 1px solid rgba(99,102,241,0.2);
 }
 
-/* Indicador lateral */
-.menu-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 0%;
-  background: #4a55ff;
-  border-radius: 0 12px 12px 0;
-  transition: height 0.2s ease;
+.item-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
 }
 
-.menu-item:hover::before,
-.menu-item.active-item::before {
-  height: 70%;
+.menu-item:hover .item-icon-wrap {
+  background: rgba(255,255,255,0.1);
+}
+
+.menu-item.active-item .item-icon-wrap {
+  background: linear-gradient(135deg, #4a55ff, #7c3aed);
+  box-shadow: 0 4px 12px rgba(74,85,255,0.4);
 }
 
 .menu-icon {
-  font-size: 22px;
-  flex-shrink: 0;
+  font-size: 18px;
+  color: inherit;
 }
 
 .menu-text {
   flex: 1;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 500;
+  letter-spacing: -0.1px;
 }
 
-/* Seta do submenu */
-.submenu-arrow {
-  font-size: 20px;
-  margin-left: auto;
-  transition: transform 0.3s ease;
+.arrow-icon {
+  font-size: 18px;
+  color: rgba(255,255,255,0.3);
+  transition: transform 0.25s ease;
 }
 
-.menu-item.expanded .submenu-arrow {
+.menu-item.expanded .arrow-icon {
   transform: rotate(180deg);
 }
 
@@ -218,173 +287,109 @@
    SUBMENU
 ============================ */
 .submenu {
+  margin: 3px 0 5px 12px;
   padding-left: 20px;
-  margin-top: 6px;
-  margin-bottom: 8px;
+  border-left: 1px solid rgba(99,102,241,0.2);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  animation: slideDown 0.3s ease;
+  gap: 2px;
+  animation: slideDown 0.22s ease;
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .submenu-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border-radius: 6px;
+  padding: 9px 12px;
+  border-radius: 8px;
   cursor: pointer;
-  color: #a8b3c1;
-  transition: all 0.2s ease;
-  position: relative;
-  padding-left: 24px;
-}
-
-.submenu-item::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  background: #4a55ff;
-  border-radius: 50%;
-  opacity: 0.5;
-  transition: all 0.2s ease;
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
 }
 
 .submenu-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
-  padding-left: 28px;
-}
-
-.submenu-item:hover::before {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.3);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.85);
 }
 
 .submenu-item.active-item {
-  background: rgba(74, 85, 255, 0.15);
-  color: #fff;
+  background: rgba(74,85,255,0.15);
+  color: #a5b4fc;
   font-weight: 600;
-}
-
-.submenu-item.active-item::before {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.5);
 }
 
 .submenu-icon {
-  font-size: 18px;
-  flex-shrink: 0;
+  font-size: 16px;
+  opacity: 0.7;
 }
 
-.submenu-text {
-  font-size: 13px;
-  font-weight: 500;
-}
+.submenu-text { font-size: 13px; }
 
 /* ============================
-   BOTÃO SAIR
+   RODAPÉ / LOGOUT
 ============================ */
-.logout-btn {
-  margin-top: auto;
+.sidebar-footer {
+  flex-shrink: 0;
   padding: 12px;
-  background: linear-gradient(135deg, #ff4d4d 0%, #e63a3a 100%);
-  border: none;
-  border-radius: 8px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 10px;
   cursor: pointer;
-  color: #fff;
+  color: #f87171;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.25s ease;
+  gap: 10px;
+  font-size: 13.5px;
   font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #e63a3a 0%, #d32f2f 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 77, 77, 0.4);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
 }
 
-.logout-btn:active {
-  transform: translateY(0);
-}
+.logout-btn .material-icons { font-size: 19px; }
 
 /* ============================
    MAIN CONTENT
 ============================ */
 .main-content {
   flex: 1;
-  padding: 30px;
-  margin-left: 260px;
-  transition: margin-left 0.3s ease;
-  overflow-x: hidden;
+  margin-left: 255px;
+  min-height: 100vh;
+  background: #f1f4f9;
 }
 
 /* ============================
-   RESPONSIVO - DESKTOP
+   RESPONSIVO
 ============================ */
 @media (min-width: 900px) {
-  .hamburger-btn {
-    display: none;
-  }
-
-  .sidebar {
-    transform: translateX(0) !important;
-  }
-
-  .main-content {
-    margin-left: 260px;
-  }
+  .hamburger-btn { display: none; }
+  .sidebar { transform: translateX(0) !important; }
 }
 
-/* ============================
-   RESPONSIVO - MOBILE
-============================ */
 @media (max-width: 899px) {
-  .hamburger-btn {
-    display: block;
-  }
-
-  .sidebar {
-    transform: translateX(-105%);
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .main-content {
-    margin-left: 0 !important;
-    padding: 80px 20px 20px;
-  }
+  .hamburger-btn { display: block; }
+  .sidebar { transform: translateX(-105%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-left: 0 !important; padding-top: 70px; }
 }
 
 @media (max-width: 480px) {
-  .sidebar {
-    width: 85%;
-    max-width: 280px;
-  }
-
-  .main-content {
-    padding: 70px 15px 15px;
-  }
+  .sidebar { width: 82%; max-width: 270px; }
 }

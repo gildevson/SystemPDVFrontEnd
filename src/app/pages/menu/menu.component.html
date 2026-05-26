@@ -1,10 +1,9 @@
 <!-- BOTÃO HAMBÚRGUER -->
 <button class="hamburger-btn" (click)="toggleSidebar()">
-  <span *ngIf="!isSidebarOpen" class="material-icons">menu</span>
-  <span *ngIf="isSidebarOpen" class="material-icons">close</span>
+  <span class="material-icons">{{ isSidebarOpen ? 'close' : 'menu' }}</span>
 </button>
 
-<!-- OVERLAY ESCURECIDO NO MOBILE -->
+<!-- OVERLAY MOBILE -->
 <div class="overlay" [class.visible]="isSidebarOpen" (click)="toggleSidebar()"></div>
 
 <div class="layout">
@@ -13,62 +12,82 @@
   <aside class="sidebar" [class.open]="isSidebarOpen">
 
     <!-- LOGO -->
-    <div class="logo">
-      <img src="../../../assets/logo.png" class="logo-img" alt="Logo" />
-      <span>RME TECH</span>
+    <div class="logo-area">
+      <div class="logo-icon">
+        <img src="../../../assets/logo.png" alt="Logo" />
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">RME Tech</span>
+        <span class="logo-tag">PDV System</span>
+      </div>
     </div>
 
-    <!-- BLOCO DO USUÁRIO -->
-    <div class="user-info">
-      <span class="material-icons user-icon">account_circle</span>
-      <span class="user-name">{{ nomeUsuario }}</span>
+    <div class="sidebar-divider"></div>
+
+    <!-- USUÁRIO -->
+    <div class="user-card">
+      <div class="user-avatar">{{ iniciais }}</div>
+      <div class="user-info">
+        <span class="user-name">{{ nomeUsuario }}</span>
+        <span class="user-email">{{ emailUsuario }}</span>
+      </div>
+      <span class="user-status"></span>
     </div>
 
+    <div class="sidebar-divider"></div>
+
+    <!-- NAVEGAÇÃO -->
     <nav class="menu-list">
+      @for (item of menuItems; track item.nome) {
 
-      <!-- ITENS DO MENU -->
-      <ng-container *ngFor="let item of menuItems">
-        <div *ngIf="hasPermissao(item.permissao)">
-
-          <!-- ITEM PRINCIPAL -->
-          <div
-            class="menu-item"
-            [class.active-item]="item.rota && router.url.includes(item.rota)"
-            [class.has-submenu]="item.submenu"
-            [class.expanded]="item.expanded"
-            (click)="toggleSubmenu(item)"
-          >
-            <span class="material-icons menu-icon">{{ item.icone }}</span>
-            <span class="menu-text">{{ item.nome }}</span>
-
-            <!-- Seta para submenu -->
-            <span *ngIf="item.submenu" class="material-icons submenu-arrow">
-              {{ item.expanded ? 'expand_less' : 'expand_more' }}
-            </span>
-          </div>
-
-          <!-- SUBMENU -->
-          <div class="submenu" *ngIf="item.submenu && item.expanded">
+        @if (item.isSection) {
+          <div class="section-label">{{ item.nome }}</div>
+        } @else {
+          <div>
             <div
-              *ngFor="let subitem of item.submenu"
-              class="submenu-item"
-              [class.active-item]="subitem.rota && router.url.includes(subitem.rota)"
-              (click)="navegar(subitem.rota!)"
+              class="menu-item"
+              [class.active-item]="item.rota && isRouteActive(item.rota)"
+              [class.has-submenu]="item.submenu"
+              [class.expanded]="item.expanded"
+              (click)="toggleSubmenu(item)"
             >
-              <span class="material-icons submenu-icon">{{ subitem.icone }}</span>
-              <span class="submenu-text">{{ subitem.nome }}</span>
+              <div class="item-icon-wrap">
+                <span class="material-icons menu-icon">{{ item.icone }}</span>
+              </div>
+              <span class="menu-text">{{ item.nome }}</span>
+              @if (item.submenu) {
+                <span class="material-icons arrow-icon">expand_more</span>
+              }
             </div>
+
+            @if (item.submenu && item.expanded) {
+              <div class="submenu">
+                @for (sub of item.submenu; track sub.nome) {
+                  <div
+                    class="submenu-item"
+                    [class.active-item]="sub.rota && isRouteActive(sub.rota)"
+                    (click)="navegar(sub.rota!)"
+                  >
+                    <span class="material-icons submenu-icon">{{ sub.icone }}</span>
+                    <span class="submenu-text">{{ sub.nome }}</span>
+                  </div>
+                }
+              </div>
+            }
           </div>
+        }
 
-        </div>
-      </ng-container>
-
+      }
     </nav>
 
-    <button class="logout-btn" (click)="logout()">
-      <span class="material-icons">logout</span>
-      Sair
-    </button>
+    <!-- RODAPÉ -->
+    <div class="sidebar-footer">
+      <div class="sidebar-divider"></div>
+      <button class="logout-btn" (click)="logout()">
+        <span class="material-icons">logout</span>
+        <span>Sair da conta</span>
+      </button>
+    </div>
 
   </aside>
 

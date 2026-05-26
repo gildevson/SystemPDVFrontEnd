@@ -22,10 +22,9 @@ export const routes: Routes = [
     component: MenuComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'dashboard', component: OperacaoComponent },
       { path: 'usuarios', component: ListaDeUsuariosComponent },
       { path: 'deletar-usuario/:id', component: DeleteUsuariosComponent },
-      { path: 'editar-usuario/:id', component: AtualizarUsuarioComponent }, // 👈 SEM 'menu/'
+      { path: 'editar-usuario/:id', component: AtualizarUsuarioComponent },
 
       {
         path: 'novousuario',
@@ -35,7 +34,7 @@ export const routes: Routes = [
       },
 
       { path: 'operacao', component: OperacaoComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
     ]
   }
 ];

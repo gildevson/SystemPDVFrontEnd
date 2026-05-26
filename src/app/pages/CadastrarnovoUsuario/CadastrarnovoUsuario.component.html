@@ -1,55 +1,70 @@
 <div class="container" (click)="$event.stopPropagation()">
 
-  <!-- BOTÃO FECHAR -->
-  <button class="btn-close" (click)="cancelar()" [disabled]="carregando">
-    ✕
-  </button>
-
-  <!-- TÍTULO -->
-  <h2 class="ClassTitulo">Cadastrar Novo Usuário</h2>
+  <!-- HEADER -->
+  <div class="card-header">
+    <div class="header-icon">
+      <span class="material-icons">person_add</span>
+    </div>
+    <div class="header-info">
+      <h2 class="card-title">Cadastrar Novo Usuário</h2>
+      <p class="card-subtitle">Preencha os dados para criar um novo acesso</p>
+    </div>
+    <button class="btn-close" (click)="cancelar()" [disabled]="carregando" title="Voltar à lista">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
 
   <!-- FORMULÁRIO -->
-  <form (ngSubmit)="salvar()">
+  <form class="form-body" (ngSubmit)="salvar()">
 
-    <!-- NOME -->
-    <div class="form-group">
-      <label for="nome">
-        Nome <span class="required">*</span>
-      </label>
-      <input
-        id="nome"
-        [(ngModel)]="nome"
-        name="nome"
-        type="text"
-        placeholder="Digite o nome completo"
-        [disabled]="carregando"
-        maxlength="100"
-        autocomplete="name" />
-    </div>
+    <!-- NOME + EMAIL em grid -->
+    <div class="form-grid">
 
-    <!-- E-MAIL -->
-    <div class="form-group">
-      <label for="email">
-        E-mail <span class="required">*</span>
-      </label>
-      <input
-        id="email"
-        [(ngModel)]="email"
-        name="email"
-        type="email"
-        placeholder="exemplo@email.com"
-        [disabled]="carregando"
-        maxlength="100"
-        autocomplete="email" />
+      <div class="form-group">
+        <label class="form-label" for="nome">
+          <span class="material-icons label-icon">person</span>
+          Nome <span class="required">*</span>
+        </label>
+        <input
+          id="nome"
+          class="form-input"
+          type="text"
+          [(ngModel)]="nome"
+          name="nome"
+          placeholder="Nome completo"
+          [disabled]="carregando"
+          maxlength="100"
+          autocomplete="name" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">
+          <span class="material-icons label-icon">alternate_email</span>
+          E-mail <span class="required">*</span>
+        </label>
+        <input
+          id="email"
+          class="form-input"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="exemplo@email.com"
+          [disabled]="carregando"
+          maxlength="100"
+          autocomplete="email" />
+      </div>
+
     </div>
 
     <!-- TIPO DE USUÁRIO -->
     <div class="form-group">
-      <label for="tipoUsuario">
+      <label class="form-label" for="tipoUsuario">
+        <span class="material-icons label-icon">shield</span>
         Tipo de Usuário <span class="required">*</span>
       </label>
       <select
         id="tipoUsuario"
+        class="form-select"
         [(ngModel)]="permissaoId"
         name="tipoUsuario"
         [disabled]="carregando">
@@ -59,75 +74,91 @@
       </select>
     </div>
 
-    <!-- SENHA -->
-    <div class="form-group">
-      <label for="senha">
-        Senha <span class="required">*</span>
-      </label>
-      <input
-        id="senha"
-        [(ngModel)]="senha"
-        name="senha"
-        type="password"
-        placeholder="Mínimo 6 caracteres"
-        [disabled]="carregando"
-        maxlength="50"
-        autocomplete="new-password" />
+    <!-- SENHA + CONFIRMAR em grid -->
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label class="form-label" for="senha">
+          <span class="material-icons label-icon">lock</span>
+          Senha <span class="required">*</span>
+        </label>
+        <input
+          id="senha"
+          class="form-input"
+          type="password"
+          [(ngModel)]="senha"
+          name="senha"
+          placeholder="Mínimo 6 caracteres"
+          [disabled]="carregando"
+          maxlength="50"
+          autocomplete="new-password" />
+        <small class="form-hint" *ngIf="senha && senha.length < 6">
+          <span class="material-icons" style="font-size:13px;vertical-align:middle;color:#f59e0b">warning</span>
+          <span style="color:#f59e0b">Mínimo 6 caracteres</span>
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="confirmarSenha">
+          <span class="material-icons label-icon">lock_reset</span>
+          Confirmar Senha <span class="required">*</span>
+        </label>
+        <input
+          id="confirmarSenha"
+          class="form-input"
+          [class.input-error]="senha && confirmarSenha && senha !== confirmarSenha"
+          [class.input-ok]="senha && confirmarSenha && senha === confirmarSenha"
+          type="password"
+          [(ngModel)]="confirmarSenha"
+          name="confirmarSenha"
+          placeholder="Repita a senha"
+          [disabled]="carregando || !senha"
+          maxlength="50"
+          autocomplete="new-password" />
+        <small class="form-hint" *ngIf="senha && confirmarSenha && senha !== confirmarSenha">
+          <span class="material-icons" style="font-size:13px;vertical-align:middle;color:#dc2626">error_outline</span>
+          <span style="color:#dc2626">As senhas não conferem</span>
+        </small>
+        <small class="form-hint" *ngIf="senha && confirmarSenha && senha === confirmarSenha">
+          <span class="material-icons" style="font-size:13px;vertical-align:middle;color:#16a34a">check_circle</span>
+          <span style="color:#16a34a">Senhas conferem</span>
+        </small>
+      </div>
+
     </div>
 
-    <!-- CONFIRMAR SENHA -->
-    <div class="form-group">
-      <label for="confirmarSenha">
-        Confirmar Senha <span class="required">*</span>
-      </label>
-      <input
-        id="confirmarSenha"
-        [(ngModel)]="confirmarSenha"
-        name="confirmarSenha"
-        type="password"
-        placeholder="Digite a senha novamente"
-        [disabled]="carregando"
-        maxlength="50"
-        autocomplete="new-password" />
+    <!-- ERRO -->
+    <div class="alert alert-erro" *ngIf="erro">
+      <span class="material-icons">error_outline</span>
+      <span>{{ erro }}</span>
+    </div>
+
+    <!-- SUCESSO -->
+    <div class="alert alert-sucesso" *ngIf="sucesso">
+      <span class="material-icons">check_circle</span>
+      <span>Usuário cadastrado com sucesso! Redirecionando...</span>
     </div>
 
     <!-- BOTÕES -->
-    <div class="button-group">
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="carregando">
-        <span *ngIf="!carregando">
-          <span class="material-icons">person_add</span>
-          Cadastrar Usuário
-        </span>
-        <span *ngIf="carregando" class="btn-loading">
-          <span class="spinner-inline"></span>
-          Salvando...
-        </span>
-      </button>
-
+    <div class="form-actions">
       <button
         type="button"
-        class="btn btn-secondary"
+        class="btn btn-cancelar"
         (click)="cancelar()"
         [disabled]="carregando">
-        <span class="material-icons">close</span>
+        <span class="material-icons">arrow_back</span>
         Cancelar
       </button>
-    </div>
-
-    <!-- MENSAGENS -->
-    <div class="mensagens">
-      <p class="erro" *ngIf="erro">
-        <span class="material-icons">error</span>
-        {{ erro }}
-      </p>
-      <p class="sucesso" *ngIf="sucesso">
-        <span class="material-icons">check_circle</span>
-        Usuário cadastrado com sucesso!
-      </p>
+      <button
+        type="submit"
+        class="btn btn-salvar"
+        [disabled]="carregando || !nome || !email || !permissaoId || !senha || !confirmarSenha || senha !== confirmarSenha">
+        <span class="spinner-inline" *ngIf="carregando"></span>
+        <span class="material-icons" *ngIf="!carregando">person_add</span>
+        {{ carregando ? 'Salvando...' : 'Cadastrar Usuário' }}
+      </button>
     </div>
 
   </form>
+
 </div>

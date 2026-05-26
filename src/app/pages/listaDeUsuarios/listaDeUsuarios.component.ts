@@ -109,6 +109,21 @@ export class ListaDeUsuariosComponent implements OnInit {
     return permissoes.join(', ');
   }
 
+  getIniciais(nome: string): string {
+    if (!nome) return '?';
+    const partes = nome.trim().split(' ');
+    if (partes.length >= 2) return (partes[0][0] + partes[1][0]).toUpperCase();
+    return nome.substring(0, 2).toUpperCase();
+  }
+
+  getAvatarColor(nome: string): string {
+    const classes = ['avatar-purple', 'avatar-blue', 'avatar-green', 'avatar-orange', 'avatar-pink', 'avatar-teal'];
+    if (!nome) return classes[0];
+    let hash = 0;
+    for (let i = 0; i < nome.length; i++) hash = nome.charCodeAt(i) + ((hash << 5) - hash);
+    return classes[Math.abs(hash) % classes.length];
+  }
+
   // ✅ Método para obter classe CSS baseada na permissão
   getPermissaoClass(permissoes: string[]): string {
     if (!permissoes || permissoes.length === 0) return 'badge-sem-permissao';

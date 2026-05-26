@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoadingService } from '../../shared/loading.service';
 
@@ -10,28 +9,31 @@ interface MenuItem {
   permissao?: string;
   submenu?: MenuItem[];
   expanded?: boolean;
+  isSection?: boolean;
 }
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
 
   menuItems: MenuItem[] = [
+    { nome: 'Principal', icone: '', isSection: true },
     {
-      nome: 'Dashboard Geral',
-      rota: 'dashboard',
+      nome: 'Dashboard',
+      rota: 'usuarios',
       icone: 'dashboard'
     },
+    { nome: 'Gestão', icone: '', isSection: true },
     {
       nome: 'Cadastros',
-      icone: 'folder',
+      icone: 'folder_open',
       submenu: [
-        { nome: 'Usuários do Sistema', rota: 'usuarios', icone: 'groups', permissao: 'ADMIN' },
+        { nome: 'Usuários', rota: 'usuarios', icone: 'group', permissao: 'ADMIN' },
         { nome: 'Produtos', rota: 'produtos', icone: 'inventory_2' },
         { nome: 'Clientes', rota: 'clientes', icone: 'people' },
         { nome: 'Fornecedores', rota: 'fornecedores', icone: 'local_shipping' },
@@ -40,13 +42,14 @@ export class MenuComponent {
     },
     {
       nome: 'Operações',
-      icone: 'business_center',
+      icone: 'storefront',
       submenu: [
         { nome: 'PDV', rota: 'operacao/pdv', icone: 'point_of_sale' },
         { nome: 'Vendas', rota: 'operacao/vendas', icone: 'shopping_cart' },
         { nome: 'Estoque', rota: 'operacao/estoque', icone: 'warehouse' }
       ]
     },
+    { nome: 'Análise', icone: '', isSection: true },
     {
       nome: 'Relatórios',
       icone: 'bar_chart',
@@ -56,21 +59,33 @@ export class MenuComponent {
         { nome: 'Estoque', rota: 'relatorios/estoque', icone: 'assessment' }
       ]
     },
+    { nome: 'Sistema', icone: '', isSection: true },
     {
       nome: 'Configurações',
       rota: 'configuracoes',
-      icone: 'settings'
+      icone: 'tune'
     }
   ];
 
   nomeUsuario: string = '';
+  emailUsuario: string = '';
   isSidebarOpen = false;
+
+  get iniciais(): string {
+    return this.nomeUsuario
+      .split(' ')
+      .slice(0, 2)
+      .map(n => n[0])
+      .join('')
+      .toUpperCase();
+  }
 
   constructor(
     public router: Router, // ✅ MUDOU DE private PARA public
     private loadingService: LoadingService
   ) {
     this.nomeUsuario = localStorage.getItem('nome') || 'Usuário';
+    this.emailUsuario = localStorage.getItem('email') || '';
   }
 
   // ✅ Ler permissões

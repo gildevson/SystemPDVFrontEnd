@@ -1,16 +1,21 @@
-<!-- ================= -->
-<!-- CARD PRINCIPAL -->
-<!-- ================= -->
 <div class="content-card">
 
   <!-- HEADER -->
   <div class="header-row">
-    <h2 class="titulo">Lista de Usuários</h2>
+    <div class="header-left">
+      <h2 class="titulo">Lista de Usuários</h2>
+      <span class="subtitulo" *ngIf="!termoPesquisa && total > 0">
+        <span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">group</span>
+        {{ total }} {{ total === 1 ? 'usuário cadastrado' : 'usuários cadastrados' }}
+      </span>
+      <span class="subtitulo search-info" *ngIf="termoPesquisa">
+        <span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">search</span>
+        {{ usuariosFiltrados.length }} {{ usuariosFiltrados.length === 1 ? 'resultado' : 'resultados' }} para
+        <strong>"{{ termoPesquisa }}"</strong>
+      </span>
+    </div>
 
-    <button
-      type="button"
-      class="btn-novo"
-      (click)="abrirOverlay()">
+    <button type="button" class="btn-novo" (click)="abrirOverlay()">
       <span class="material-icons">person_add</span>
       Novo Usuário
     </button>
@@ -19,14 +24,12 @@
   <!-- PESQUISA -->
   <div class="search-container">
     <span class="material-icons search-icon">search</span>
-
     <input
       type="text"
       class="search-input"
       [(ngModel)]="termoPesquisa"
       (input)="pesquisar()"
       placeholder="Pesquisar por nome, email ou permissão..." />
-
     <button
       *ngIf="termoPesquisa"
       type="button"
@@ -37,102 +40,135 @@
     </button>
   </div>
 
+  <!-- ERRO -->
+  <div class="erro-banner" *ngIf="erro">
+    <span class="material-icons">error_outline</span>
+    Não foi possível carregar os usuários. Verifique a conexão e tente novamente.
+    <button class="btn-retry" (click)="buscarUsuarios()">Tentar novamente</button>
+  </div>
+
   <!-- TABELA -->
-  <table class="tabela">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Permissões</th>
-        <th>Data de Criação</th>
-        <th class="col-acoes">Ações</th>
-      </tr>
-    </thead>
+  <div class="table-wrapper">
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th class="col-usuario">Usuário</th>
+          <th>Email</th>
+          <th>Permissões</th>
+          <th>Data de Criação</th>
+          <th class="col-acoes">Ações</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let u of usuariosFiltrados">
-        <td data-label="Nome">{{ u.nome }}</td>
-        <td data-label="Email">{{ u.email }}</td>
+      <tbody>
+        <tr *ngFor="let u of usuariosFiltrados; let i = index" class="user-row">
 
-        <!-- ✅ EXIBIÇÃO DAS PERMISSÕES COM BADGES -->
-        <td data-label="Permissões">
-          <div class="permissoes-container">
-            <span
-              *ngFor="let permissao of u.permissoes"
-              [ngClass]="getPermissaoClass(u.permissoes)"
-              class="badge-permissao">
-              {{ permissao }}
-            </span>
-            <span
-              *ngIf="!u.permissoes || u.permissoes.length === 0"
-              class="badge-permissao badge-sem-permissao">
-              Sem permissões
-            </span>
-          </div>
-        </td>
+          <!-- Usuário com avatar -->
+          <td data-label="Usuário" class="td-usuario">
+            <div class="user-cell" (click)="editar(u)" title="Clique para editar">
+              <div class="user-avatar" [ngClass]="getAvatarColor(u.nome)">
+                {{ getIniciais(u.nome) }}
+              </div>
+              <div class="user-info">
+                <span class="user-nome">{{ u.nome }}</span>
+                <span class="user-id">ID: {{ u.id.substring(0, 8) }}...</span>
+              </div>
+            </div>
+          </td>
 
-        <td data-label="Data de Criação">
-          {{ u.dataCriacao | date:'dd/MM/yyyy HH:mm' }}
-        </td>
-        <td class="acoes">
-          <span
-            class="acao editar material-icons"
-            title="Editar usuário"
-            (click)="editar(u)">
-            edit
-          </span>
+          <!-- Email -->
+          <td data-label="Email">
+            <div class="email-cell">
+              <span class="material-icons email-icon">alternate_email</span>
+              <span>{{ u.email }}</span>
+            </div>
+          </td>
 
-          <span
-            class="acao deletar material-icons"
-            title="Deletar usuário"
-            (click)="deletar(u)">
-            delete
-          </span>
-        </td>
-      </tr>
+          <!-- Permissões -->
+          <td data-label="Permissões">
+            <div class="permissoes-container">
+              <span
+                *ngFor="let permissao of u.permissoes"
+                [ngClass]="getPermissaoClass(u.permissoes)"
+                class="badge-permissao">
+                {{ permissao }}
+              </span>
+              <span
+                *ngIf="!u.permissoes || u.permissoes.length === 0"
+                class="badge-permissao badge-sem-permissao">
+                Sem permissões
+              </span>
+            </div>
+          </td>
 
-      <!-- ESTADO VAZIO -->
-      <tr
-        *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa"
-        class="empty-state">
-        <td colspan="5">
-          <span class="material-icons empty-icon">inbox</span>
-          <div>Nenhum usuário cadastrado</div>
-        </td>
-      </tr>
+          <!-- Data -->
+          <td data-label="Data de Criação">
+            <div class="data-cell">
+              <span class="material-icons data-icon">calendar_today</span>
+              <div class="data-info">
+                <span class="data-dia">{{ u.dataCriacao | date:'dd/MM/yyyy' }}</span>
+                <span class="data-hora">{{ u.dataCriacao | date:'HH:mm' }}</span>
+              </div>
+            </div>
+          </td>
 
-      <!-- SEM RESULTADOS -->
-      <tr
-        *ngIf="usuariosFiltrados.length === 0 && termoPesquisa"
-        class="empty-state">
-        <td colspan="5">
-          <span class="material-icons empty-icon">search_off</span>
-          <div>
-            Nenhum resultado encontrado para
-            <strong>"{{ termoPesquisa }}"</strong>
-          </div>
-          <button
-            type="button"
-            class="btn-limpar-resultado"
-            (click)="limparPesquisa()">
-            Limpar pesquisa
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <!-- Ações -->
+          <td class="acoes">
+            <button class="btn-acao deletar" title="Deletar usuário" (click)="deletar(u)">
+              <span class="material-icons">delete</span>
+            </button>
+          </td>
+        </tr>
+
+        <!-- ESTADO VAZIO -->
+        <tr *ngIf="usuariosFiltrados.length === 0 && !termoPesquisa && !erro" class="empty-state">
+          <td colspan="5">
+            <div class="empty-content">
+              <div class="empty-icon-wrapper">
+                <span class="material-icons empty-icon">group</span>
+              </div>
+              <h3 class="empty-title">Nenhum usuário cadastrado</h3>
+              <p class="empty-desc">Comece adicionando o primeiro usuário ao sistema.</p>
+              <button type="button" class="btn-empty-action" (click)="abrirOverlay()">
+                <span class="material-icons">person_add</span>
+                Adicionar primeiro usuário
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- SEM RESULTADOS -->
+        <tr *ngIf="usuariosFiltrados.length === 0 && termoPesquisa" class="empty-state">
+          <td colspan="5">
+            <div class="empty-content">
+              <div class="empty-icon-wrapper search-empty">
+                <span class="material-icons empty-icon">search_off</span>
+              </div>
+              <h3 class="empty-title">Nenhum resultado encontrado</h3>
+              <p class="empty-desc">
+                Não encontramos nada para <strong>"{{ termoPesquisa }}"</strong>.<br>
+                Tente um termo diferente.
+              </p>
+              <button type="button" class="btn-empty-action outline" (click)="limparPesquisa()">
+                <span class="material-icons">clear</span>
+                Limpar pesquisa
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- PAGINAÇÃO -->
-  <div
-    class="paginacao"
-    *ngIf="totalPages > 1 && !termoPesquisa">
-
+  <div class="paginacao" *ngIf="totalPages > 1 && !termoPesquisa">
     <button
       type="button"
       class="btn-pag"
       [disabled]="page === 1"
       (click)="buscarUsuarios(page - 1)">
-      « Anterior
+      <span class="material-icons">chevron_left</span>
+      Anterior
     </button>
 
     <div class="numeros">
@@ -151,7 +187,8 @@
       class="btn-pag"
       [disabled]="page === totalPages"
       (click)="buscarUsuarios(page + 1)">
-      Próxima »
+      Próxima
+      <span class="material-icons">chevron_right</span>
     </button>
   </div>
 

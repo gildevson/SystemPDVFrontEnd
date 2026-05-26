@@ -17,7 +17,8 @@ export class AtualizarUsuarioComponent implements OnInit {
   nome = '';
   email = '';
   senha = '';
-  permissaoId: number | null = null; // 🆕 Permissão
+  confirmarSenha = '';
+  permissaoId: number | null = null;
 
   carregando = false;
   carregandoDados = false;
@@ -91,6 +92,11 @@ export class AtualizarUsuarioComponent implements OnInit {
     // Validar senha se preenchida
     if (this.senha && this.senha.length < 6) {
       this.erro = 'A senha deve ter no mínimo 6 caracteres.';
+      return;
+    }
+
+    if (this.senha && this.senha !== this.confirmarSenha) {
+      this.erro = 'As senhas não conferem.';
       return;
     }
 
